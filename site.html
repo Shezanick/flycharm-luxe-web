@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLYCHARM | The Future of Travel</title>
+    <link rel="icon" type="image/png" href="favicon.PNG">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-lime: #D5FE00;
+            --brand-noir: #101010;
+            --brand-dark: #1A1A1A;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--brand-noir);
+            color: #E0E0E0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-brand-header {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .text-cyber-lime { color: var(--brand-lime); }
+        .bg-cyber-lime { background-color: var(--brand-lime); }
+
+        .cta-button {
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(213, 254, 0, 0.5);
+            filter: brightness(1.15);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-item.is-open .accordion-content {
+            max-height: 500px; /* Adjust as needed */
+        }
+        .accordion-item.is-open .accordion-header svg {
+            transform: rotate(180deg);
+        }
+        .partner-logo {
+            filter: grayscale(100%) opacity(0.6);
+            transition: all 0.3s ease-in-out;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0%) opacity(1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="sticky-header" class="sticky top-0 z-50">
+        <div class="bg-cyber-lime text-black text-center py-2 text-sm">
+            <p>Our little tech experiment got a bit too popular. We've sold our OTA tech to let's say.. a large company. We're now a concierge-only service. The transition will be complete on October 15th.</p>
+        </div>
+
+        <header class="relative transition-all duration-300" id="header">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#hero" class="flex items-center" aria-label="Flycharm home">
+                    <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-8 md:h-10 w-auto select-none" draggable="false">
+                </a>
+                <a href="#cta" class="bg-cyber-lime text-black font-bold py-2 px-6 rounded-full text-sm hover:bg-white transition-colors cta-button">
+                    Join Now
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <main>
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('image.png');">
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+            <div class="container mx-auto px-6 text-center relative z-10 fade-in-up">
+                <h1 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">
+                    Stop scrolling, start travelling.
+                </h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-neutral-300">
+                    You've got better things to do than compare a million flights. We're the human-powered travel engine that does the work for you. Just text us.
+                </p>
+                <div class="mt-10 max-w-xl mx-auto">
+                   <form id="whatsapp-form" class="flex flex-col sm:flex-row gap-3">
+                        <input id="whatsapp-input" type="text" placeholder="e.g., 'Two business class tickets to Tokyo, next month.'" class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
+                        <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
+                            Start Your Trip
+                        </button>
+                    </form>
+                    <p class="text-xs text-neutral-500 mt-3">No apps. No logins. Just results.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">The Travel Industry is Broken. We're Fixing It.</h2>
+                    <p class="mt-4 text-lg md:text-xl text-neutral-400">The big booking sites sell you a ticket and leave you to fend for yourself. We're different. We're a human-powered travel engine that provides a complete, end-to-end travel experience. And yes, we're usually cheaper.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-center">
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">$147k+</h3>
+                        <p class="mt-2 text-lg font-semibold">Saved for Our Clients</p>
+                    </div>
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">100%</h3>
+                        <p class="mt-2 text-lg font-semibold">Price Beat Guarantee</p>
+                    </div>
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">9k+</h3>
+                        <p class="mt-2 text-lg font-semibold">Hours Reclaimed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32 bg-brand-dark">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">How It Works</h2>
+                    <p class="mt-4 text-lg md:text-xl text-neutral-400">We've made it ridiculously simple to travel like a VIP.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-center">
+                    <div class="p-8">
+                        <div class="font-brand-header text-6xl text-cyber-lime">1</div>
+                        <h3 class="font-brand-header text-2xl mt-4 text-white">Text Us Your Request</h3>
+                        <p class="mt-2 text-neutral-400">Tell us what you need, from flights and hotels to restaurant reservations and visa assistance.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="font-brand-header text-6xl text-cyber-lime">2</div>
+                        <h3 class="font-brand-header text-2xl mt-4 text-white">We Handle the Rest</h3>
+                        <p class="mt-2 text-neutral-400">Our team of travel experts will find you the best deals and handle all the bookings.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="font-brand-header text-6xl text-cyber-lime">3</div>
+                        <h3 class="font-brand-header text-2xl mt-4 text-white">You Travel</h3>
+                        <p class="mt-2 text-neutral-400">That's it. Seriously. We'll even check you in for your flight.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-brand-dark">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-lg font-semibold text-neutral-400 uppercase tracking-widest">On a first-name basis with</h2>
+                <div class="mt-10 grid grid-cols-3 gap-8 items-center">
+                    <div class="flex justify-center">
+                        <img src="emirates.png" alt="Emirates" class="h-10 partner-logo">
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="Airindia.png" alt="Air India" class="h-10 partner-logo">
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="etihad.png" alt="Etihad" class="h-10 partner-logo">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">Who We're For</h2>
+                    <p class="mt-4 text-lg md:text-xl text-neutral-400">If you value your time and sanity, you're in the right place.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-2xl text-white">Biz Bros & Gals</h3>
+                        <p class="mt-2 text-neutral-400">You're busy building your empire. Let us handle the travel.</p>
+                    </div>
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-2xl text-white">The Family Leader</h3>
+                        <p class="mt-2 text-neutral-400">Planning a family vacation is a full-time job. Outsource it to us.</p>
+                    </div>
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-2xl text-white">The Luxury Traveler</h3>
+                        <p class="mt-2 text-neutral-400">You want the best. We'll make sure you get it.</p>
+                    </div>
+                    <div class="p-8 bg-brand-dark rounded-lg">
+                        <h3 class="font-brand-header text-2xl text-white">The Last-Minute Booker</h3>
+                        <p class="mt-2 text-neutral-400">Need to be in another country tomorrow? We live for the challenge.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32 bg-brand-dark">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">What We Do</h2>
+                    <p class="mt-4 text-lg md:text-xl text-neutral-400">Everything the big booking sites do, plus a whole lot more.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-16 text-center">
+                    <div class="p-8">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Flights</h3>
+                        <p class="mt-2 text-neutral-400">We find the best deals on flights, so you don't have to.</p>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Hotels</h3>
+                        <p class="mt-2 text-neutral-400">From boutique hotels to luxury resorts, we've got you covered.</p>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Visas</h3>
+                        <p class="mt-2 text-neutral-400">We'll handle the paperwork, so you can focus on the fun part.</p>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">24/7 Support</h3>
+                        <p class="mt-2 text-neutral-400">Flight canceled? Lost luggage? We're here to help, 24/7.</p>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Loyalty Programs</h3>
+                        <p class="mt-2 text-neutral-400">We'll manage your points and miles, so you get the most out of them.</p>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">And More...</h3>
+                        <p class="mt-2 text-neutral-400">Need a private jet? A yacht? A personal chef? Just ask.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">Don't Just Take Our Word For It</h2>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-brand-dark p-8 rounded-lg">
+                        <p class="text-lg text-neutral-300">"He finally moved out of my basement. 10/10, would recommend."</p>
+                        <p class="mt-4 text-cyber-lime font-semibold">- Mom</p>
+                    </div>
+                    <div class="bg-brand-dark p-8 rounded-lg">
+                        <p class="text-lg text-neutral-300">"I used to dread booking travel. Now I just send a text and it's done even the boarding passes. It's like magic."</p>
+                        <p class="mt-4 text-cyber-lime font-semibold">- Vidit K., Drink Conisseur</p>
+                    </div>
+                    <div class="bg-brand-dark p-8 rounded-lg">
+                        <p class="text-lg text-neutral-300">"I needed to be in three continents in 48 hours. Flycharm didn't even flinch. They just asked the dates."</p>
+                        <p class="mt-4 text-cyber-lime font-semibold">- Alex R., International Person of Mystery</p>
+                    </div>
+                    <div class="bg-brand-dark p-8 rounded-lg">
+                        <p class="text-lg text-neutral-300">"I was sure this was a scam. Now I'm sending my travel requests via text from a beach in Bali. I'm still not convinced this is real."</p>
+                        <p class="mt-4 text-cyber-lime font-semibold">- Ben P., Professional Skeptic</p>
+                    </div>
+                    <div class="bg-brand-dark p-8 rounded-lg">
+                        <p class="text-lg text-neutral-300">"My accountant tried to hire Flycharm to manage my company's finances. They're that good at finding savings."</p>
+                        <p class="mt-4 text-cyber-lime font-semibold">- Shezanick, WCH Studios</p>
+                    </div>
+                    <div class="bg-brand-dark p-8 rounded-lg">
+                        <p class="text-lg text-neutral-300">"It's like having alfred in your pocket, makes you feel like batman."</p>
+                        <p class="mt-4 text-cyber-lime font-semibold">- David L., Luther Corp? Probably.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center">
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">You've Got Questions. We've Got Answers.</h2>
+                    <p class="mt-4 text-lg md:text-xl text-neutral-400">The important, the weird, and the "are you for real?"</p>
+                </div>
+                <div class="mt-16 space-y-4">
+                    <div class="accordion-item bg-brand-dark border border-neutral-800 rounded-lg">
+                        <div class="accordion-header flex justify-between items-center p-6 cursor-pointer">
+                            <h3 class="font-semibold text-lg text-white">What's the difference between you and my assistant?</h3>
+                            <svg class="w-6 h-6 text-cyber-lime transform transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-neutral-400 p-6 pt-0">That's like asking the difference between a flip phone and an iPhone. We use technology to give you a better experience, but we're powered by humans who actually care about your trip. We're your personal travel department, not just a person who books your flights.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-brand-dark border border-neutral-800 rounded-lg">
+                        <div class="accordion-header flex justify-between items-center p-6 cursor-pointer">
+                            <h3 class="font-semibold text-lg text-white">How do you actually save me money?</h3>
+                            <svg class="w-6 h-6 text-cyber-lime transform transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-neutral-400 p-6 pt-0">We have access to deals that aren't available to the public. We also have human experts who can find creative ways to save you money that algorithms can't. It's not magic, it's just connections. And we're very good at what we do.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-brand-dark border border-neutral-800 rounded-lg">
+                        <div class="accordion-header flex justify-between items-center p-6 cursor-pointer">
+                            <h3 class="font-semibold text-lg text-white">What's the catch? There's always a catch.</h3>
+                            <svg class="w-6 h-6 text-cyber-lime transform transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-neutral-400 p-6 pt-0">We charge a small, transparent service fee. But we guarantee that we'll save you more than our fee, or you don't pay it. So the only "catch" is that you'll have more time and money to spend on your trip. Sorry about that.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-brand-dark border border-neutral-800 rounded-lg">
+                        <div class="accordion-header flex justify-between items-center p-6 cursor-pointer">
+                            <h3 class="font-semibold text-lg text-white">What if something goes wrong during my trip?</h3>
+                            <svg class="w-6 h-6 text-cyber-lime transform transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-neutral-400 p-6 pt-0">We're on it. 24/7. While everyone else is on hold with the airline, you're texting a real human who is fixing the problem. We're your travel guardian angels. But, you know, funnier.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-brand-dark border border-neutral-800 rounded-lg">
+                        <div class="accordion-header flex justify-between items-center p-6 cursor-pointer">
+                            <h3 class="font-semibold text-lg text-white">Is this only for business travel?</h3>
+                            <svg class="w-6 h-6 text-cyber-lime transform transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-neutral-400 p-6 pt-0">We do it all. Business trips, family vacations, honeymoons, secret agent missions... if it involves travel, we're in.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="py-20 md:py-32 bg-cover bg-center" style="background-image: url('image.png');">
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h2 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold text-white">Your Time is Too Valuable to Waste on Travel Sites.</h2>
+                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">You're one text away from a better travel experience. The only thing you have to lose is the headache.</p>
+                <div class="mt-10 max-w-xl mx-auto">
+                   <form id="whatsapp-form-2" class="flex flex-col sm:flex-row gap-3">
+                        <input id="whatsapp-input-2" type="text" placeholder="Your dream trip starts here..." class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
+                        <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
+                            Upgrade My Travel
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 bg-brand-dark">
+        <div class="container mx-auto px-6 text-center text-neutral-500">
+            <p class="text-lg">Flycharm by the people of WCH Studios.</p>
+            <p class="text-sm mt-8">&copy; 2025 Flycharm. All rights reserved. If you're reading this, you have too much time on your hands. Go travel.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.style.backgroundColor = 'rgba(16, 16, 16, 0.7)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.backgroundColor = 'transparent';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // --- WhatsApp CTA Logic ---
+        function handleWhatsAppRedirect(formId, inputId) {
+            const form = document.getElementById(formId);
+            if(form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const message = document.getElementById(inputId).value;
+                    if (message) {
+                        const whatsappNumber = '19876543210'; // IMPORTANT: Replace with your actual WhatsApp number
+                        const encodedMessage = encodeURIComponent(message);
+                        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                        window.open(whatsappUrl, '_blank');
+                    }
+                });
+            }
+        }
+        handleWhatsAppRedirect('whatsapp-form', 'whatsapp-input');
+        handleWhatsAppRedirect('whatsapp-form-2', 'whatsapp-input-2');
+
+        // --- Accordion Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach((item, index) => {
+                const header = item.querySelector('.accordion-header');
+                if (index === 0) {
+                    item.classList.add('is-open');
+                } else {
+                    item.classList.remove('is-open');
+                }
+                header.addEventListener('click', () => {
+                    accordionItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('is-open');
+                        }
+                    });
+                    item.classList.toggle('is-open');
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // --- Hero Section Height Adjustment ---
+        function adjustHeroHeight() {
+            const stickyHeader = document.getElementById('sticky-header');
+            const heroSection = document.getElementById('hero');
+            if (stickyHeader && heroSection) {
+                const headerHeight = stickyHeader.offsetHeight;
+                heroSection.style.minHeight = `calc(100vh - ${headerHeight}px)`;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', adjustHeroHeight);
+        window.addEventListener('resize', adjustHeroHeight);
+    </script>
+
+</body>
+</html>
