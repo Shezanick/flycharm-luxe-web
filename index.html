@@ -81,6 +81,43 @@
             filter: brightness(1.15);
         }
 
+        /* Subtle lime headline glow behind hero headline */
+        .headline-glow {
+            position: relative;
+            z-index: 1;
+        }
+        .headline-glow::after {
+            content: '';
+            position: absolute;
+            inset: -10% -5% -5% -5%;
+            background: radial-gradient(60% 60% at 50% 50%, rgba(213,254,0,0.25) 0%, rgba(213,254,0,0.12) 35%, rgba(213,254,0,0.0) 70%);
+            filter: blur(24px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Hero video wrapper for lightweight cinematic feel */
+        .hero-media {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        .hero-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(1.05) contrast(1.05);
+        }
+
+        /* Stronger overlay for contrast + soft gradient vignette */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(80% 60% at 50% 10%, rgba(16,16,16,0.15) 0%, rgba(16,16,16,0.55) 60%, rgba(16,16,16,0.85) 100%),
+                linear-gradient(180deg, rgba(16,16,16,0.55) 0%, rgba(16,16,16,0.85) 100%);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -130,14 +167,19 @@
     </div>
 
     <main>
-        <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('image.png');">
-            <div class="absolute inset-0 bg-black opacity-60"></div>
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center relative" style="background-image: url('image.png');">
+            <div class="hero-media" aria-hidden="true">
+                <video autoplay muted loop playsinline preload="metadata">
+                    <source src="hero.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="hero-overlay"></div>
             <div class="container mx-auto px-6 text-center relative z-10 fade-in-up">
-                <h1 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">
-                    Stop <span class="text-cyber-lime">scrolling</span>, start <span class="text-cyber-lime">travelling</span>.
+                <h1 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] text-white max-w-5xl mx-auto headline-glow">
+                    Text us your trip. We handle everything — <span class="text-cyber-lime">usually cheaper</span>.
                 </h1>
-                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-neutral-300">
-                    You've got better things to do than compare a million flights. We're the human-powered travel engine that does the work for you. Just text us.
+                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">
+                    Send a text. Get flights, hotels, check‑in, and 24/7 humans. No apps. No logins. Just results.
                 </p>
                 <div class="mt-10 max-w-xl mx-auto">
                    <form id="whatsapp-form" class="flex flex-col sm:flex-row gap-3">
@@ -146,7 +188,13 @@
                             Start Your Trip
                         </button>
                     </form>
-                    <p class="text-xs text-neutral-500 mt-3">No apps. No logins. Just results.</p>
+                    <div class="flex items-center justify-center gap-2 mt-3">
+                        <span class="inline-flex items-center gap-2 bg-neutral-900/60 border border-neutral-800 text-neutral-300 text-xs px-3 py-1 rounded-full">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
+                            Price‑Beat Guarantee
+                        </span>
+                        <span class="text-[11px] text-neutral-500">If we don't beat it, you don't pay the fee.</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -157,14 +205,17 @@
                     <h2 class="font-brand-header text-4xl md:text-6xl text-white">The Travel Industry is Broken. We're Fixing It.</h2>
                     <p class="mt-4 text-lg md:text-xl text-neutral-400">The big booking sites sell you a ticket and leave you to fend for yourself. We're different. We're a human-powered travel engine that provides a complete, end-to-end travel experience. And yes, we're usually cheaper.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 text-center">
                     <div class="p-8 bg-brand-dark rounded-lg">
                         <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">$147k+</h3>
                         <p class="mt-2 text-lg font-semibold">Saved for Our Clients</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg">
-                        <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">100%</h3>
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                        <div class="flex items-baseline justify-center gap-3">
+                            <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">100%</h3>
+                        </div>
                         <p class="mt-2 text-lg font-semibold">Price Beat Guarantee</p>
+                        <p class="mt-3 text-sm text-neutral-400 max-w-xs mx-auto">If we can't beat a like‑for‑like quote, you don't pay our service fee. Simple.</p>
                     </div>
                     <div class="p-8 bg-brand-dark rounded-lg">
                         <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">9k+</h3>
@@ -211,28 +262,28 @@
             </div>
         </section>
 
-        <section class="py-20 md:py-32">
+        <section class="py-20 md:py-36">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
-                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">Who We're For</h2>
-                    <p class="mt-4 text-lg md:text-xl text-neutral-400">If you value your time and sanity, you're in the right place.</p>
+                    <h2 class="font-brand-header text-4xl md:text-6xl text-white">What You Get</h2>
+                    <p class="mt-4 text-lg md:text-xl text-neutral-400">Brutally honest outcomes. No fluff. Just the stuff you actually want.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-                    <div class="p-8 bg-brand-dark rounded-lg">
-                        <h3 class="font-brand-header text-2xl text-white">Biz Bros & Gals</h3>
-                        <p class="mt-2 text-neutral-400">You're busy building your empire. Let us handle the travel.</p>
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Save Money</h3>
+                        <p class="mt-2 text-neutral-400">We beat public prices because we know where the bodies are buried. Not literally. Mostly contracts, timing, and human brains the algorithms forgot.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg">
-                        <h3 class="font-brand-header text-2xl text-white">The Family Leader</h3>
-                        <p class="mt-2 text-neutral-400">Planning a family vacation is a full-time job. Outsource it to us.</p>
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Save Hours</h3>
+                        <p class="mt-2 text-neutral-400">No more 19 tabs of “maybe this one?” Send a text. We send options. You pick. Your screen time goes down. Your life gets better.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg">
-                        <h3 class="font-brand-header text-2xl text-white">The Luxury Traveler</h3>
-                        <p class="mt-2 text-neutral-400">You want the best. We'll make sure you get it.</p>
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Front‑Row Treatment</h3>
+                        <p class="mt-2 text-neutral-400">Upgrades, better seats, sane layovers. We ask for things nicely and often. That works better than yelling at a chatbot.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg">
-                        <h3 class="font-brand-header text-2xl text-white">The Last-Minute Booker</h3>
-                        <p class="mt-2 text-neutral-400">Need to be in another country tomorrow? We live for the challenge.</p>
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                        <h3 class="font-brand-header text-2xl text-cyber-lime">Zero‑Stress Fixes</h3>
+                        <p class="mt-2 text-neutral-400">Flights get delayed. Bags go sightseeing without you. You text us. We fix it while you pretend everything’s fine. Because it is.</p>
                     </div>
                 </div>
             </div>
@@ -363,9 +414,9 @@
             </div>
         </section>
 
-        <section id="cta" class="py-20 md:py-32 bg-brand-dark">
+        <section id="cta" class="py-20 md:py-36 bg-brand-dark">
             <div class="container mx-auto px-6 text-center relative z-10">
-                <h2 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold text-white">Your Time is Too Valuable to Waste on Travel Sites.</h2>
+                <h2 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.05]">Your Time is Too Valuable to Waste on Travel Sites.</h2>
                 <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">You're one text away from a better travel experience. The only thing you have to lose is the headache.</p>
                 <div class="mt-10 max-w-xl mx-auto">
                    <form id="whatsapp-form-2" class="flex flex-col sm:flex-row gap-3">
@@ -374,6 +425,13 @@
                             Upgrade My Travel
                         </button>
                     </form>
+                    <div class="flex items-center justify-center gap-2 mt-3">
+                        <span class="inline-flex items-center gap-2 bg-neutral-900/60 border border-neutral-800 text-neutral-300 text-xs px-3 py-1 rounded-full">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
+                            Price‑Beat Guarantee
+                        </span>
+                        <span class="text-[11px] text-neutral-500">If we don't beat it, you don't pay the fee.</span>
+                    </div>
                 </div>
             </div>
         </section>
