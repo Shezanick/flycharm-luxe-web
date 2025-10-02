@@ -145,13 +145,46 @@
         .partner-logo:hover {
             filter: grayscale(0%) opacity(1);
         }
+
+        /* Luminous card effect (inspired by Camden) */
+        .lumen-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 1px 2px rgba(0,0,0,0.35);
+            transition: box-shadow 300ms ease, transform 300ms ease;
+        }
+        .lumen-card::before {
+            content: '';
+            position: absolute;
+            inset: -20% -10% auto -10%;
+            height: 60%;
+            background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 70%);
+            filter: blur(10px);
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+        .lumen-card::after {
+            content: '';
+            position: absolute;
+            inset: auto -15% -25% -15%;
+            height: 70%;
+            background: radial-gradient(80% 100% at 50% 100%, rgba(0,0,0,0.35), rgba(0,0,0,0) 65%);
+            filter: blur(14px);
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+        .lumen-card:hover {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.45);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <div id="sticky-header" class="sticky top-0 z-50">
         <div class="bg-cyber-lime text-black text-center py-1 text-sm">
-            <p>We divested the OTA tech to an Airline Partner™. We're now invite-only from Oct 15th.</p>
+            <p>We divested the OTA tech to an Airline Partner™. We're invite-only from Oct 15th.</p>
         </div>
 
         <header class="relative transition-all duration-300" id="header">
@@ -206,18 +239,18 @@
                     <p class="mt-4 text-lg md:text-xl text-neutral-400">The big booking sites sell you a ticket and leave you to fend for yourself. We're different. We're a human-powered travel engine that provides a complete, end-to-end travel experience. And yes, we're usually cheaper.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 text-center">
-                    <div class="p-8 bg-brand-dark rounded-lg">
+                    <div class="p-8 bg-brand-dark rounded-lg lumen-card">
                         <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">$147k+</h3>
                         <p class="mt-2 text-lg font-semibold">Saved for Our Clients</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800 lumen-card">
                         <div class="flex items-baseline justify-center gap-3">
                             <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">100%</h3>
                         </div>
                         <p class="mt-2 text-lg font-semibold">Price Beat Guarantee</p>
                         <p class="mt-3 text-sm text-neutral-400 max-w-xs mx-auto">If we can't beat a like‑for‑like quote, you don't pay our service fee. Simple.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg">
+                    <div class="p-8 bg-brand-dark rounded-lg lumen-card">
                         <h3 class="font-brand-header text-6xl md:text-7xl font-bold text-cyber-lime">9k+</h3>
                         <p class="mt-2 text-lg font-semibold">Hours Reclaimed</p>
                     </div>
@@ -269,19 +302,19 @@
                     <p class="mt-4 text-lg md:text-xl text-neutral-400">Brutally honest outcomes. No fluff. Just the stuff you actually want.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800 lumen-card">
                         <h3 class="font-brand-header text-2xl text-cyber-lime">Save Money</h3>
                         <p class="mt-2 text-neutral-400">We beat public prices because we know where the bodies are buried. Not literally. Mostly contracts, timing, and human brains the algorithms forgot.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800 lumen-card">
                         <h3 class="font-brand-header text-2xl text-cyber-lime">Save Hours</h3>
                         <p class="mt-2 text-neutral-400">No more 19 tabs of “maybe this one?” Send a text. We send options. You pick. Your screen time goes down. Your life gets better.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800 lumen-card">
                         <h3 class="font-brand-header text-2xl text-cyber-lime">Front‑Row Treatment</h3>
                         <p class="mt-2 text-neutral-400">Upgrades, better seats, sane layovers. We ask for things nicely and often. That works better than yelling at a chatbot.</p>
                     </div>
-                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800">
+                    <div class="p-8 bg-brand-dark rounded-lg border border-neutral-800 lumen-card">
                         <h3 class="font-brand-header text-2xl text-cyber-lime">Zero‑Stress Fixes</h3>
                         <p class="mt-2 text-neutral-400">Flights get delayed. Bags go sightseeing without you. You text us. We fix it while you pretend everything’s fine. Because it is.</p>
                     </div>
