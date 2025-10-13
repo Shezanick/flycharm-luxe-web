@@ -216,9 +216,9 @@
                 </p>
                 <div class="mt-10 max-w-xl mx-auto">
                    <form id="whatsapp-form" class="flex flex-col sm:flex-row gap-3">
-                        <input id="whatsapp-input" type="text" placeholder="e.g., 'Two business class tickets to Tokyo, next month.'" class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
+                        <input id="whatsapp-input" type="text" placeholder="Enter your invite code (e.g. Shezan1)" class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
                         <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
-                            Start Your Trip
+                            Get Access
                         </button>
                     </form>
                     <div class="flex items-center justify-center gap-2 mt-3">
@@ -453,11 +453,12 @@
                 <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">You're one text away from a better travel experience. The only thing you have to lose is the headache.</p>
                 <div class="mt-10 max-w-xl mx-auto">
                    <form id="whatsapp-form-2" class="flex flex-col sm:flex-row gap-3">
-                        <input id="whatsapp-input-2" type="text" placeholder="Your dream trip starts here..." class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
+                        <input id="whatsapp-input-2" type="text" placeholder="e.g. Two Tickets to Tokyo on 13th Dec" class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
                         <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
                             Upgrade My Travel
                         </button>
                     </form>
+                    <p class="mt-4 text-sm text-neutral-400">Share your invite code to get access.</p>
                     <div class="flex items-center justify-center gap-2 mt-3">
                         <span class="inline-flex items-center gap-2 bg-neutral-900/60 border border-neutral-800 text-neutral-300 text-xs px-3 py-1 rounded-full">
                             <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
@@ -491,23 +492,30 @@
         });
 
         // --- WhatsApp CTA Logic ---
-        function handleWhatsAppRedirect(formId, inputId) {
+        function handleWhatsAppRedirect(formId, inputId, messageTemplate) {
             const form = document.getElementById(formId);
             if(form) {
                 form.addEventListener('submit', function(event) {
                     event.preventDefault();
-                    const message = document.getElementById(inputId).value;
-                    if (message) {
+                    const inviteCode = document.getElementById(inputId).value;
+                    if (inviteCode) {
                         const whatsappNumber = '+919023778849'; // IMPORTANT: Replace with your actual WhatsApp number
-                        const encodedMessage = encodeURIComponent(message);
+                        const formattedMessage = messageTemplate.replace('[invite_code]', inviteCode);
+                        const encodedMessage = encodeURIComponent(formattedMessage);
                         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
                         window.open(whatsappUrl, '_blank');
+                    } else {
+                        alert('Please enter an invite code.');
                     }
                 });
             }
         }
-        handleWhatsAppRedirect('whatsapp-form', 'whatsapp-input');
-        handleWhatsAppRedirect('whatsapp-form-2', 'whatsapp-input-2');
+
+        const accessMessage = "Hey Flycharm team! I'd like to get access to your exclusive travel service. My invite code is [invite_code].";
+        const upgradeMessage = "Hey Flycharm team! I'm ready to upgrade my travel experience. My invite code is [invite_code].";
+
+        handleWhatsAppRedirect('whatsapp-form', 'whatsapp-input', accessMessage);
+        handleWhatsAppRedirect('whatsapp-form-2', 'whatsapp-input-2', upgradeMessage);
 
         // --- Accordion Logic ---
         document.addEventListener('DOMContentLoaded', () => {
