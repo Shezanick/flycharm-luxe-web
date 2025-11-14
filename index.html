@@ -33,8 +33,7 @@
       "url": "https://flycharm.wecreativeheads.com/",
       "logo": "https://flycharm.wecreativeheads.com/Flycharm-logo-clear-w.png",
       "sameAs": [
-        "https://www.instagram.com/flycharm",
-        "https://www.twitter.com/flycharm"
+        "https."
       ],
       "description": "Human‑powered travel concierge handling flights, hotels, visas, and 24/7 support."
     }
@@ -43,12 +42,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FONT EXPERIMENT: Swapped Syne for Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
+            /* --- OG BRANDING IS BACK --- */
             --brand-lime: #D5FE00;
             --brand-noir: #101010;
             --brand-dark: #1A1A1A;
+            --brand-secondary: #101010; /* For toggle text on lime bg */
         }
 
         html {
@@ -63,25 +66,27 @@
         }
 
         .font-brand-header {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
+            /* FONT EXPERIMENT: Using Space Grotesk */
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
             letter-spacing: -0.02em;
         }
 
+        /* --- OG COLOR CLASSES --- */
         .text-cyber-lime { color: var(--brand-lime); }
         .bg-cyber-lime { background-color: var(--brand-lime); }
+        .border-cyber-lime { border-color: var(--brand-lime); }
 
         .cta-button {
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .cta-button:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
             box-shadow: 0 0 40px rgba(213, 254, 0, 0.5);
             filter: brightness(1.15);
         }
 
-        /* Subtle lime headline glow behind hero headline */
+        /* Subtle lime headline glow */
         .headline-glow {
             position: relative;
             z-index: 1;
@@ -96,7 +101,7 @@
             pointer-events: none;
         }
 
-        /* Hero video wrapper for lightweight cinematic feel */
+        /* Hero video wrapper */
         .hero-media {
             position: absolute;
             inset: 0;
@@ -109,13 +114,13 @@
             filter: saturate(1.05) contrast(1.05);
         }
 
-        /* Stronger overlay for contrast + soft gradient vignette */
+        /* Stronger overlay for contrast */
         .hero-overlay {
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(80% 60% at 50% 10%, rgba(16,16,16,0.15) 0%, rgba(16,16,16,0.55) 60%, rgba(16,16,16,0.85) 100%),
-                linear-gradient(180deg, rgba(16,16,16,0.55) 0%, rgba(16,16,16,0.85) 100%);
+                radial-gradient(80% 60% at 50% 10%, rgba(16,16,16,0.25) 0%, rgba(16,16,16,0.65) 60%, rgba(16,16,16,0.9) 100%),
+                linear-gradient(180deg, rgba(16,16,16,0.65) 0%, rgba(16,16,16,0.9) 100%);
         }
 
         @keyframes fadeInUp {
@@ -127,63 +132,243 @@
             animation: fadeInUp 1s ease-out forwards;
         }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-        .accordion-item.is-open .accordion-content {
-            max-height: 500px; /* Adjust as needed */
-        }
-        .accordion-item.is-open .accordion-header svg {
-            transform: rotate(180deg);
-        }
-        .partner-logo {
-            filter: grayscale(100%) opacity(0.6);
-            transition: all 0.3s ease-in-out;
-        }
-        .partner-logo:hover {
-            filter: grayscale(0%) opacity(1);
+        /* --- STYLES FOR OLD SECTIONS (Lumen Card, Accordion) --- */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+        .accordion-item.is-open .accordion-content { max-height: 500px; }
+        .accordion-item.is-open .accordion-header svg { transform: rotate(180deg); }
+        .partner-logo { filter: grayscale(100%) opacity(0.6); transition: all 0.3s ease-in-out; }
+        .partner-logo:hover { filter: grayscale(0%) opacity(1); }
+        .lumen-card { position: relative; overflow: hidden; border-radius: 0.5rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 1px 2px rgba(0,0,0,0.35); transition: box-shadow 300ms ease, transform 300ms ease; }
+        .lumen-card::before { content: ''; position: absolute; inset: -20% -10% auto -10%; height: 60%; background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 70%); filter: blur(10px); pointer-events: none; transform: translateZ(0); }
+        .lumen-card::after { content: ''; position: absolute; inset: auto -15% -25% -15%; height: 70%; background: radial-gradient(80% 100% at 50% 100%, rgba(0,0,0,0.35), rgba(0,0,0,0) 65%); filter: blur(14px); pointer-events: none; transform: translateZ(0); }
+        .lumen-card:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.45); transform: translateY(-2px); }
+
+
+        /* --- NEW STYLES FOR PREMIUM BOOKING FORM --- */
+
+        /* Main Glass UI Box */
+        .glass-ui-container {
+            background-color: rgba(26, 26, 26, 0.5); /* bg-brand-dark/50 */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+            border-radius: 1.5rem; /* rounded-3xl */
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* Luminous card effect (inspired by Camden) */
-        .lumen-card {
+        /* Icon Tab Nav */
+        .service-nav {
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .service-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem; /* gap-2 */
+            padding: 1.25rem 1.5rem; /* p-5 md:px-6 */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 600; /* font-semibold */
+            color: #A3A3A3; /* text-neutral-400 */
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1.5px; /* Pull up to overlap border */
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .service-tab:hover {
+            color: var(--brand-lime);
+        }
+        .service-tab.is-active {
+            color: var(--brand-lime);
+            border-bottom-color: var(--brand-lime);
+        }
+        .service-tab.is-disabled {
+            color: #525252; /* text-neutral-600 */
+            cursor: not-allowed;
+        }
+
+        /* Sleek Round-trip / One-way Toggle */
+        .trip-type-toggle {
+            display: flex;
+            border-radius: 9999px; /* rounded-full */
+            background-color: rgba(0, 0, 0, 0.3); /* bg-black/30 */
+            border: 1px solid #404040; /* border-neutral-700 */
+            padding: 0.25rem; /* p-1 */
+            width: fit-content;
+        }
+        .trip-type-toggle input[type="radio"] { display: none; }
+        .trip-type-toggle label {
+            text-align: center;
+            padding: 0.375rem 1rem; /* py-1.5 px-4 */
+            border-radius: 9999px; /* rounded-full */
+            color: #A3A3A3; /* text-neutral-400 */
+            font-weight: 500; /* font-medium */
+            font-size: 0.875rem; /* text-sm */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .trip-type-toggle input[type="radio"]:checked + label {
+            background-color: var(--brand-lime);
+            color: var(--brand-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Fields Container */
+        .form-fields-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem; /* rounded-2xl */
+        }
+        
+        @media (min-width: 1024px) { /* lg */
+            .form-fields-grid {
+                grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+            }
+        }
+
+        .form-field-wrapper {
             position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 1px 2px rgba(0,0,0,0.35);
-            transition: box-shadow 300ms ease, transform 300ms ease;
+            padding: 0.75rem 1.25rem; /* p-3 px-5 */
         }
-        .lumen-card::before {
-            content: '';
-            position: absolute;
-            inset: -20% -10% auto -10%;
-            height: 60%;
-            background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 70%);
-            filter: blur(10px);
+        
+        /* Vertical dividers */
+        .form-divider {
+            display: none; /* Hidden on mobile */
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        @media (min-width: 1024px) { /* lg */
+            .form-divider {
+                display: block;
+            }
+        }
+
+        /* Form Labels */
+        .form-label {
+            display: block;
+            margin-bottom: 0.25rem; /* mb-1 */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 600; /* font-semibold */
+            color: #A3A3A3; /* text-neutral-400 */
+        }
+
+        /* Form Inputs (borderless, bg-transparent) */
+        .form-input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            padding: 0.25rem 0; /* py-1 */
+            color: #FFFFFF; /* White text for input */
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 500;
+            outline: none;
+            box-shadow: none;
+        }
+        .form-input::placeholder {
+            color: #737373; /* text-neutral-500 */
+        }
+        
+        /* Special handling for date inputs */
+        input[type="date"] { 
+            color-scheme: dark; 
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        /* Fix for native date picker icon color */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(0.7);
+        }
+        
+        .date-input-wrapper { display: flex; gap: 0.5rem; }
+        .date-input-wrapper .form-input { width: 50%; }
+        
+        /* Disabled state for return date */
+        .return-date-wrapper.is-disabled {
+            opacity: 0.4;
             pointer-events: none;
-            transform: translateZ(0);
         }
-        .lumen-card::after {
-            content: '';
+        
+        /* Smaller inputs for details */
+        .form-input-sm {
+            background-color: transparent;
+            border: 1px solid #404040; /* border-neutral-700 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 0.75rem 1rem; /* px-4 py-3 */
+            font-size: 1rem; /* text-base */
+            color: #FFFFFF;
+            height: 100%;
+        }
+        .form-input-sm::placeholder {
+            color: #737373; /* text-neutral-500 */
+        }
+
+        /* --- TRAVELER POPOVER --- */
+        #travelers-button {
+            text-align: left;
+            cursor: pointer;
+        }
+        .travelers-popover {
             position: absolute;
-            inset: auto -15% -25% -15%;
-            height: 70%;
-            background: radial-gradient(80% 100% at 50% 100%, rgba(0,0,0,0.35), rgba(0,0,0,0) 65%);
-            filter: blur(14px);
-            pointer-events: none;
-            transform: translateZ(0);
+            background-color: #262626; /* bg-neutral-800 */
+            border: 1px solid #404040; /* border-neutral-700 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            z-index: 50;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            margin-top: 0.5rem;
         }
-        .lumen-card:hover {
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.45);
-            transform: translateY(-2px);
+        .traveler-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
         }
+        .traveler-row:not(:last-child) {
+            border-bottom: 1px solid #404040; /* border-neutral-700 */
+        }
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* gap-3 */
+        }
+        .counter-btn {
+            width: 2rem; /* w-8 */
+            height: 2rem; /* h-8 */
+            border-radius: 9999px; /* rounded-full */
+            border: 1px solid #737373; /* border-neutral-500 */
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 1.25rem; /* text-xl */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .counter-btn:hover {
+            background-color: var(--brand-lime);
+            color: var(--brand-secondary);
+            border-color: var(--brand-lime);
+        }
+        .counter-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background-color: transparent;
+            color: #737373;
+            border-color: #404040;
+        }
+
     </style>
 </head>
 <body class="antialiased">
 
     <div id="sticky-header" class="sticky top-0 z-50">
-        <div class="bg-cyber-lime text-black text-center py-1 text-sm">
+        <!-- TOP BANNER: OG LIME -->
+        <div class="bg-cyber-lime text-black text-center py-1 text-sm font-medium">
             <p>We divested the OTA tech to an Airline Partner™. We're invite-only from Oct 15th.</p>
         </div>
 
@@ -192,6 +377,7 @@
                 <a href="#hero" class="flex items-center" aria-label="Flycharm home">
                     <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-8 md:h-10 w-auto select-none" draggable="false">
                 </a>
+                <!-- CTA Button: OG LIME -->
                 <a href="#cta" class="bg-cyber-lime text-black font-bold py-2 px-6 rounded-full text-sm hover:bg-white transition-colors cta-button">
                     Join Waitlist
                 </a>
@@ -200,6 +386,7 @@
     </div>
 
     <main>
+        <!-- HERO SECTION - UPGRADED -->
         <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center relative" style="background-image: url('image.png');">
             <div class="hero-media" aria-hidden="true">
                 <video autoplay muted loop playsinline preload="metadata">
@@ -207,21 +394,141 @@
                 </video>
             </div>
             <div class="hero-overlay"></div>
-            <div class="container mx-auto px-6 text-center relative z-10 fade-in-up">
-                <h1 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] text-white max-w-5xl mx-auto headline-glow">
-                    Text us your trip. We handle everything — <span class="text-cyber-lime">usually cheaper</span>.
+            
+            <!-- ADDED PADDING TOP HERE (pt-16) -->
+            <div class="container mx-auto px-4 sm:px-6 relative z-10 fade-in-up flex flex-col items-center pt-16">
+                
+                <!-- HEADLINE RESTORED -->
+                <h1 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] text-white max-w-5xl mx-auto headline-glow text-center">
+                    Text us your trip. We handle everything, <span class="text-cyber-lime">usually cheaper</span>.
                 </h1>
-                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">
-                    Send a text. Get flights, hotels, check‑in, and 24/7 humans. No apps. No logins. Just results.
+                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300 text-center">
+                    No apps. No logins. Just tell us what you need and our human experts will build your perfect trip.
                 </p>
-                <div class="mt-10 max-w-xl mx-auto">
-                   <form id="whatsapp-form" class="flex flex-col sm:flex-row gap-3">
-                        <input id="whatsapp-input" type="text" placeholder="Enter your invite code (e.g. Shezan1)" class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
-                        <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
-                            Get Access
-                        </button>
+
+                <!-- NEW PREMIUM BOOKING FORM -->
+                <div class="mt-12 w-full max-w-6xl mx-auto">
+                   
+                    <form id="booking-form" class="glass-ui-container">
+                        
+                        <!-- Service Nav -->
+                        <nav class="service-nav">
+                            <button type="button" class="service-tab is-disabled" title="Coming Soon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+                                <span>Concierge</span>
+                            </button>
+                            <button type="button" class="service-tab is-disabled" title="Coming Soon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>
+                                <span>Hotels</span>
+                            </button>
+                            <button type="button" class="service-tab is-active">
+                                <!-- PROPER FLIGHT ICON -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12.75 19.5v-6.75l.75.75 6 6h-6.75zM12.75 4.5v6.75l.75-.75 6-6h-6.75zM5.25 12l6-6v6l-6 6v-6zm-3-3l6 6v-6l-6-6v6z"/></svg>
+                                <span>Flights</span>
+                            </button>
+                            <button type="button" class="service-tab is-disabled" title="Coming Soon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" /></svg>
+                                <span>Experiences</span>
+                            </button>
+                        </nav>
+                        
+                        <!-- Form Content -->
+                        <div class="p-4 md:p-6">
+                            
+                            <!-- Top Row: Toggle -->
+                            <div class="flex justify-start items-center gap-4 mb-4">
+                                <div class="trip-type-toggle">
+                                    <input type="radio" id="trip-round" name="TripType" value="Round-Trip">
+                                    <label for="trip-round">Round Trip</label>
+                                    
+                                    <!-- DEFAULT TO ONE WAY -->
+                                    <input type="radio" id="trip-one-way" name="TripType" value="One-Way" checked>
+                                    <label for="trip-one-way">One Way</label>
+                                </div>
+                            </div>
+                            
+                            <!-- Main Fields Grid -->
+                            <div class="form-fields-grid">
+                                <div class="form-field-wrapper">
+                                    <label for="from-loc" class="form-label">From</label>
+                                    <input id="from-loc" name="From" type="text" placeholder="e.g., NYC or JFK" class="form-input" required>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-field-wrapper">
+                                    <label for="to-loc" class="form-label">To</label>
+                                    <input id="to-loc" name="To" type="text" placeholder="e.g., London or LHR" class="form-input" required>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-field-wrapper">
+                                    <label for="depart-date" class="form-label">When</label>
+                                    <div class="date-input-wrapper">
+                                        <!-- DATE INPUT (no placeholder) -->
+                                        <input id="depart-date" name="Depart" type="date" class="form-input" required>
+                                        <div id="return-date-wrapper" class="return-date-wrapper transition-opacity duration-300 w-1/2">
+                                            <!-- DATE INPUT (no placeholder) -->
+                                            <input id="return-date" name="Return" type="date" class="form-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <!-- TRAVELER COUNTER -->
+                                <div class="form-field-wrapper">
+                                    <label for="travelers-button" class="form-label">Travelers</label>
+                                    <button type="button" id="travelers-button" class="form-input">1 Adult</button>
+                                    <!-- Popover -->
+                                    <div id="travelers-popover" class="travelers-popover hidden">
+                                        <div class="traveler-row">
+                                            <div>
+                                                <div class="font-semibold text-white">Adults</div>
+                                                <div class="text-sm text-neutral-400">Ages 13+</div>
+                                            </div>
+                                            <div class="counter-controls">
+                                                <button type="button" class="counter-btn" data-action="dec" data-target="adults">-</button>
+                                                <span id="adults-count" class="font-semibold text-white text-lg w-4 text-center">1</span>
+                                                <button type="button" class="counter-btn" data-action="inc" data-target="adults">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="traveler-row">
+                                            <div>
+                                                <div class="font-semibold text-white">Children</div>
+                                                <div class="text-sm text-neutral-400">Ages 2-12</div>
+                                            </div>
+                                            <div class="counter-controls">
+                                                <button type="button" class="counter-btn" data-action="dec" data-target="children">-</button>
+                                                <span id="children-count" class="font-semibold text-white text-lg w-4 text-center">0</span>
+                                                <button type="button" class="counter-btn" data-action="inc" data-target="children">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="traveler-row">
+                                            <div>
+                                                <div class="font-semibold text-white">Infants</div>
+                                                <div class="text-sm text-neutral-400">Under 2, on lap</div>
+                                            </div>
+                                            <div class="counter-controls">
+                                                <button type="button" class="counter-btn" data-action="dec" data-target="infants">-</button>
+                                                <span id="infants-count" class="font-semibold text-white text-lg w-4 text-center">0</span>
+                                                <button type="button" class="counter-btn" data-action="inc" data-target="infants">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NAME/EMAIL FIELDS REMOVED -->
+                            
+                            <!-- Bottom Row: Details + Submit -->
+                            <div class="flex flex-col md:flex-row gap-4 mt-4">
+                                <!-- Details input now flex-grow -->
+                                <input id="details" name="Details" type="text" placeholder="e.g., Biz class, early morning flight" class="form-input form-input-sm w-full flex-grow">
+                                <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-3.5 px-8 rounded-full text-base whitespace-nowrap">
+                                    Send Request
+                                </button>
+                            </div>
+
+                        </div>
                     </form>
-                    <div class="flex items-center justify-center gap-2 mt-3">
+
+                    <div class="flex items-center justify-center gap-2 mt-8">
                         <span class="inline-flex items-center gap-2 bg-neutral-900/60 border border-neutral-800 text-neutral-300 text-xs px-3 py-1 rounded-full">
                             <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
                             Price‑Beat Guarantee
@@ -231,6 +538,8 @@
                 </div>
             </div>
         </section>
+        <!-- END HERO SECTION -->
+
 
         <section class="py-20 md:py-32">
             <div class="container mx-auto px-6">
@@ -258,7 +567,7 @@
             </div>
         </section>
 
-        <section class="py-20 md:py-32 bg-brand-dark">
+        <section id="how-it-works" class="py-20 md:py-32 bg-brand-dark">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
                     <h2 class="font-brand-header text-4xl md:text-6xl text-white">How It Works</h2>
@@ -267,13 +576,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-center">
                     <div class="p-8">
                         <div class="font-brand-header text-6xl text-cyber-lime">1</div>
-                        <h3 class="font-brand-header text-2xl mt-4 text-white">Text Us Your Request</h3>
-                        <p class="mt-2 text-neutral-400">Tell us what you need, from flights and hotels to restaurant reservations and visa assistance.</p>
+                        <h3 class="font-brand-header text-2xl mt-4 text-white">Submit Your Request</h3>
+                        <p class="mt-2 text-neutral-400">Use the form to send us your trip details. Tell us what you need, from flights and hotels to visa help.</p>
                     </div>
                     <div class="p-8">
                         <div class="font-brand-header text-6xl text-cyber-lime">2</div>
                         <h3 class="font-brand-header text-2xl mt-4 text-white">We Handle the Rest</h3>
-                        <p class="mt-2 text-neutral-400">Our team of travel experts will find you the best deals and handle all the bookings.</p>
+                        <p class="mt-2 text-neutral-400">Our team of travel experts finds you the best deals and replies via email or phone to confirm.</p>
                     </div>
                     <div class="p-8">
                         <div class="font-brand-header text-6xl text-cyber-lime">3</div>
@@ -391,7 +700,7 @@
             </div>
         </section>
 
-        <section class="py-20 md:py-32">
+        <section id="faq" class="py-20 md:py-32">
             <div class="container mx-auto px-6 max-w-4xl">
                 <div class="text-center">
                     <h2 class="font-brand-header text-4xl md:text-6xl text-white">You've Got Questions. We've Got Answers.</h2>
@@ -416,6 +725,7 @@
                             <p class="text-neutral-400 p-6 pt-0">We have access to deals that aren't available to the public. We also have human experts who can find creative ways to save you money that algorithms can't. It's not magic, it's just connections. And we're very good at what we do.</p>
                         </div>
                     </div>
+                    <!-- RESTORED Q&A -->
                     <div class="accordion-item bg-brand-dark border border-neutral-800 rounded-lg">
                         <div class="accordion-header flex justify-between items-center p-6 cursor-pointer">
                             <h3 class="font-semibold text-lg text-white">What's the catch? There's always a catch.</h3>
@@ -443,23 +753,21 @@
                             <p class="text-neutral-400 p-6 pt-0">We do it all. Business trips, family vacations, honeymoons, secret agent missions... if it involves travel, we're in.</p>
                         </div>
                     </div>
+                    <!-- END RESTORED Q&A -->
                 </div>
             </div>
         </section>
 
+        <!-- CTA SECTION -->
         <section id="cta" class="py-20 md:py-36 bg-brand-dark">
             <div class="container mx-auto px-6 text-center relative z-10">
                 <h2 class="font-brand-header text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.05]">Your Time is Too Valuable to Waste on Travel Sites.</h2>
-                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">You're one text away from a better travel experience. The only thing you have to lose is the headache.</p>
+                <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">You're one click away from a better travel experience. The only thing you have to lose is the headache.</p>
                 <div class="mt-10 max-w-xl mx-auto">
-                   <form id="whatsapp-form-2" class="flex flex-col sm:flex-row gap-3">
-                        <input id="whatsapp-input-2" type="text" placeholder="e.g. Two Tickets to Tokyo on 13th Dec" class="w-full bg-neutral-800 border border-neutral-700 rounded-full px-6 py-4 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-cyber-lime transition-all duration-300 flex-grow" required>
-                        <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
-                            Upgrade My Travel
-                        </button>
-                    </form>
-                    <p class="mt-4 text-sm text-neutral-400">Share your invite code to get access.</p>
-                    <div class="flex items-center justify-center gap-2 mt-3">
+                   <a href="#hero" class="cta-button inline-block bg-cyber-lime text-black font-bold py-4 px-8 rounded-full text-lg whitespace-nowrap">
+                        Start My Trip
+                   </a>
+                    <div class="flex items-center justify-center gap-2 mt-6">
                         <span class="inline-flex items-center gap-2 bg-neutral-900/60 border border-neutral-800 text-neutral-300 text-xs px-3 py-1 rounded-full">
                             <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
                             Price‑Beat Guarantee
@@ -471,12 +779,24 @@
         </section>
     </main>
 
-    <footer class="py-12 bg-brand-dark">
-        <div class="container mx-auto px-6 text-center text-neutral-500">
-            <p class="text-lg">Flycharm by the people of WCH Studios.</p>
-            <p class="text-sm mt-8">&copy; 2025 Flycharm. All rights reserved. If you're reading this, you have too much time on your hands. Go travel.</p>
+   <!-- MINIMAL AESTHETIC FOOTER -->
+   <footer class="py-16 bg-brand-dark border-t border-neutral-800/50">
+    <div class="container mx-auto px-6 flex flex-col items-center text-center">
+        <a href="#hero" class="inline-block" aria-label="Flycharm home">
+            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-10 w-auto select-none" draggable="false">
+        </a>
+        <nav class="flex gap-6 mt-8">
+            <a href="#hero" class="text-neutral-400 hover:text-cyber-lime transition-colors">Home</a>
+            <a href="#how-it-works" class="text-neutral-400 hover:text-cyber-lime transition-colors">How It Works</a>
+            <a href="#faq" class="text-neutral-400 hover:text-cyber-lime transition-colors">FAQ</a>
+        </nav>
+        <div class="border-t border-neutral-800/50 mt-10 pt-8 w-full max-w-md">
+            <p class="text-neutral-500 text-sm">
+                &copy; 2025 Flycharm by WCH Studios. All rights reserved.
+            </p>
         </div>
-    </footer>
+    </div>
+</footer>
 
     <script>
         // --- Header Scroll Effect ---
@@ -491,55 +811,173 @@
             }
         });
 
-        // --- WhatsApp CTA Logic ---
-        function handleWhatsAppRedirect(formId, inputId, messageTemplate) {
-            const form = document.getElementById(formId);
-            if(form) {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const inviteCode = document.getElementById(inputId).value;
-                    if (inviteCode) {
-                        const whatsappNumber = '+919998156651'; // IMPORTANT: Replace with your actual WhatsApp number
-                        const formattedMessage = messageTemplate.replace('[invite_code]', inviteCode);
-                        const encodedMessage = encodeURIComponent(formattedMessage);
-                        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                        window.open(whatsappUrl, '_blank');
-                    } else {
-                        alert('Please enter an invite code.');
-                    }
-                });
-            }
-        }
-
-        const accessMessage = "Hey Flycharm team! I'd like to get access to Flycharm. My invite code is [invite_code].";
-        const upgradeMessage = "Hey Flycharm team! I'm doing some traveling. Can you upgrade my travel experience? My invite code is [invite_code].";
-
-        handleWhatsAppRedirect('whatsapp-form', 'whatsapp-input', accessMessage);
-        handleWhatsAppRedirect('whatsapp-form-2', 'whatsapp-input-2', upgradeMessage);
-
         // --- Accordion Logic ---
         document.addEventListener('DOMContentLoaded', () => {
             const accordionItems = document.querySelectorAll('.accordion-item');
             accordionItems.forEach((item, index) => {
                 const header = item.querySelector('.accordion-header');
-                if (index === 0) {
+                if (index === 0) { // Auto-open first
                     item.classList.add('is-open');
-                } else {
-                    item.classList.remove('is-open');
                 }
                 header.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('is-open');
+                    // Close all others
                     accordionItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.classList.remove('is-open');
-                        }
+                        otherItem.classList.remove('is-open');
                     });
-                    item.classList.toggle('is-open');
+                    // Toggle current
+                    if (!isOpen) {
+                        item.classList.add('is-open');
+                    }
                 });
             });
-        });
-    </script>
 
-    <script>
+            // --- NEW Booking Form Logic ---
+            const roundTripRadio = document.getElementById('trip-round');
+            const oneWayRadio = document.getElementById('trip-one-way');
+            const returnDateWrapper = document.getElementById('return-date-wrapper');
+            const returnDateInput = document.getElementById('return-date');
+            const departDateInput = document.getElementById('depart-date');
+
+            // --- 1. Date Picker Logic ---
+            const today = new Date().toISOString().split('T')[0];
+            departDateInput.min = today;
+            returnDateInput.min = today;
+
+            function toggleReturnDate() {
+                if (oneWayRadio.checked) {
+                    returnDateWrapper.classList.add('is-disabled');
+                    returnDateInput.required = false;
+                    returnDateInput.value = '';
+                } else {
+                    returnDateWrapper.classList.remove('is-disabled');
+                    returnDateInput.required = true;
+                    // Ensure return date is not before depart date
+                    if (departDateInput.value) {
+                        returnDateInput.min = departDateInput.value;
+                    }
+                }
+            }
+            
+            departDateInput.addEventListener('change', () => {
+                if (departDateInput.value) {
+                    returnDateInput.min = departDateInput.value;
+                    // If round trip is selected and return is before new depart, clear it
+                    if (roundTripRadio.checked && returnDateInput.value < departDateInput.value) {
+                        returnDateInput.value = '';
+                    }
+                }
+            });
+
+            toggleReturnDate(); // Set initial state
+            roundTripRadio.addEventListener('change', toggleReturnDate);
+            oneWayRadio.addEventListener('change', toggleReturnDate);
+
+            // --- 2. Traveler Popover Logic ---
+            const travelersButton = document.getElementById('travelers-button');
+            const travelersPopover = document.getElementById('travelers-popover');
+            const counterButtons = travelersPopover.querySelectorAll('.counter-btn');
+
+            const counts = {
+                adults: 1,
+                children: 0,
+                infants: 0
+            };
+
+            function updateTravelerButtonText() {
+                let text = `${counts.adults} Adult${counts.adults !== 1 ? 's' : ''}`;
+                if (counts.children > 0) {
+                    text += `, ${counts.children} Child${counts.children !== 1 ? 'ren' : ''}`;
+                }
+                if (counts.infants > 0) {
+                    text += `, ${counts.infants} Infant${counts.infants !== 1 ? 's' : ''}`;
+                }
+                travelersButton.textContent = text;
+            }
+
+            function updateCounterButtons() {
+                document.getElementById('adults-count').textContent = counts.adults;
+                document.getElementById('children-count').textContent = counts.children;
+                document.getElementById('infants-count').textContent = counts.infants;
+
+                // Adults must be at least 1
+                travelersPopover.querySelector('[data-target="adults"][data-action="dec"]').disabled = counts.adults <= 1;
+                travelersPopover.querySelector('[data-target="children"][data-action="dec"]').disabled = counts.children <= 0;
+                travelersPopover.querySelector('[data-target="infants"][data-action="dec"]').disabled = counts.infants <= 0;
+            }
+
+            travelersButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                travelersPopover.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!travelersPopover.classList.contains('hidden') && !travelersPopover.contains(e.target) && e.target !== travelersButton) {
+                    travelersPopover.classList.add('hidden');
+                }
+            });
+
+            counterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const action = button.dataset.action;
+                    const target = button.dataset.target;
+                    
+                    if (action === 'inc') {
+                        counts[target]++;
+                    } else if (action === 'dec') {
+                        if (target === 'adults' && counts.adults > 1) {
+                            counts[target]--;
+                        } else if (target !== 'adults' && counts[target] > 0) {
+                            counts[target]--;
+                        }
+                    }
+                    updateTravelerButtonText();
+                    updateCounterButtons();
+                });
+            });
+
+            updateTravelerButtonText();
+            updateCounterButtons();
+            
+            // --- 3. WHATSAPP Submission Logic (Name/Email Removed) ---
+            const bookingForm = document.getElementById('booking-form');
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get values
+                const tripType = oneWayRadio.checked ? oneWayRadio.value : roundTripRadio.value;
+                const from = document.getElementById('from-loc').value;
+                const to = document.getElementById('to-loc').value;
+                const depart = departDateInput.value;
+                const ret = returnDateInput.value;
+                const travelers = travelersButton.textContent; // Get text from button
+                const details = document.getElementById('details').value;
+
+                // Build WhatsApp message body
+                let message = `FLYCHARM FLIGHT REQUEST\n`;
+                message += `--------------------------\n`;
+                message += `*Trip Type:* ${tripType}\n`;
+                message += `*From:* ${from}\n`;
+                message += `*To:* ${to}\n`;
+                message += `*Depart:* ${depart}\n`;
+                if (tripType === 'Round-Trip') {
+                    message += `*Return:* ${ret}\n`;
+                }
+                message += `*Travelers:* ${travelers}\n`;
+                message += `\n*Notes:*\n`;
+                message += `${details || 'No additional details.'}\n`;
+
+                // Build WhatsApp URL
+                const whatsappNumber = '+919998156651'; // Using number from your original file
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                // Open WhatsApp
+                window.location.href = whatsappUrl;
+            });
+
+        });
+
         // --- Hero Section Height Adjustment ---
         function adjustHeroHeight() {
             const stickyHeader = document.getElementById('sticky-header');
