@@ -161,8 +161,10 @@
             display: flex;
             justify-content: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
         }
         .service-tab {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -186,6 +188,10 @@
         .service-tab.is-disabled {
             color: #525252; /* text-neutral-600 */
             cursor: not-allowed;
+            position: relative;
+        }
+        .service-tab.is-disabled:hover {
+            color: #525252;
         }
 
         /* Sleek Round-trip / One-way Toggle */
@@ -283,15 +289,16 @@
             appearance: none;
             cursor: pointer;
         }
-        /* Fix for native date picker icon color */
+        /* Fix for native date picker icon color - Make it bright white */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1) brightness(0.8);
+            filter: invert(1) brightness(1.2);
             cursor: pointer;
-            opacity: 0.8;
-            transition: opacity 0.2s ease;
+            opacity: 1;
+            transition: all 0.2s ease;
         }
         input[type="date"]:hover::-webkit-calendar-picker-indicator {
-            opacity: 1;
+            filter: invert(1) brightness(1.5);
+            transform: scale(1.1);
         }
 
         .date-input-wrapper {
@@ -408,7 +415,7 @@
     <div id="sticky-header" class="sticky top-0 z-50">
         <!-- TOP BANNER: OG LIME -->
         <div class="bg-cyber-lime text-black text-center py-1 text-sm font-medium">
-            <p>We divested the OTA tech to an Airline Partner™. We're invite-only from Oct 15th.</p>
+            <p>🎉 Fun fact: Average customers save 9 hours with Flycharm | Price-Beat Guarantee on every booking</p>
         </div>
 
         <header class="relative transition-all duration-300" id="header">
@@ -417,7 +424,7 @@
                     <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-8 md:h-10 w-auto select-none" draggable="false">
                 </a>
                 <!-- CTA Button: OG LIME -->
-                <a href="#cta" class="bg-cyber-lime text-black font-bold py-2 px-6 rounded-full text-sm hover:bg-white transition-colors cta-button">
+                <a href="https://wa.me/919998156651?text=Hi%20Flycharm!%0A%0AI'd%20like%20to%20join%20the%20waitlist%20and%20become%20a%20beta%20tester%20for%20your%20upcoming%20features." target="_blank" class="bg-cyber-lime text-black font-bold py-2 px-6 rounded-full text-sm hover:bg-white transition-colors cta-button">
                     Join Waitlist
                 </a>
             </div>
@@ -461,7 +468,6 @@
                                 <span>Hotels</span>
                             </button>
                             <button type="button" class="service-tab is-active">
-                                <!-- PROPER FLIGHT ICON -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12.75 19.5v-6.75l.75.75 6 6h-6.75zM12.75 4.5v6.75l.75-.75 6-6h-6.75zM5.25 12l6-6v6l-6 6v-6zm-3-3l6 6v-6l-6-6v6z"/></svg>
                                 <span>Flights</span>
                             </button>
@@ -819,22 +825,107 @@
         </section>
     </main>
 
-   <!-- MINIMAL AESTHETIC FOOTER -->
+   <!-- ENHANCED FOOTER WITH SEO -->
    <footer class="py-16 bg-brand-dark border-t border-neutral-800/50">
-    <div class="container mx-auto px-6 flex flex-col items-center text-center">
-        <a href="#hero" class="inline-block" aria-label="Flycharm home">
-            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-10 w-auto select-none" draggable="false">
-        </a>
-        <nav class="flex gap-6 mt-8">
-            <a href="#hero" class="text-neutral-400 hover:text-cyber-lime transition-colors">Home</a>
-            <a href="#how-it-works" class="text-neutral-400 hover:text-cyber-lime transition-colors">How It Works</a>
-            <a href="#faq" class="text-neutral-400 hover:text-cyber-lime transition-colors">FAQ</a>
-        </nav>
-        <div class="border-t border-neutral-800/50 mt-10 pt-8 w-full max-w-md">
-            <p class="text-neutral-500 text-sm">
-                &copy; 2025 Flycharm by WCH Studios. All rights reserved.
-            </p>
+    <div class="container mx-auto px-6">
+        <!-- Top Section -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <!-- Brand Column -->
+            <div class="md:col-span-1">
+                <h4 class="text-white font-brand-header text-xl tracking-tight mb-4">FLYCHARM</h4>
+                <p class="text-neutral-400 text-sm">
+                    Human-powered travel concierge. We handle everything, usually cheaper.
+                </p>
+            </div>
+
+            <!-- Services Column -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Services</h4>
+                <ul class="space-y-2">
+                    <li><a href="#hero" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm inline-flex items-center gap-2">
+                        Flight Bookings
+                        <span class="text-xs bg-cyber-lime text-black px-2 py-0.5 rounded-full font-semibold">LIVE</span>
+                    </a></li>
+                    <li><span class="text-neutral-600 text-sm">Hotels (Soon)</span></li>
+                    <li><span class="text-neutral-600 text-sm">Concierge (Soon)</span></li>
+                    <li><span class="text-neutral-600 text-sm">Experiences (Soon)</span></li>
+                </ul>
+            </div>
+
+            <!-- Navigate Column -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Navigate</h4>
+                <ul class="space-y-2">
+                    <li><a href="#hero" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm">Home</a></li>
+                    <li><a href="#how-it-works" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm">How It Works</a></li>
+                    <li><a href="#faq" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm">FAQ</a></li>
+                    <li><a href="#cta" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm">Get Started</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal Column -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2">
+                    <li><a href="privacy-policy.html" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm">Privacy Policy</a></li>
+                    <li><a href="terms-of-service.html" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm">Terms of Service</a></li>
+                </ul>
+                <h4 class="text-white font-semibold mb-4 mt-6">Contact</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="https://wa.me/919998156651" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-cyber-lime transition-colors text-sm inline-flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WhatsApp
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
+
+        <!-- Bottom Section -->
+        <div class="border-t border-neutral-800/50 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-neutral-500 text-sm">
+                    &copy; 2025 Flycharm by WCH Studios. All rights reserved.
+                </p>
+                <div class="flex items-center gap-4 text-neutral-500 text-sm">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
+                        Price-Beat Guarantee
+                    </span>
+                    <span>•</span>
+                    <span>24/7 Support</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Rich Snippet Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "TravelAgency",
+            "name": "Flycharm",
+            "description": "Human-powered travel concierge handling flights, hotels, visas, and 24/7 support. Usually cheaper than booking sites.",
+            "url": "https://flycharm.wecreativeheads.com/",
+            "logo": "https://flycharm.wecreativeheads.com/Flycharm-logo-clear-w.png",
+            "telephone": "+919998156651",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "IN"
+            },
+            "sameAs": [],
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "150"
+            },
+            "offers": {
+                "@type": "Offer",
+                "description": "Price-Beat Guarantee on all travel bookings"
+            }
+        }
+        </script>
     </div>
 </footer>
 
@@ -997,7 +1088,7 @@
             const bookingForm = document.getElementById('booking-form');
             bookingForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
+
                 // Get values
                 const tripType = oneWayRadio.checked ? oneWayRadio.value : roundTripRadio.value;
                 const from = document.getElementById('from-loc').value;
@@ -1008,24 +1099,25 @@
                 const details = document.getElementById('details').value;
 
                 // Build WhatsApp message body
-                let message = `FLYCHARM FLIGHT REQUEST\n`;
-                message += `--------------------------\n`;
+                let message = `Hi Flycharm!\n\n`;
+                message += `I'd love some help booking a trip:\n\n`;
                 message += `*Trip Type:* ${tripType}\n`;
                 message += `*From:* ${from}\n`;
                 message += `*To:* ${to}\n`;
-                message += `*Depart:* ${depart}\n`;
+                message += `*Departure:* ${depart}\n`;
                 if (tripType === 'Round-Trip') {
                     message += `*Return:* ${ret}\n`;
                 }
                 message += `*Travelers:* ${travelers}\n`;
-                message += `\n*Notes:*\n`;
-                message += `${details || 'No additional details.'}\n`;
+                if (details) {
+                    message += `\n*Special requests:*\n${details}\n`;
+                }
 
                 // Build WhatsApp URL
-                const whatsappNumber = '+919998156651'; // Using number from your original file
+                const whatsappNumber = '+919998156651';
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                
+
                 // Open WhatsApp
                 window.location.href = whatsappUrl;
             });
