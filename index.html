@@ -486,14 +486,22 @@
 
     <main>
         <!-- HERO SECTION - UPGRADED -->
-        <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center relative" style="background-image: url('image.png');">
-            <div class="hero-media" aria-hidden="true">
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center relative">
+            <!-- Static Background Image Layer (fallback) -->
+            <div class="absolute inset-0 z-0">
+                <img src="herobg.png" alt="" class="w-full h-full object-cover" aria-hidden="true">
+            </div>
+
+            <!-- Video Layer (on top of static bg) -->
+            <div class="hero-media" aria-hidden="true" style="z-index: 1;">
                 <video autoplay muted loop playsinline preload="metadata">
                     <source src="hero.mp4" type="video/mp4">
                 </video>
             </div>
-            <div class="hero-overlay"></div>
-            
+
+            <!-- Enhanced Overlay for Better Text Contrast -->
+            <div class="hero-overlay" style="z-index: 2;"></div>
+
             <!-- ADDED PADDING TOP HERE (pt-16) -->
             <div class="container mx-auto px-4 sm:px-6 relative z-10 fade-in-up flex flex-col items-center pt-16">
                 
