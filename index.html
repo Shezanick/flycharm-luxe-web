@@ -192,27 +192,33 @@
         .trip-type-toggle {
             display: flex;
             border-radius: 9999px; /* rounded-full */
-            background-color: rgba(0, 0, 0, 0.3); /* bg-black/30 */
-            border: 1px solid #404040; /* border-neutral-700 */
+            background-color: rgba(0, 0, 0, 0.4); /* Slightly darker for better contrast */
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Lighter border */
             padding: 0.25rem; /* p-1 */
             width: fit-content;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         .trip-type-toggle input[type="radio"] { display: none; }
         .trip-type-toggle label {
             text-align: center;
-            padding: 0.375rem 1rem; /* py-1.5 px-4 */
+            padding: 0.5rem 1.25rem; /* Slightly larger padding */
             border-radius: 9999px; /* rounded-full */
             color: #A3A3A3; /* text-neutral-400 */
-            font-weight: 500; /* font-medium */
+            font-weight: 600; /* Bolder text */
             font-size: 0.875rem; /* text-sm */
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
+            min-width: 100px;
+        }
+        .trip-type-toggle label:hover {
+            color: #D4D4D4;
         }
         .trip-type-toggle input[type="radio"]:checked + label {
             background-color: var(--brand-lime);
             color: var(--brand-secondary);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(213, 254, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
         }
 
         /* Form Fields Container */
@@ -271,23 +277,56 @@
         }
         
         /* Special handling for date inputs */
-        input[type="date"] { 
-            color-scheme: dark; 
+        input[type="date"] {
+            color-scheme: dark;
             -webkit-appearance: none;
             appearance: none;
+            cursor: pointer;
         }
         /* Fix for native date picker icon color */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1) brightness(0.7);
+            filter: invert(1) brightness(0.8);
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
         }
-        
-        .date-input-wrapper { display: flex; gap: 0.5rem; }
-        .date-input-wrapper .form-input { width: 50%; }
-        
+        input[type="date"]:hover::-webkit-calendar-picker-indicator {
+            opacity: 1;
+        }
+
+        .date-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .date-input-wrapper .form-input {
+            flex: 1;
+        }
+
+        /* Arrow separator between dates */
+        .date-separator {
+            color: #525252;
+            font-size: 1.25rem;
+            font-weight: 600;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
         /* Disabled state for return date */
+        .return-date-wrapper {
+            flex: 1;
+            transition: all 0.3s ease;
+        }
         .return-date-wrapper.is-disabled {
-            opacity: 0.4;
+            opacity: 0;
+            transform: scale(0.95);
             pointer-events: none;
+            width: 0;
+            overflow: hidden;
+            flex: 0;
+        }
+        .date-separator.is-hidden {
+            opacity: 0;
         }
         
         /* Smaller inputs for details */
@@ -464,7 +503,8 @@
                                     <div class="date-input-wrapper">
                                         <!-- DATE INPUT (no placeholder) -->
                                         <input id="depart-date" name="Depart" type="date" class="form-input" required>
-                                        <div id="return-date-wrapper" class="return-date-wrapper transition-opacity duration-300 w-1/2">
+                                        <span id="date-separator" class="date-separator">→</span>
+                                        <div id="return-date-wrapper" class="return-date-wrapper">
                                             <!-- DATE INPUT (no placeholder) -->
                                             <input id="return-date" name="Return" type="date" class="form-input">
                                         </div>
@@ -841,34 +881,48 @@
 
             // --- 1. Date Picker Logic ---
             const today = new Date().toISOString().split('T')[0];
+            const dateSeparator = document.getElementById('date-separator');
             departDateInput.min = today;
             returnDateInput.min = today;
 
             function toggleReturnDate() {
                 if (oneWayRadio.checked) {
                     returnDateWrapper.classList.add('is-disabled');
+                    dateSeparator.classList.add('is-hidden');
                     returnDateInput.required = false;
                     returnDateInput.value = '';
                 } else {
                     returnDateWrapper.classList.remove('is-disabled');
+                    dateSeparator.classList.remove('is-hidden');
                     returnDateInput.required = true;
                     // Ensure return date is not before depart date
                     if (departDateInput.value) {
                         returnDateInput.min = departDateInput.value;
+                        // If no return date is set, suggest one (depart + 7 days)
+                        if (!returnDateInput.value) {
+                            const departDate = new Date(departDateInput.value);
+                            departDate.setDate(departDate.getDate() + 7);
+                            returnDateInput.value = departDate.toISOString().split('T')[0];
+                        }
                     }
                 }
             }
-            
+
             departDateInput.addEventListener('change', () => {
                 if (departDateInput.value) {
                     returnDateInput.min = departDateInput.value;
-                    // If round trip is selected and return is before new depart, clear it
-                    if (roundTripRadio.checked && returnDateInput.value < departDateInput.value) {
-                        returnDateInput.value = '';
+                    // If round trip is selected and return is before new depart, adjust it
+                    if (roundTripRadio.checked) {
+                        if (!returnDateInput.value || returnDateInput.value < departDateInput.value) {
+                            const departDate = new Date(departDateInput.value);
+                            departDate.setDate(departDate.getDate() + 7);
+                            returnDateInput.value = departDate.toISOString().split('T')[0];
+                        }
                     }
                 }
             });
 
+            // Initialize with better defaults
             toggleReturnDate(); // Set initial state
             roundTripRadio.addEventListener('change', toggleReturnDate);
             oneWayRadio.addEventListener('change', toggleReturnDate);
