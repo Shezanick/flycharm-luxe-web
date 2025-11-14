@@ -408,9 +408,62 @@
             border-color: #404040;
         }
 
+        /* Coming Soon Notification */
+        .coming-soon-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background-color: #1A1A1A;
+            border: 1px solid #404040;
+            border-radius: 1rem;
+            padding: 2rem 3rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .coming-soon-notification.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .coming-soon-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(16, 16, 16, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .coming-soon-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
     </style>
 </head>
 <body class="antialiased">
+
+    <!-- Coming Soon Notification -->
+    <div class="coming-soon-overlay" id="coming-soon-overlay"></div>
+    <div class="coming-soon-notification" id="coming-soon-notification">
+        <div class="text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyber-lime/10 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="text-cyber-lime">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h3 class="font-brand-header text-2xl text-white mb-2">Coming Soon</h3>
+            <p class="text-neutral-400 mb-6 max-w-xs">This feature will be available soon. Stay tuned!</p>
+            <button id="close-notification" class="bg-cyber-lime text-black font-semibold py-2 px-6 rounded-full text-sm hover:bg-white transition-colors">
+                Got it
+            </button>
+        </div>
+    </div>
 
     <div id="sticky-header" class="sticky top-0 z-50">
         <!-- TOP BANNER: OG LIME -->
@@ -1129,6 +1182,43 @@
             } else {
                 header.style.backgroundColor = 'transparent';
                 header.style.backdropFilter = 'none';
+            }
+        });
+
+        // --- Coming Soon Notification Logic ---
+        const comingSoonNotification = document.getElementById('coming-soon-notification');
+        const comingSoonOverlay = document.getElementById('coming-soon-overlay');
+        const closeNotificationBtn = document.getElementById('close-notification');
+        const disabledServiceTabs = document.querySelectorAll('.service-tab.is-disabled');
+
+        function showComingSoonNotification() {
+            comingSoonNotification.classList.add('show');
+            comingSoonOverlay.classList.add('show');
+        }
+
+        function hideComingSoonNotification() {
+            comingSoonNotification.classList.remove('show');
+            comingSoonOverlay.classList.remove('show');
+        }
+
+        // Add click event to disabled service tabs
+        disabledServiceTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                showComingSoonNotification();
+            });
+        });
+
+        // Close notification on button click
+        closeNotificationBtn.addEventListener('click', hideComingSoonNotification);
+
+        // Close notification on overlay click
+        comingSoonOverlay.addEventListener('click', hideComingSoonNotification);
+
+        // Close notification on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && comingSoonNotification.classList.contains('show')) {
+                hideComingSoonNotification();
             }
         });
 
