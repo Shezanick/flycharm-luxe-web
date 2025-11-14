@@ -444,6 +444,141 @@
             pointer-events: auto;
         }
 
+        /* === MOBILE OPTIMIZATIONS === */
+        @media (max-width: 768px) {
+            /* Hero Section Mobile */
+            .headline-glow {
+                font-size: 2.5rem !important; /* Smaller on mobile */
+                line-height: 1.1;
+            }
+
+            /* Booking Form Mobile */
+            .glass-ui-container {
+                border-radius: 1rem; /* Smaller radius on mobile */
+                padding: 0;
+            }
+
+            .service-nav {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+            }
+            .service-nav::-webkit-scrollbar {
+                display: none; /* Chrome, Safari */
+            }
+
+            .service-tab {
+                padding: 1rem 1.25rem;
+                font-size: 0.8125rem;
+                white-space: nowrap;
+            }
+
+            .service-tab svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .form-fields-grid {
+                gap: 0;
+            }
+
+            .form-field-wrapper {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .form-field-wrapper:last-child {
+                border-bottom: none;
+            }
+
+            /* How It Works Mobile */
+            .service-tab svg {
+                margin-bottom: 0.25rem;
+            }
+
+            /* What You Get Cards Mobile */
+            .lumen-card {
+                padding: 1.5rem !important;
+            }
+
+            /* Testimonial Cards Mobile */
+            .bg-brand-dark.p-8 {
+                padding: 1.5rem !important;
+            }
+
+            /* Coming Soon Modal Mobile */
+            .coming-soon-notification {
+                margin: 1rem;
+                padding: 1.5rem 2rem;
+                max-width: calc(100vw - 2rem);
+            }
+
+            /* Stats Section Mobile */
+            .font-brand-header.text-6xl,
+            .font-brand-header.text-7xl {
+                font-size: 3rem !important;
+            }
+
+            /* CTA Section Mobile */
+            #cta h2 {
+                font-size: 2.5rem !important;
+                line-height: 1.1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            /* Extra small devices */
+            .headline-glow {
+                font-size: 2rem !important;
+            }
+
+            #cta h2 {
+                font-size: 2rem !important;
+            }
+
+            /* All section headings */
+            .font-brand-header.text-4xl {
+                font-size: 2rem !important;
+            }
+
+            /* Tighter padding on small screens */
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Reduce section padding */
+            .py-20 {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+
+            .py-32 {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+
+            /* Service nav fully scrollable */
+            .service-nav {
+                justify-content: flex-start;
+                padding: 0 0.5rem;
+            }
+
+            /* Traveler popover mobile positioning */
+            .travelers-popover {
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100vw - 2rem);
+                max-width: 300px;
+            }
+
+            /* Footer mobile spacing */
+            footer .grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
     </style>
 </head>
 <body class="antialiased">
@@ -467,17 +602,18 @@
 
     <div id="sticky-header" class="sticky top-0 z-50">
         <!-- TOP BANNER: OG LIME -->
-        <div class="bg-cyber-lime text-black text-center py-1 text-sm font-medium">
-            <p>🎉 Fun fact: Our average customer saves 9 hours with FlyCharm | Price-Beat Guarantee on every booking</p>
+        <div class="bg-cyber-lime text-black text-center py-1 text-xs sm:text-sm font-medium px-2">
+            <p class="hidden sm:inline">🎉 Fun fact: Our average customer saves 9 hours with FlyCharm | Price-Beat Guarantee on every booking</p>
+            <p class="sm:hidden">🎉 Save 9 hours | Price-Beat Guarantee</p>
         </div>
 
         <header class="relative transition-all duration-300" id="header">
-            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
                 <a href="#hero" class="flex items-center" aria-label="Flycharm home">
-                    <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-8 md:h-10 w-auto select-none" draggable="false">
+                    <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-7 sm:h-8 md:h-10 w-auto select-none" draggable="false">
                 </a>
                 <!-- CTA Button: OG LIME -->
-                <a href="https://wa.me/919998156651?text=Hi%20Flycharm!%0A%0AI'd%20like%20to%20join%20the%20waitlist%20and%20become%20a%20beta%20tester%20for%20your%20upcoming%20features." target="_blank" class="bg-cyber-lime text-black font-bold py-2 px-6 rounded-full text-sm hover:bg-white transition-colors cta-button">
+                <a href="https://wa.me/919998156651?text=Hi%20Flycharm!%0A%0AI'd%20like%20to%20join%20the%20waitlist%20and%20become%20a%20beta%20tester%20for%20your%20upcoming%20features." target="_blank" class="bg-cyber-lime text-black font-bold py-2 px-4 sm:px-6 rounded-full text-xs sm:text-sm hover:bg-white transition-colors cta-button whitespace-nowrap">
                     Join Waitlist
                 </a>
             </div>
@@ -624,10 +760,10 @@
                             <!-- NAME/EMAIL FIELDS REMOVED -->
                             
                             <!-- Bottom Row: Details + Submit -->
-                            <div class="flex flex-col md:flex-row gap-4 mt-4">
+                            <div class="flex flex-col md:flex-row gap-3 sm:gap-4 mt-4 px-4 md:px-0">
                                 <!-- Details input now flex-grow -->
-                                <input id="details" name="Details" type="text" placeholder="e.g., Biz class, early morning flight" class="form-input form-input-sm w-full flex-grow">
-                                <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-3.5 px-8 rounded-full text-base whitespace-nowrap">
+                                <input id="details" name="Details" type="text" placeholder="e.g., Biz class, early morning flight" class="form-input form-input-sm w-full flex-grow text-sm sm:text-base">
+                                <button type="submit" class="cta-button bg-cyber-lime text-black font-bold py-3 sm:py-3.5 px-6 sm:px-8 rounded-full text-sm sm:text-base whitespace-nowrap w-full md:w-auto">
                                     Send Request
                                 </button>
                             </div>
@@ -635,12 +771,12 @@
                         </div>
                     </form>
 
-                    <div class="flex items-center justify-center gap-2 mt-8">
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 mt-6 sm:mt-8 px-4">
                         <span class="inline-flex items-center gap-2 bg-neutral-900/60 border border-neutral-800 text-neutral-300 text-xs px-3 py-1 rounded-full">
                             <span class="inline-block h-1.5 w-1.5 rounded-full bg-cyber-lime"></span>
                             Price‑Beat Guarantee
                         </span>
-                        <span class="text-[11px] text-neutral-500">If we don't beat it, you don't pay the fee.</span>
+                        <span class="text-[10px] sm:text-[11px] text-neutral-500 text-center sm:text-left">If we don't beat it, you don't pay the fee.</span>
                     </div>
                 </div>
             </div>
