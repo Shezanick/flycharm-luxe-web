@@ -34,7 +34,7 @@
         .bg-cyber-lime { background-color: var(--brand-lime); }
         .border-cyber-lime { border-color: var(--brand-lime); }
 
-        .form-input {
+        .form-input, .form-select {
             background-color: #1A1A1A;
             border: 1px solid #333;
             color: #E0E0E0;
@@ -44,10 +44,14 @@
             transition: all 0.2s;
         }
 
-        .form-input:focus {
+        .form-input:focus, .form-select:focus {
             outline: none;
             border-color: var(--brand-lime);
             box-shadow: 0 0 0 2px rgba(213, 254, 0, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #666;
         }
 
         .form-label {
@@ -76,11 +80,6 @@
             box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
         }
 
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .tab-button {
             padding: 0.75rem 1.5rem;
             border: 2px solid #333;
@@ -92,6 +91,23 @@
         }
 
         .tab-button.active {
+            border-color: var(--brand-lime);
+            background-color: var(--brand-lime);
+            color: var(--brand-noir);
+        }
+
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            border: 2px solid #333;
+            background-color: transparent;
+            color: #A0A0A0;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .toggle-button.active {
             border-color: var(--brand-lime);
             background-color: var(--brand-lime);
             color: var(--brand-noir);
@@ -122,6 +138,12 @@
             color: #ff4444;
             font-size: 0.875rem;
             margin-top: 0.25rem;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
         }
     </style>
 </head>
@@ -168,11 +190,14 @@
                         <label class="form-label">Trip ID</label>
                         <input type="text" name="tripId" class="form-input" placeholder="e.g., 110" required>
                     </div>
+                </div>
 
-                    <!-- Phone Number -->
-                    <div>
-                        <label class="form-label">Customer Phone Number</label>
-                        <input type="tel" name="phoneNumber" class="form-input" placeholder="e.g., +919876543210" required>
+                <!-- Trip Type Toggle -->
+                <div>
+                    <label class="form-label">Trip Type</label>
+                    <div class="flex gap-0">
+                        <button type="button" id="oneWayBtn" class="toggle-button active flex-1 rounded-l-lg">One Way</button>
+                        <button type="button" id="roundTripBtn" class="toggle-button flex-1 rounded-r-lg">Round Trip</button>
                     </div>
                 </div>
 
@@ -186,16 +211,16 @@
                         </div>
                         <div>
                             <label class="form-label">Gender</label>
-                            <select name="gender" class="form-input" required>
-                                <option value="">Select...</option>
+                            <select name="gender" class="form-select" required>
+                                <option value="">Select</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                             </select>
                         </div>
                         <div>
-                            <label class="form-label">DOB (DD/MM/YYYY)</label>
-                            <input type="text" name="dob" class="form-input" placeholder="DD/MM/YYYY" required>
+                            <label class="form-label">DOB</label>
+                            <input type="date" name="dob" class="form-input" required>
                         </div>
                         <div class="md:col-span-2">
                             <label class="form-label">FF# (Optional)</label>
@@ -213,43 +238,38 @@
                             <input type="text" name="airline" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">Origin (Code)</label>
-                            <input type="text" name="origin" class="form-input" placeholder="e.g., DEL" required>
+                            <label class="form-label">Origin</label>
+                            <input type="text" name="origin" class="form-input" placeholder="DEL" required>
                         </div>
                         <div>
-                            <label class="form-label">Destination (Code)</label>
-                            <input type="text" name="destination" class="form-input" placeholder="e.g., BOM" required>
+                            <label class="form-label">Destination</label>
+                            <input type="text" name="destination" class="form-input" placeholder="BOM" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Date</label>
-                            <input type="text" name="departDate" class="form-input" placeholder="DD/MM/YYYY" required>
+                            <input type="date" name="departDate" class="form-input" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Time</label>
-                            <input type="text" name="departTime" class="form-input" placeholder="e.g., 10:30 AM" required>
+                            <input type="time" name="departTime" class="form-input" required>
                         </div>
-                        <div>
-                            <label class="form-label">Return Date (if any)</label>
-                            <input type="text" name="returnDate" class="form-input" placeholder="DD/MM/YYYY">
+
+                        <!-- Return Fields (conditional) -->
+                        <div id="returnDateField" style="display: none;">
+                            <label class="form-label">Return Date</label>
+                            <input type="date" name="returnDate" class="form-input">
                         </div>
-                        <div>
-                            <label class="form-label">Return Time (if any)</label>
-                            <input type="text" name="returnTime" class="form-input" placeholder="e.g., 6:00 PM">
+                        <div id="returnTimeField" style="display: none;">
+                            <label class="form-label">Return Time</label>
+                            <input type="time" name="returnTime" class="form-input">
                         </div>
+
                         <div>
                             <label class="form-label">Class</label>
-                            <select name="class" class="form-input" required>
+                            <select name="class" class="form-select" required>
                                 <option value="Economy">Economy</option>
                                 <option value="Business">Business</option>
                                 <option value="First">First</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="form-label">Fare Type</label>
-                            <select name="fareType" class="form-input" required>
-                                <option value="Saver">Saver</option>
-                                <option value="Flexi">Flexi</option>
-                                <option value="Value">Value</option>
                             </select>
                         </div>
                     </div>
@@ -261,21 +281,21 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Committed Price</label>
-                            <input type="text" name="price" class="form-input" placeholder="e.g., ₹5,000" required>
+                            <input type="text" name="price" class="form-input" placeholder="₹5,000" required>
                         </div>
                         <div>
                             <label class="form-label">Payment Method</label>
-                            <select name="paymentMethod" class="form-input" required>
-                                <option value="">Select...</option>
-                                <option value="Direct">Direct</option>
-                                <option value="UPI">UPI</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Card">Card</option>
+                            <select name="paymentMethod" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Shazan CC">Shazan CC</option>
+                                <option value="Awacious Credit Card">Awacious Credit Card</option>
+                                <option value="Shazan Friend">Shazan Friend</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div>
                             <label class="form-label">Payment Status</label>
-                            <select name="paymentStatus" class="form-input" required>
+                            <select name="paymentStatus" class="form-select" required>
                                 <option value="DUE">DUE</option>
                                 <option value="PAID">PAID</option>
                             </select>
@@ -285,40 +305,43 @@
 
                 <!-- Notes -->
                 <div>
-                    <label class="form-label">Notes</label>
-                    <textarea name="notes" class="form-input" rows="3" placeholder="Any additional information..."></textarea>
+                    <label class="form-label">Home Ticket</label>
+                    <input type="text" name="homeTicket" class="form-input" placeholder="Optional">
+                </div>
+
+                <div>
+                    <label class="form-label">Additional Notes</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Optional"></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn w-full">
-                    Send to WhatsApp 💬
+                    Send to WhatsApp
                 </button>
             </form>
 
             <!-- International Form -->
             <form id="internationalForm" class="space-y-6" style="display: none;">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Trip ID -->
                     <div>
                         <label class="form-label">Trip ID</label>
                         <input type="text" name="tripId" class="form-input" placeholder="e.g., 1101" required>
                     </div>
-
-                    <!-- Phone Number -->
-                    <div>
-                        <label class="form-label">Customer Phone Number</label>
-                        <input type="tel" name="phoneNumber" class="form-input" placeholder="e.g., +919876543210" required>
-                    </div>
-
-                    <!-- Date -->
                     <div>
                         <label class="form-label">Date</label>
-                        <input type="text" name="date" class="form-input" placeholder="DD/MM/YYYY" required>
+                        <input type="date" name="date" class="form-input" required>
                     </div>
-
-                    <!-- By -->
-                    <div>
+                    <div class="md:col-span-2">
                         <label class="form-label">By</label>
                         <input type="text" name="by" class="form-input" value="Roshan (Fly Charm)" required>
+                    </div>
+                </div>
+
+                <!-- Trip Type Toggle -->
+                <div>
+                    <label class="form-label">Trip Type</label>
+                    <div class="flex gap-0">
+                        <button type="button" id="oneWayBtnIntl" class="toggle-button active flex-1 rounded-l-lg">One Way</button>
+                        <button type="button" id="roundTripBtnIntl" class="toggle-button flex-1 rounded-r-lg">Round Trip</button>
                     </div>
                 </div>
 
@@ -335,13 +358,13 @@
                             <input type="text" name="lastName" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">DOB (DD/MM/YYYY)</label>
-                            <input type="text" name="dob" class="form-input" placeholder="DD/MM/YYYY" required>
+                            <label class="form-label">DOB</label>
+                            <input type="date" name="dob" class="form-input" required>
                         </div>
                         <div>
                             <label class="form-label">Gender</label>
-                            <select name="gender" class="form-input" required>
-                                <option value="">Select...</option>
+                            <select name="gender" class="form-select" required>
+                                <option value="">Select</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
@@ -352,11 +375,11 @@
                             <input type="text" name="passportNumber" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">Passport Exp. (DD/MM/YYYY)</label>
-                            <input type="text" name="passportExpiry" class="form-input" placeholder="DD/MM/YYYY" required>
+                            <label class="form-label">Passport Exp.</label>
+                            <input type="date" name="passportExpiry" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">Visa # (if applicable)</label>
+                            <label class="form-label">Visa # (Optional)</label>
                             <input type="text" name="visaNumber" class="form-input">
                         </div>
                         <div>
@@ -375,32 +398,35 @@
                             <input type="text" name="airline" class="form-input">
                         </div>
                         <div>
-                            <label class="form-label">Origin (Code)</label>
-                            <input type="text" name="origin" class="form-input" placeholder="e.g., DEL" required>
+                            <label class="form-label">Origin</label>
+                            <input type="text" name="origin" class="form-input" placeholder="DEL" required>
                         </div>
                         <div>
-                            <label class="form-label">Destination (Code)</label>
-                            <input type="text" name="destination" class="form-input" placeholder="e.g., SYD" required>
+                            <label class="form-label">Destination</label>
+                            <input type="text" name="destination" class="form-input" placeholder="SYD" required>
                         </div>
                         <div>
-                            <label class="form-label">Depart Date (DD/MM/YYYY)</label>
-                            <input type="text" name="departDate" class="form-input" placeholder="DD/MM/YYYY" required>
+                            <label class="form-label">Depart Date</label>
+                            <input type="date" name="departDate" class="form-input" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Time</label>
-                            <input type="text" name="departTime" class="form-input" placeholder="e.g., 10:30 AM" required>
+                            <input type="time" name="departTime" class="form-input" required>
                         </div>
-                        <div>
-                            <label class="form-label">Return Date (DD/MM/YYYY)</label>
-                            <input type="text" name="returnDate" class="form-input" placeholder="DD/MM/YYYY">
+
+                        <!-- Return Fields (conditional) -->
+                        <div id="returnDateFieldIntl" style="display: none;">
+                            <label class="form-label">Return Date</label>
+                            <input type="date" name="returnDate" class="form-input">
                         </div>
-                        <div>
+                        <div id="returnTimeFieldIntl" style="display: none;">
                             <label class="form-label">Return Time</label>
-                            <input type="text" name="returnTime" class="form-input" placeholder="e.g., 6:00 PM">
+                            <input type="time" name="returnTime" class="form-input">
                         </div>
+
                         <div>
                             <label class="form-label">Class</label>
-                            <select name="class" class="form-input" required>
+                            <select name="class" class="form-select" required>
                                 <option value="Economy">Economy</option>
                                 <option value="Business">Business</option>
                                 <option value="First">First</option>
@@ -408,7 +434,7 @@
                         </div>
                         <div>
                             <label class="form-label">Refund Preference</label>
-                            <select name="refundPreference" class="form-input" required>
+                            <select name="refundPreference" class="form-select" required>
                                 <option value="Saver">Saver</option>
                                 <option value="Flexi">Flexi</option>
                                 <option value="Value">Value</option>
@@ -423,17 +449,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Method (Internal)</label>
-                            <select name="paymentMethod" class="form-input" required>
-                                <option value="">Select...</option>
-                                <option value="Direct">Direct</option>
-                                <option value="UPI">UPI</option>
-                                <option value="Cash">Cash</option>
+                            <select name="paymentMethod" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Shazan CC">Shazan CC</option>
+                                <option value="Awacious Credit Card">Awacious Credit Card</option>
+                                <option value="Shazan Friend">Shazan Friend</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div>
                             <label class="form-label">Client Payment Expectation</label>
-                            <select name="paymentExpectation" class="form-input" required>
-                                <option value="">Select...</option>
+                            <select name="paymentExpectation" class="form-select" required>
+                                <option value="">Select</option>
                                 <option value="Immediately After Booking">Immediately After Booking</option>
                                 <option value="Credit for 7 Days">Credit for 7 Days</option>
                                 <option value="Credit for 14 Days">Credit for 14 Days</option>
@@ -444,18 +471,25 @@
 
                 <!-- Notes -->
                 <div>
-                    <label class="form-label">Notes</label>
-                    <textarea name="notes" class="form-input" rows="3" placeholder="Any specific client requests or important information..."></textarea>
+                    <label class="form-label">Home Ticket</label>
+                    <input type="text" name="homeTicket" class="form-input" placeholder="Optional">
+                </div>
+
+                <div>
+                    <label class="form-label">Additional Notes</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Optional"></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn w-full">
-                    Send to WhatsApp 💬
+                    Send to WhatsApp
                 </button>
             </form>
         </div>
     </div>
 
     <script>
+        const PHONE_NUMBER = '9016';
+
         // Access Code Logic
         const accessCodeInput = document.getElementById('accessCode');
         const accessError = document.getElementById('accessError');
@@ -493,43 +527,99 @@
             domesticForm.style.display = 'none';
         });
 
+        // Domestic One Way / Round Trip Toggle
+        const oneWayBtn = document.getElementById('oneWayBtn');
+        const roundTripBtn = document.getElementById('roundTripBtn');
+        const returnDateField = document.getElementById('returnDateField');
+        const returnTimeField = document.getElementById('returnTimeField');
+
+        oneWayBtn.addEventListener('click', () => {
+            oneWayBtn.classList.add('active');
+            roundTripBtn.classList.remove('active');
+            returnDateField.style.display = 'none';
+            returnTimeField.style.display = 'none';
+            domesticForm.querySelector('[name="returnDate"]').removeAttribute('required');
+            domesticForm.querySelector('[name="returnTime"]').removeAttribute('required');
+        });
+
+        roundTripBtn.addEventListener('click', () => {
+            roundTripBtn.classList.add('active');
+            oneWayBtn.classList.remove('active');
+            returnDateField.style.display = 'block';
+            returnTimeField.style.display = 'block';
+        });
+
+        // International One Way / Round Trip Toggle
+        const oneWayBtnIntl = document.getElementById('oneWayBtnIntl');
+        const roundTripBtnIntl = document.getElementById('roundTripBtnIntl');
+        const returnDateFieldIntl = document.getElementById('returnDateFieldIntl');
+        const returnTimeFieldIntl = document.getElementById('returnTimeFieldIntl');
+
+        oneWayBtnIntl.addEventListener('click', () => {
+            oneWayBtnIntl.classList.add('active');
+            roundTripBtnIntl.classList.remove('active');
+            returnDateFieldIntl.style.display = 'none';
+            returnTimeFieldIntl.style.display = 'none';
+            internationalForm.querySelector('[name="returnDate"]').removeAttribute('required');
+            internationalForm.querySelector('[name="returnTime"]').removeAttribute('required');
+        });
+
+        roundTripBtnIntl.addEventListener('click', () => {
+            roundTripBtnIntl.classList.add('active');
+            oneWayBtnIntl.classList.remove('active');
+            returnDateFieldIntl.style.display = 'block';
+            returnTimeFieldIntl.style.display = 'block';
+        });
+
+        // Helper function to format date
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        // Helper function to format time
+        function formatTime(timeString) {
+            if (!timeString) return '';
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
         // Domestic Form Submission
         domesticForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
 
-            const message = `*Confirmed Booking ⚡️*
+            let message = `Confirmed Booking\n\nTrip ID: #${formData.get('tripId')}\n\nPassengers:\n\nFull Name: ${formData.get('fullName')}\nGender: ${formData.get('gender')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}`;
 
-Trip ID: #${formData.get('tripId')}
+            if (formData.get('ffNumber')) {
+                message += `\nFF#: ${formData.get('ffNumber')}`;
+            }
 
-*Passengers:*
+            message += `\n\nFlight:\n\nAirline: ${formData.get('airline')}\nOrigin (Code): ${formData.get('origin')}\nDestination (Code): ${formData.get('destination')}\nDepart Date: ${formatDate(formData.get('departDate'))}\nDepart Time: ${formatTime(formData.get('departTime'))}`;
 
-Full Name: ${formData.get('fullName')}
-Gender: ${formData.get('gender')}
-DOB (DD/MM/YYYY): ${formData.get('dob')}
-FF# (Optional): ${formData.get('ffNumber') || 'N/A'}
+            if (formData.get('returnDate') && formData.get('returnTime')) {
+                message += `\nReturn Date: ${formatDate(formData.get('returnDate'))}\nReturn Time: ${formatTime(formData.get('returnTime'))}`;
+            }
 
-*Flight:*
+            message += `\nClass: ${formData.get('class')}\nCommitted Price: ${formData.get('price')}\nPayment Method: ${formData.get('paymentMethod')}\n\nPayment Status: ${formData.get('paymentStatus')}`;
 
-Airline: ${formData.get('airline')}
-Origin (Code): ${formData.get('origin')}
-Destination (Code): ${formData.get('destination')}
-Depart Date: ${formData.get('departDate')}
-Depart Time: ${formData.get('departTime')}
-Return Date (if any): ${formData.get('returnDate') || 'N/A'}
-Return Time (if any): ${formData.get('returnTime') || 'N/A'}
-Class: ${formData.get('class')}
-Fare Type: ${formData.get('fareType')}
-Committed Price: ${formData.get('price')}
-Payment Method: ${formData.get('paymentMethod')}
+            if (formData.get('homeTicket')) {
+                message += `\nHome Ticket: ${formData.get('homeTicket')}`;
+            }
 
-Payment Status: ${formData.get('paymentStatus')}
-Notes: ${formData.get('notes') || 'None'}`;
+            if (formData.get('notes')) {
+                message += `\nNotes: ${formData.get('notes')}`;
+            }
 
-            const phoneNumber = formData.get('phoneNumber').replace(/\D/g, '');
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
+            const whatsappUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
             window.open(whatsappUrl, '_blank');
         });
 
@@ -538,46 +628,40 @@ Notes: ${formData.get('notes') || 'None'}`;
             e.preventDefault();
             const formData = new FormData(e.target);
 
-            const message = `🌎 *Fly Charm - International Booking Request*
+            let message = `Fly Charm - International Booking Request\n\nDate: ${formatDate(formData.get('date'))}\nBy: ${formData.get('by')}\nTrip ID: ${formData.get('tripId')}\n\nPassengers:\n\nFirst Name: ${formData.get('firstName')}\nLast Name: ${formData.get('lastName')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}\nGender: ${formData.get('gender')}\nPassport #: ${formData.get('passportNumber')}\nPassport Exp. (DD/MM/YYYY): ${formatDate(formData.get('passportExpiry'))}`;
 
-Date: ${formData.get('date')}
-By: ${formData.get('by')}
-Trip ID: ${formData.get('tripId')}
+            if (formData.get('visaNumber')) {
+                message += `\nVisa #: ${formData.get('visaNumber')}`;
+            }
 
-*Passengers:*
+            if (formData.get('ffNumber')) {
+                message += `\nFF#: ${formData.get('ffNumber')}`;
+            }
 
-First Name: ${formData.get('firstName')}
-Last Name: ${formData.get('lastName')}
-DOB (DD/MM/YYYY): ${formData.get('dob')}
-Gender: ${formData.get('gender')}
-Passport #: ${formData.get('passportNumber')}
-Passport Exp. (DD/MM/YYYY): ${formData.get('passportExpiry')}
-Visa # (if applicable): ${formData.get('visaNumber') || 'N/A'}
-FF# (Optional): ${formData.get('ffNumber') || 'N/A'}
+            message += `\n\nFlight:`;
 
-*Flight:*
+            if (formData.get('airline')) {
+                message += `\n\nAirline: ${formData.get('airline')}`;
+            }
 
-Airline (Optional): ${formData.get('airline') || 'N/A'}
-Origin (Code): ${formData.get('origin')}
-Destination (Code): ${formData.get('destination')}
-Depart Date: ${formData.get('departDate')}
-Depart Time: ${formData.get('departTime')}
-Return Date: ${formData.get('returnDate') || 'N/A'}
-Return Time: ${formData.get('returnTime') || 'N/A'}
-Class: ${formData.get('class')}
-Refund Preference: ${formData.get('refundPreference')}
+            message += `\nOrigin (Code): ${formData.get('origin')}\nDestination (Code): ${formData.get('destination')}\nDepart Date: ${formatDate(formData.get('departDate'))}\nDepart Time: ${formatTime(formData.get('departTime'))}`;
 
-*Payment:*
+            if (formData.get('returnDate') && formData.get('returnTime')) {
+                message += `\nReturn Date: ${formatDate(formData.get('returnDate'))}\nReturn Time: ${formatTime(formData.get('returnTime'))}`;
+            }
 
-Method (Internal): ${formData.get('paymentMethod')}
-Client Payment Expectation: ${formData.get('paymentExpectation')}
+            message += `\nClass: ${formData.get('class')}\nRefund Preference: ${formData.get('refundPreference')}\n\nPayment:\n\nMethod (Internal): ${formData.get('paymentMethod')}\nClient Payment Expectation: ${formData.get('paymentExpectation')}`;
 
-Notes: ${formData.get('notes') || 'None'}`;
+            if (formData.get('homeTicket')) {
+                message += `\n\nHome Ticket: ${formData.get('homeTicket')}`;
+            }
 
-            const phoneNumber = formData.get('phoneNumber').replace(/\D/g, '');
+            if (formData.get('notes')) {
+                message += `\nNotes: ${formData.get('notes')}`;
+            }
+
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
+            const whatsappUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
             window.open(whatsappUrl, '_blank');
         });
     </script>
