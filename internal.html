@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,10 +18,17 @@
             --brand-dark: #1A1A1A;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: var(--brand-noir);
             color: #E0E0E0;
             font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         .font-brand-header {
@@ -32,7 +39,6 @@
 
         .text-cyber-lime { color: var(--brand-lime); }
         .bg-cyber-lime { background-color: var(--brand-lime); }
-        .border-cyber-lime { border-color: var(--brand-lime); }
 
         .form-input, .form-select {
             background-color: #1A1A1A;
@@ -41,7 +47,8 @@
             padding: 0.75rem;
             border-radius: 0.5rem;
             width: 100%;
-            transition: all 0.15s;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            font-size: 0.9375rem;
         }
 
         .form-input:focus, .form-select:focus {
@@ -59,7 +66,7 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #A0A0A0;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
         }
 
         .submit-btn {
@@ -70,14 +77,19 @@
             border-radius: 0.5rem;
             border: none;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.1rem;
+            width: 100%;
         }
 
         .submit-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
         }
 
         .tab-button {
@@ -146,19 +158,31 @@
             filter: invert(1);
             cursor: pointer;
         }
+
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .gap-4 { gap: 1rem; }
+        .gap-5 { gap: 1.25rem; }
+
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:col-span-2 { grid-column: span 2 / span 2; }
+        }
     </style>
 </head>
 <body>
     <!-- Access Code Lock -->
     <div id="lockOverlay" class="locked-overlay">
-        <div class="text-center max-w-md mx-auto p-8">
-            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-12 mx-auto mb-8">
-            <h1 class="font-brand-header text-3xl mb-4">Internal Booking Portal</h1>
-            <p class="text-gray-400 mb-6">Enter access code to continue</p>
+        <div style="text-align: center; max-width: 28rem; margin: 0 auto; padding: 2rem;">
+            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 3rem; margin: 0 auto 2rem;">
+            <h1 class="font-brand-header" style="font-size: 1.875rem; margin-bottom: 1rem;">Internal Booking Portal</h1>
+            <p style="color: #888; margin-bottom: 1.5rem;">Enter access code to continue</p>
             <input
                 type="password"
                 id="accessCode"
-                class="form-input text-center text-2xl tracking-widest mb-2"
+                class="form-input"
+                style="text-align: center; font-size: 1.5rem; letter-spacing: 0.25em; margin-bottom: 0.5rem;"
                 placeholder="••••"
                 maxlength="4"
                 autocomplete="off"
@@ -169,44 +193,50 @@
 
     <!-- Main Content -->
     <div id="mainContent" style="display: none;">
-        <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div style="max-width: 48rem; margin: 0 auto; padding: 2rem 1rem;">
             <!-- Header -->
-            <div class="text-center mb-8">
-                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-8 mx-auto mb-4">
-                <h1 class="font-brand-header text-3xl mb-1">Internal Booking</h1>
-                <p class="text-gray-500 text-sm">Fast. Smart. Efficient.</p>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 2rem; margin: 0 auto 1rem;">
+                <h1 class="font-brand-header" style="font-size: 1.875rem; margin-bottom: 0.25rem;">Internal Booking</h1>
+                <p style="color: #666; font-size: 0.875rem;">Fast. Smart. Efficient.</p>
             </div>
 
-            <!-- Booking Type Toggle (Small) -->
-            <div class="flex gap-0 mb-6 max-w-xs mx-auto">
-                <button id="domesticTab" class="tab-button active flex-1 rounded-l-lg">Domestic</button>
-                <button id="internationalTab" class="tab-button flex-1 rounded-r-lg">International</button>
+            <!-- Booking Type Toggle -->
+            <div style="display: flex; gap: 0; margin-bottom: 1.5rem; max-width: 20rem; margin-left: auto; margin-right: auto;">
+                <button id="domesticTab" class="tab-button active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">Domestic</button>
+                <button id="internationalTab" class="tab-button" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">International</button>
             </div>
 
             <!-- Domestic Form -->
-            <form id="domesticForm" class="space-y-5">
-                <!-- Trip ID -->
-                <div>
-                    <label class="form-label">Trip ID</label>
-                    <input type="text" name="tripId" class="form-input" placeholder="110" required autofocus>
-                </div>
+            <form id="domesticForm" style="display: block;">
+                <div style="margin-bottom: 1.25rem;">
+                    <!-- Trip ID -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <label class="form-label">Trip ID</label>
+                        <input type="text" name="tripId" class="form-input" placeholder="110" required autofocus>
+                    </div>
 
-                <!-- Trip Type Toggle (Large & Prominent) -->
-                <div>
-                    <label class="form-label">Trip Type</label>
-                    <div class="flex gap-0">
-                        <button type="button" id="oneWayBtn" class="trip-toggle active flex-1 rounded-l-lg">One Way</button>
-                        <button type="button" id="roundTripBtn" class="trip-toggle flex-1 rounded-r-lg">Round Trip</button>
+                    <!-- Trip Type Toggle -->
+                    <div>
+                        <label class="form-label">Trip Type</label>
+                        <div style="display: flex; gap: 0;">
+                            <button type="button" id="oneWayBtn" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
+                            <button type="button" id="roundTripBtn" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Passenger Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Passenger</h3>
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="md:col-span-2">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" name="fullName" class="form-input" required>
+                        <div>
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="firstName" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="lastName" class="form-input" required>
                         </div>
                         <div>
                             <label class="form-label">Gender</label>
@@ -214,7 +244,6 @@
                                 <option value="">Select</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
-                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div>
@@ -230,7 +259,7 @@
 
                 <!-- Flight Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Flight</h3>
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Flight</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline</label>
@@ -253,7 +282,7 @@
                             <input type="time" name="departTime" class="form-input" required>
                         </div>
 
-                        <!-- Return Fields (conditional) -->
+                        <!-- Return Fields -->
                         <div id="returnDateField" style="display: none;">
                             <label class="form-label">Return Date</label>
                             <input type="date" name="returnDate" class="form-input">
@@ -276,7 +305,7 @@
 
                 <!-- Payment Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Payment</h3>
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Committed Price</label>
@@ -304,42 +333,42 @@
                 </div>
 
                 <!-- Notes -->
-                <div>
+                <div style="margin-bottom: 1.25rem;">
                     <label class="form-label">Notes (Optional)</label>
                     <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
                 </div>
 
-                <button type="submit" class="submit-btn w-full">
-                    Send to WhatsApp
-                </button>
+                <button type="submit" class="submit-btn">Send to WhatsApp 💬</button>
             </form>
 
             <!-- International Form -->
-            <form id="internationalForm" class="space-y-5" style="display: none;">
-                <!-- Trip ID and Date -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="form-label">Trip ID</label>
-                        <input type="text" name="tripId" class="form-input" placeholder="1101" required>
+            <form id="internationalForm" style="display: none;">
+                <div style="margin-bottom: 1.25rem;">
+                    <!-- Trip ID and Date -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" style="margin-bottom: 1.25rem;">
+                        <div>
+                            <label class="form-label">Trip ID</label>
+                            <input type="text" name="tripId" class="form-input" placeholder="1101" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Date</label>
+                            <input type="date" name="date" class="form-input" required>
+                        </div>
                     </div>
-                    <div>
-                        <label class="form-label">Date</label>
-                        <input type="date" name="date" class="form-input" required>
-                    </div>
-                </div>
 
-                <!-- Trip Type Toggle (Large & Prominent) -->
-                <div>
-                    <label class="form-label">Trip Type</label>
-                    <div class="flex gap-0">
-                        <button type="button" id="oneWayBtnIntl" class="trip-toggle active flex-1 rounded-l-lg">One Way</button>
-                        <button type="button" id="roundTripBtnIntl" class="trip-toggle flex-1 rounded-r-lg">Round Trip</button>
+                    <!-- Trip Type Toggle -->
+                    <div>
+                        <label class="form-label">Trip Type</label>
+                        <div style="display: flex; gap: 0;">
+                            <button type="button" id="oneWayBtnIntl" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
+                            <button type="button" id="roundTripBtnIntl" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Passenger Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Passenger</h3>
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">First Name (as per Passport)</label>
@@ -359,7 +388,6 @@
                                 <option value="">Select</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
-                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div>
@@ -383,7 +411,7 @@
 
                 <!-- Flight Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Flight</h3>
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Flight</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline (Optional)</label>
@@ -406,7 +434,7 @@
                             <input type="time" name="departTime" class="form-input" required>
                         </div>
 
-                        <!-- Return Fields (conditional) -->
+                        <!-- Return Fields -->
                         <div id="returnDateFieldIntl" style="display: none;">
                             <label class="form-label">Return Date</label>
                             <input type="date" name="returnDate" class="form-input">
@@ -437,10 +465,10 @@
 
                 <!-- Payment Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Payment</h3>
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="form-label">Method (Internal)</label>
+                            <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
                                 <option value="">Select</option>
                                 <option value="Shezan CC">Shezan CC</option>
@@ -451,200 +479,203 @@
                             </select>
                         </div>
                         <div>
-                            <label class="form-label">Client Payment Expectation</label>
-                            <select name="paymentExpectation" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="Immediately After Booking">Immediately After Booking</option>
-                                <option value="Credit for 7 Days">Credit for 7 Days</option>
-                                <option value="Credit for 14 Days">Credit for 14 Days</option>
+                            <label class="form-label">Payment Status</label>
+                            <select name="paymentStatus" class="form-select" required>
+                                <option value="DUE">DUE</option>
+                                <option value="PAID">PAID</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <!-- Notes -->
-                <div>
+                <div style="margin-bottom: 1.25rem;">
                     <label class="form-label">Notes (Optional)</label>
                     <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
                 </div>
 
-                <button type="submit" class="submit-btn w-full">
-                    Send to WhatsApp
-                </button>
+                <button type="submit" class="submit-btn">Send to WhatsApp 💬</button>
             </form>
         </div>
     </div>
 
     <script>
-        const PHONE_NUMBER = '9016';
-        const SIGNATURE = '✓'; // Subtle checkmark to identify internal form usage
+        const PHONE = '9016';
+        const SIG = '✓';
 
-        // Access Code Logic
-        const accessCodeInput = document.getElementById('accessCode');
-        const accessError = document.getElementById('accessError');
-        const lockOverlay = document.getElementById('lockOverlay');
-        const mainContent = document.getElementById('mainContent');
+        // Access Code
+        const code = document.getElementById('accessCode');
+        const err = document.getElementById('accessError');
+        const lock = document.getElementById('lockOverlay');
+        const main = document.getElementById('mainContent');
 
-        accessCodeInput.addEventListener('input', function(e) {
+        code.addEventListener('input', function(e) {
             if (e.target.value === '1110') {
-                lockOverlay.style.display = 'none';
-                mainContent.style.display = 'block';
-                accessError.style.display = 'none';
+                lock.style.display = 'none';
+                main.style.display = 'block';
+                err.style.display = 'none';
             } else if (e.target.value.length === 4) {
-                accessError.style.display = 'block';
+                err.style.display = 'block';
                 e.target.value = '';
             }
         });
 
-        // Tab Switching
-        const domesticTab = document.getElementById('domesticTab');
-        const internationalTab = document.getElementById('internationalTab');
-        const domesticForm = document.getElementById('domesticForm');
-        const internationalForm = document.getElementById('internationalForm');
+        // Tabs
+        const domTab = document.getElementById('domesticTab');
+        const intlTab = document.getElementById('internationalTab');
+        const domForm = document.getElementById('domesticForm');
+        const intlForm = document.getElementById('internationalForm');
 
-        domesticTab.addEventListener('click', () => {
-            domesticTab.classList.add('active');
-            internationalTab.classList.remove('active');
-            domesticForm.style.display = 'block';
-            internationalForm.style.display = 'none';
-        });
+        domTab.onclick = () => {
+            domTab.classList.add('active');
+            intlTab.classList.remove('active');
+            domForm.style.display = 'block';
+            intlForm.style.display = 'none';
+        };
 
-        internationalTab.addEventListener('click', () => {
-            internationalTab.classList.add('active');
-            domesticTab.classList.remove('active');
-            internationalForm.style.display = 'block';
-            domesticForm.style.display = 'none';
-        });
+        intlTab.onclick = () => {
+            intlTab.classList.add('active');
+            domTab.classList.remove('active');
+            intlForm.style.display = 'block';
+            domForm.style.display = 'none';
+        };
 
-        // Domestic One Way / Round Trip Toggle
-        const oneWayBtn = document.getElementById('oneWayBtn');
-        const roundTripBtn = document.getElementById('roundTripBtn');
-        const returnDateField = document.getElementById('returnDateField');
-        const returnTimeField = document.getElementById('returnTimeField');
+        // Domestic Trip Type
+        const oneWay = document.getElementById('oneWayBtn');
+        const roundTrip = document.getElementById('roundTripBtn');
+        const retDate = document.getElementById('returnDateField');
+        const retTime = document.getElementById('returnTimeField');
 
-        oneWayBtn.addEventListener('click', () => {
-            oneWayBtn.classList.add('active');
-            roundTripBtn.classList.remove('active');
-            returnDateField.style.display = 'none';
-            returnTimeField.style.display = 'none';
-            domesticForm.querySelector('[name="returnDate"]').removeAttribute('required');
-            domesticForm.querySelector('[name="returnTime"]').removeAttribute('required');
-        });
+        oneWay.onclick = () => {
+            oneWay.classList.add('active');
+            roundTrip.classList.remove('active');
+            retDate.style.display = 'none';
+            retTime.style.display = 'none';
+            domForm.querySelector('[name="returnDate"]').removeAttribute('required');
+            domForm.querySelector('[name="returnTime"]').removeAttribute('required');
+        };
 
-        roundTripBtn.addEventListener('click', () => {
-            roundTripBtn.classList.add('active');
-            oneWayBtn.classList.remove('active');
-            returnDateField.style.display = 'block';
-            returnTimeField.style.display = 'block';
-        });
+        roundTrip.onclick = () => {
+            roundTrip.classList.add('active');
+            oneWay.classList.remove('active');
+            retDate.style.display = 'block';
+            retTime.style.display = 'block';
+            domForm.querySelector('[name="returnDate"]').setAttribute('required', 'required');
+            domForm.querySelector('[name="returnTime"]').setAttribute('required', 'required');
+        };
 
-        // International One Way / Round Trip Toggle
-        const oneWayBtnIntl = document.getElementById('oneWayBtnIntl');
-        const roundTripBtnIntl = document.getElementById('roundTripBtnIntl');
-        const returnDateFieldIntl = document.getElementById('returnDateFieldIntl');
-        const returnTimeFieldIntl = document.getElementById('returnTimeFieldIntl');
+        // International Trip Type
+        const oneWayIntl = document.getElementById('oneWayBtnIntl');
+        const roundTripIntl = document.getElementById('roundTripBtnIntl');
+        const retDateIntl = document.getElementById('returnDateFieldIntl');
+        const retTimeIntl = document.getElementById('returnTimeFieldIntl');
 
-        oneWayBtnIntl.addEventListener('click', () => {
-            oneWayBtnIntl.classList.add('active');
-            roundTripBtnIntl.classList.remove('active');
-            returnDateFieldIntl.style.display = 'none';
-            returnTimeFieldIntl.style.display = 'none';
-            internationalForm.querySelector('[name="returnDate"]').removeAttribute('required');
-            internationalForm.querySelector('[name="returnTime"]').removeAttribute('required');
-        });
+        oneWayIntl.onclick = () => {
+            oneWayIntl.classList.add('active');
+            roundTripIntl.classList.remove('active');
+            retDateIntl.style.display = 'none';
+            retTimeIntl.style.display = 'none';
+            intlForm.querySelector('[name="returnDate"]').removeAttribute('required');
+            intlForm.querySelector('[name="returnTime"]').removeAttribute('required');
+        };
 
-        roundTripBtnIntl.addEventListener('click', () => {
-            roundTripBtnIntl.classList.add('active');
-            oneWayBtnIntl.classList.remove('active');
-            returnDateFieldIntl.style.display = 'block';
-            returnTimeFieldIntl.style.display = 'block';
-        });
+        roundTripIntl.onclick = () => {
+            roundTripIntl.classList.add('active');
+            oneWayIntl.classList.remove('active');
+            retDateIntl.style.display = 'block';
+            retTimeIntl.style.display = 'block';
+            intlForm.querySelector('[name="returnDate"]').setAttribute('required', 'required');
+            intlForm.querySelector('[name="returnTime"]').setAttribute('required', 'required');
+        };
 
-        // Helper function to format date
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
+        // Format Date
+        function fd(d) {
+            if (!d) return '';
+            const dt = new Date(d);
+            return `${String(dt.getDate()).padStart(2, '0')}/${String(dt.getMonth() + 1).padStart(2, '0')}/${dt.getFullYear()}`;
         }
 
-        // Helper function to format time
-        function formatTime(timeString) {
-            if (!timeString) return '';
-            const [hours, minutes] = timeString.split(':');
-            const hour = parseInt(hours);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            const displayHour = hour % 12 || 12;
-            return `${displayHour}:${minutes} ${ampm}`;
+        // Format Time
+        function ft(t) {
+            if (!t) return '';
+            const [h, m] = t.split(':');
+            const hr = parseInt(h);
+            const ap = hr >= 12 ? 'PM' : 'AM';
+            const dh = hr % 12 || 12;
+            return `${dh}:${m} ${ap}`;
         }
 
-        // Domestic Form Submission
-        domesticForm.addEventListener('submit', function(e) {
+        // Domestic Form
+        domForm.onsubmit = (e) => {
             e.preventDefault();
-            const formData = new FormData(e.target);
+            const f = new FormData(e.target);
 
-            let message = `Confirmed Booking ${SIGNATURE}\n\nTrip ID: #${formData.get('tripId')}\n\nPassengers:\n\nFull Name: ${formData.get('fullName')}\nGender: ${formData.get('gender')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}`;
+            let msg = `${SIG} CONFIRMED BOOKING\n\n`;
+            msg += `Trip ID: #${f.get('tripId')}\n\n`;
+            msg += `PASSENGER:\n`;
+            msg += `Name: ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `Gender: ${f.get('gender')}\n`;
+            msg += `DOB: ${fd(f.get('dob'))}`;
+            if (f.get('ffNumber')) msg += `\nFF#: ${f.get('ffNumber')}`;
 
-            if (formData.get('ffNumber')) {
-                message += `\nFF#: ${formData.get('ffNumber')}`;
+            msg += `\n\nFLIGHT:\n`;
+            msg += `Airline: ${f.get('airline')}\n`;
+            msg += `Route: ${f.get('origin')} → ${f.get('destination')}\n`;
+            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}`;
+
+            if (f.get('returnDate') && f.get('returnTime')) {
+                msg += `\nReturn: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
             }
 
-            message += `\n\nFlight:\n\nAirline: ${formData.get('airline')}\nOrigin (Code): ${formData.get('origin')}\nDestination (Code): ${formData.get('destination')}\nDepart Date: ${formatDate(formData.get('departDate'))}\nDepart Time: ${formatTime(formData.get('departTime'))}`;
+            msg += `\nClass: ${f.get('class')}`;
 
-            if (formData.get('returnDate') && formData.get('returnTime')) {
-                message += `\nReturn Date: ${formatDate(formData.get('returnDate'))}\nReturn Time: ${formatTime(formData.get('returnTime'))}`;
-            }
+            msg += `\n\nPAYMENT:\n`;
+            msg += `Price: ${f.get('price')}\n`;
+            msg += `Method: ${f.get('paymentMethod')}\n`;
+            msg += `Status: ${f.get('paymentStatus')}`;
 
-            message += `\nClass: ${formData.get('class')}\nCommitted Price: ${formData.get('price')}\nPayment Method: ${formData.get('paymentMethod')}\n\nPayment Status: ${formData.get('paymentStatus')}`;
+            if (f.get('notes')) msg += `\n\nNOTES:\n${f.get('notes')}`;
 
-            if (formData.get('notes')) {
-                message += `\nNotes: ${formData.get('notes')}`;
-            }
+            window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
-            window.open(whatsappUrl, '_blank');
-        });
-
-        // International Form Submission
-        internationalForm.addEventListener('submit', function(e) {
+        // International Form
+        intlForm.onsubmit = (e) => {
             e.preventDefault();
-            const formData = new FormData(e.target);
+            const f = new FormData(e.target);
 
-            let message = `Fly Charm - International Booking Request ${SIGNATURE}\n\nDate: ${formatDate(formData.get('date'))}\nTrip ID: ${formData.get('tripId')}\n\nPassengers:\n\nFirst Name: ${formData.get('firstName')}\nLast Name: ${formData.get('lastName')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}\nGender: ${formData.get('gender')}\nPassport #: ${formData.get('passportNumber')}\nPassport Exp. (DD/MM/YYYY): ${formatDate(formData.get('passportExpiry'))}`;
+            let msg = `${SIG} INTERNATIONAL BOOKING REQUEST\n\n`;
+            msg += `Date: ${fd(f.get('date'))}\n`;
+            msg += `Trip ID: ${f.get('tripId')}\n\n`;
+            msg += `PASSENGER:\n`;
+            msg += `Name: ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `DOB: ${fd(f.get('dob'))}\n`;
+            msg += `Gender: ${f.get('gender')}\n`;
+            msg += `Passport: ${f.get('passportNumber')}\n`;
+            msg += `Passport Exp: ${fd(f.get('passportExpiry'))}`;
+            if (f.get('visaNumber')) msg += `\nVisa: ${f.get('visaNumber')}`;
+            if (f.get('ffNumber')) msg += `\nFF#: ${f.get('ffNumber')}`;
 
-            if (formData.get('visaNumber')) {
-                message += `\nVisa #: ${formData.get('visaNumber')}`;
+            msg += `\n\nFLIGHT:`;
+            if (f.get('airline')) msg += `\nAirline: ${f.get('airline')}`;
+            msg += `\nRoute: ${f.get('origin')} → ${f.get('destination')}\n`;
+            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}`;
+
+            if (f.get('returnDate') && f.get('returnTime')) {
+                msg += `\nReturn: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
             }
 
-            if (formData.get('ffNumber')) {
-                message += `\nFF#: ${formData.get('ffNumber')}`;
-            }
+            msg += `\nClass: ${f.get('class')}\n`;
+            msg += `Refund: ${f.get('refundPreference')}`;
 
-            message += `\n\nFlight:`;
+            msg += `\n\nPAYMENT:\n`;
+            msg += `Method: ${f.get('paymentMethod')}\n`;
+            msg += `Status: ${f.get('paymentStatus')}`;
 
-            if (formData.get('airline')) {
-                message += `\n\nAirline: ${formData.get('airline')}`;
-            }
+            if (f.get('notes')) msg += `\n\nNOTES:\n${f.get('notes')}`;
 
-            message += `\nOrigin (Code): ${formData.get('origin')}\nDestination (Code): ${formData.get('destination')}\nDepart Date: ${formatDate(formData.get('departDate'))}\nDepart Time: ${formatTime(formData.get('departTime'))}`;
-
-            if (formData.get('returnDate') && formData.get('returnTime')) {
-                message += `\nReturn Date: ${formatDate(formData.get('returnDate'))}\nReturn Time: ${formatTime(formData.get('returnTime'))}`;
-            }
-
-            message += `\nClass: ${formData.get('class')}\nRefund Preference: ${formData.get('refundPreference')}\n\nPayment:\n\nMethod (Internal): ${formData.get('paymentMethod')}\nClient Payment Expectation: ${formData.get('paymentExpectation')}`;
-
-            if (formData.get('notes')) {
-                message += `\n\nNotes: ${formData.get('notes')}`;
-            }
-
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
-            window.open(whatsappUrl, '_blank');
-        });
+            window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
     </script>
 </body>
 </html>
