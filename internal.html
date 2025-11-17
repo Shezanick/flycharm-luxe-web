@@ -163,7 +163,6 @@
         .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
         .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .gap-4 { gap: 1rem; }
-        .gap-5 { gap: 1.25rem; }
 
         @media (min-width: 768px) {
             .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -281,6 +280,10 @@
                             <label class="form-label">Depart Time</label>
                             <input type="time" name="departTime" class="form-input" required>
                         </div>
+                        <div>
+                            <label class="form-label">Arrival Time</label>
+                            <input type="time" name="arrivalTime" class="form-input" required>
+                        </div>
 
                         <!-- Return Fields -->
                         <div id="returnDateField" style="display: none;">
@@ -288,8 +291,12 @@
                             <input type="date" name="returnDate" class="form-input">
                         </div>
                         <div id="returnTimeField" style="display: none;">
-                            <label class="form-label">Return Time</label>
+                            <label class="form-label">Return Depart Time</label>
                             <input type="time" name="returnTime" class="form-input">
+                        </div>
+                        <div id="returnArrivalField" style="display: none;">
+                            <label class="form-label">Return Arrival Time</label>
+                            <input type="time" name="returnArrival" class="form-input">
                         </div>
 
                         <div>
@@ -344,16 +351,10 @@
             <!-- International Form -->
             <form id="internationalForm" style="display: none;">
                 <div style="margin-bottom: 1.25rem;">
-                    <!-- Trip ID and Date -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" style="margin-bottom: 1.25rem;">
-                        <div>
-                            <label class="form-label">Trip ID</label>
-                            <input type="text" name="tripId" class="form-input" placeholder="1101" required>
-                        </div>
-                        <div>
-                            <label class="form-label">Date</label>
-                            <input type="date" name="date" class="form-input" required>
-                        </div>
+                    <!-- Trip ID -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <label class="form-label">Trip ID</label>
+                        <input type="text" name="tripId" class="form-input" placeholder="1101" required>
                     </div>
 
                     <!-- Trip Type Toggle -->
@@ -433,6 +434,10 @@
                             <label class="form-label">Depart Time</label>
                             <input type="time" name="departTime" class="form-input" required>
                         </div>
+                        <div>
+                            <label class="form-label">Arrival Time</label>
+                            <input type="time" name="arrivalTime" class="form-input" required>
+                        </div>
 
                         <!-- Return Fields -->
                         <div id="returnDateFieldIntl" style="display: none;">
@@ -440,8 +445,12 @@
                             <input type="date" name="returnDate" class="form-input">
                         </div>
                         <div id="returnTimeFieldIntl" style="display: none;">
-                            <label class="form-label">Return Time</label>
+                            <label class="form-label">Return Depart Time</label>
                             <input type="time" name="returnTime" class="form-input">
+                        </div>
+                        <div id="returnArrivalFieldIntl" style="display: none;">
+                            <label class="form-label">Return Arrival Time</label>
+                            <input type="time" name="returnArrival" class="form-input">
                         </div>
 
                         <div>
@@ -467,6 +476,10 @@
                 <div class="section-card">
                     <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Committed Price</label>
+                            <input type="text" name="price" class="form-input" placeholder="$500" required>
+                        </div>
                         <div>
                             <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
@@ -545,14 +558,17 @@
         const roundTrip = document.getElementById('roundTripBtn');
         const retDate = document.getElementById('returnDateField');
         const retTime = document.getElementById('returnTimeField');
+        const retArr = document.getElementById('returnArrivalField');
 
         oneWay.onclick = () => {
             oneWay.classList.add('active');
             roundTrip.classList.remove('active');
             retDate.style.display = 'none';
             retTime.style.display = 'none';
+            retArr.style.display = 'none';
             domForm.querySelector('[name="returnDate"]').removeAttribute('required');
             domForm.querySelector('[name="returnTime"]').removeAttribute('required');
+            domForm.querySelector('[name="returnArrival"]').removeAttribute('required');
         };
 
         roundTrip.onclick = () => {
@@ -560,8 +576,10 @@
             oneWay.classList.remove('active');
             retDate.style.display = 'block';
             retTime.style.display = 'block';
+            retArr.style.display = 'block';
             domForm.querySelector('[name="returnDate"]').setAttribute('required', 'required');
             domForm.querySelector('[name="returnTime"]').setAttribute('required', 'required');
+            domForm.querySelector('[name="returnArrival"]').setAttribute('required', 'required');
         };
 
         // International Trip Type
@@ -569,14 +587,17 @@
         const roundTripIntl = document.getElementById('roundTripBtnIntl');
         const retDateIntl = document.getElementById('returnDateFieldIntl');
         const retTimeIntl = document.getElementById('returnTimeFieldIntl');
+        const retArrIntl = document.getElementById('returnArrivalFieldIntl');
 
         oneWayIntl.onclick = () => {
             oneWayIntl.classList.add('active');
             roundTripIntl.classList.remove('active');
             retDateIntl.style.display = 'none';
             retTimeIntl.style.display = 'none';
+            retArrIntl.style.display = 'none';
             intlForm.querySelector('[name="returnDate"]').removeAttribute('required');
             intlForm.querySelector('[name="returnTime"]').removeAttribute('required');
+            intlForm.querySelector('[name="returnArrival"]').removeAttribute('required');
         };
 
         roundTripIntl.onclick = () => {
@@ -584,8 +605,10 @@
             oneWayIntl.classList.remove('active');
             retDateIntl.style.display = 'block';
             retTimeIntl.style.display = 'block';
+            retArrIntl.style.display = 'block';
             intlForm.querySelector('[name="returnDate"]').setAttribute('required', 'required');
             intlForm.querySelector('[name="returnTime"]').setAttribute('required', 'required');
+            intlForm.querySelector('[name="returnArrival"]').setAttribute('required', 'required');
         };
 
         // Format Date
@@ -621,10 +644,12 @@
             msg += `\n\nFLIGHT:\n`;
             msg += `Airline: ${f.get('airline')}\n`;
             msg += `Route: ${f.get('origin')} → ${f.get('destination')}\n`;
-            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}`;
+            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}\n`;
+            msg += `Arrival: ${ft(f.get('arrivalTime'))}`;
 
             if (f.get('returnDate') && f.get('returnTime')) {
-                msg += `\nReturn: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
+                msg += `\nReturn Depart: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
+                if (f.get('returnArrival')) msg += `\nReturn Arrival: ${ft(f.get('returnArrival'))}`;
             }
 
             msg += `\nClass: ${f.get('class')}`;
@@ -645,7 +670,6 @@
             const f = new FormData(e.target);
 
             let msg = `${SIG} INTERNATIONAL BOOKING REQUEST\n\n`;
-            msg += `Date: ${fd(f.get('date'))}\n`;
             msg += `Trip ID: ${f.get('tripId')}\n\n`;
             msg += `PASSENGER:\n`;
             msg += `Name: ${f.get('firstName')} ${f.get('lastName')}\n`;
@@ -659,16 +683,19 @@
             msg += `\n\nFLIGHT:`;
             if (f.get('airline')) msg += `\nAirline: ${f.get('airline')}`;
             msg += `\nRoute: ${f.get('origin')} → ${f.get('destination')}\n`;
-            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}`;
+            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}\n`;
+            msg += `Arrival: ${ft(f.get('arrivalTime'))}`;
 
             if (f.get('returnDate') && f.get('returnTime')) {
-                msg += `\nReturn: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
+                msg += `\nReturn Depart: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
+                if (f.get('returnArrival')) msg += `\nReturn Arrival: ${ft(f.get('returnArrival'))}`;
             }
 
             msg += `\nClass: ${f.get('class')}\n`;
             msg += `Refund: ${f.get('refundPreference')}`;
 
             msg += `\n\nPAYMENT:\n`;
+            msg += `Price: ${f.get('price')}\n`;
             msg += `Method: ${f.get('paymentMethod')}\n`;
             msg += `Status: ${f.get('paymentStatus')}`;
 
