@@ -230,28 +230,30 @@
                     <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
+                            <label class="form-label">Title</label>
+                            <select name="title" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Master">Master</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="form-label">First Name</label>
                             <input type="text" name="firstName" class="form-input" required>
                         </div>
-                        <div>
+                        <div class="md:col-span-2">
                             <label class="form-label">Last Name</label>
                             <input type="text" name="lastName" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">Gender</label>
-                            <select name="gender" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                            <label class="form-label">DOB</label>
+                            <input type="date" name="dob" class="form-input" max="2024-12-31" required>
                         </div>
                         <div>
-                            <label class="form-label">DOB</label>
-                            <input type="date" name="dob" class="form-input" required>
-                        </div>
-                        <div class="md:col-span-2">
                             <label class="form-label">FF# (Optional)</label>
-                            <input type="text" name="ffNumber" class="form-input">
+                            <input type="text" name="ffNumber" class="form-input" placeholder="Frequent flyer number">
                         </div>
                     </div>
                 </div>
@@ -262,7 +264,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline</label>
-                            <input type="text" name="airline" class="form-input" required>
+                            <input type="text" name="airline" class="form-input" placeholder="Air India, IndiGo, etc." required>
                         </div>
                         <div>
                             <label class="form-label">Origin</label>
@@ -274,7 +276,7 @@
                         </div>
                         <div>
                             <label class="form-label">Depart Date</label>
-                            <input type="date" name="departDate" class="form-input" required>
+                            <input type="date" name="departDate" class="form-input" id="departDateDom" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Time</label>
@@ -288,7 +290,7 @@
                         <!-- Return Fields -->
                         <div id="returnDateField" style="display: none;">
                             <label class="form-label">Return Date</label>
-                            <input type="date" name="returnDate" class="form-input">
+                            <input type="date" name="returnDate" class="form-input" id="returnDateDom">
                         </div>
                         <div id="returnTimeField" style="display: none;">
                             <label class="form-label">Return Depart Time</label>
@@ -302,7 +304,7 @@
                         <div>
                             <label class="form-label">Class</label>
                             <select name="class" class="form-select" required>
-                                <option value="Economy">Economy</option>
+                                <option value="Economy" selected>Economy</option>
                                 <option value="Business">Business</option>
                                 <option value="First">First</option>
                             </select>
@@ -321,8 +323,7 @@
                         <div>
                             <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="Shezan CC">Shezan CC</option>
+                                <option value="Shezan CC" selected>Shezan CC</option>
                                 <option value="Shezan's Friend">Shezan's Friend</option>
                                 <option value="Avesh SBI">Avesh SBI</option>
                                 <option value="Mulla Salim">Mulla Salim</option>
@@ -332,7 +333,7 @@
                         <div>
                             <label class="form-label">Payment Status</label>
                             <select name="paymentStatus" class="form-select" required>
-                                <option value="DUE">DUE</option>
+                                <option value="DUE" selected>DUE</option>
                                 <option value="PAID">PAID</option>
                             </select>
                         </div>
@@ -372,24 +373,26 @@
                     <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
+                            <label class="form-label">Title</label>
+                            <select name="title" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Master">Master</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="form-label">First Name (as per Passport)</label>
                             <input type="text" name="firstName" class="form-input" required>
                         </div>
-                        <div>
+                        <div class="md:col-span-2">
                             <label class="form-label">Last Name</label>
                             <input type="text" name="lastName" class="form-input" required>
                         </div>
                         <div>
                             <label class="form-label">DOB</label>
-                            <input type="date" name="dob" class="form-input" required>
-                        </div>
-                        <div>
-                            <label class="form-label">Gender</label>
-                            <select name="gender" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                            <input type="date" name="dob" class="form-input" max="2024-12-31" required>
                         </div>
                         <div>
                             <label class="form-label">Passport #</label>
@@ -397,7 +400,7 @@
                         </div>
                         <div>
                             <label class="form-label">Passport Exp.</label>
-                            <input type="date" name="passportExpiry" class="form-input" required>
+                            <input type="date" name="passportExpiry" class="form-input" id="passportExp" required>
                         </div>
                         <div>
                             <label class="form-label">Visa # (Optional)</label>
@@ -405,7 +408,7 @@
                         </div>
                         <div>
                             <label class="form-label">FF# (Optional)</label>
-                            <input type="text" name="ffNumber" class="form-input">
+                            <input type="text" name="ffNumber" class="form-input" placeholder="Frequent flyer number">
                         </div>
                     </div>
                 </div>
@@ -416,7 +419,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline (Optional)</label>
-                            <input type="text" name="airline" class="form-input">
+                            <input type="text" name="airline" class="form-input" placeholder="Emirates, Qatar Airways, etc.">
                         </div>
                         <div>
                             <label class="form-label">Origin</label>
@@ -428,7 +431,7 @@
                         </div>
                         <div>
                             <label class="form-label">Depart Date</label>
-                            <input type="date" name="departDate" class="form-input" required>
+                            <input type="date" name="departDate" class="form-input" id="departDateIntl" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Time</label>
@@ -442,7 +445,7 @@
                         <!-- Return Fields -->
                         <div id="returnDateFieldIntl" style="display: none;">
                             <label class="form-label">Return Date</label>
-                            <input type="date" name="returnDate" class="form-input">
+                            <input type="date" name="returnDate" class="form-input" id="returnDateIntl">
                         </div>
                         <div id="returnTimeFieldIntl" style="display: none;">
                             <label class="form-label">Return Depart Time</label>
@@ -456,7 +459,7 @@
                         <div>
                             <label class="form-label">Class</label>
                             <select name="class" class="form-select" required>
-                                <option value="Economy">Economy</option>
+                                <option value="Economy" selected>Economy</option>
                                 <option value="Business">Business</option>
                                 <option value="First">First</option>
                             </select>
@@ -464,7 +467,7 @@
                         <div>
                             <label class="form-label">Refund Preference</label>
                             <select name="refundPreference" class="form-select" required>
-                                <option value="Saver">Saver</option>
+                                <option value="Saver" selected>Saver</option>
                                 <option value="Flexi">Flexi</option>
                                 <option value="Value">Value</option>
                             </select>
@@ -478,13 +481,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Committed Price</label>
-                            <input type="text" name="price" class="form-input" placeholder="$500" required>
+                            <input type="text" name="price" class="form-input" placeholder="$500 or ₹50,000" required>
                         </div>
                         <div>
                             <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="Shezan CC">Shezan CC</option>
+                                <option value="Shezan CC" selected>Shezan CC</option>
                                 <option value="Shezan's Friend">Shezan's Friend</option>
                                 <option value="Avesh SBI">Avesh SBI</option>
                                 <option value="Mulla Salim">Mulla Salim</option>
@@ -494,7 +496,7 @@
                         <div>
                             <label class="form-label">Payment Status</label>
                             <select name="paymentStatus" class="form-select" required>
-                                <option value="DUE">DUE</option>
+                                <option value="DUE" selected>DUE</option>
                                 <option value="PAID">PAID</option>
                             </select>
                         </div>
@@ -515,6 +517,22 @@
     <script>
         const PHONE = '9016';
         const SIG = '✓';
+
+        // Set smart date defaults
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+        const sixMonthsLater = new Date(today);
+        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+        const sixMonthsStr = sixMonthsLater.toISOString().split('T')[0];
+
+        // Set minimum dates for departure (today onwards)
+        document.getElementById('departDateDom').min = todayStr;
+        document.getElementById('departDateIntl').min = todayStr;
+        document.getElementById('returnDateDom').min = todayStr;
+        document.getElementById('returnDateIntl').min = todayStr;
+
+        // Set minimum passport expiry (6 months from today)
+        document.getElementById('passportExp').min = sixMonthsStr;
 
         // Access Code
         const code = document.getElementById('accessCode');
@@ -636,8 +654,7 @@
             let msg = `${SIG} CONFIRMED BOOKING\n\n`;
             msg += `Trip ID: #${f.get('tripId')}\n\n`;
             msg += `PASSENGER:\n`;
-            msg += `Name: ${f.get('firstName')} ${f.get('lastName')}\n`;
-            msg += `Gender: ${f.get('gender')}\n`;
+            msg += `Name: ${f.get('title')} ${f.get('firstName')} ${f.get('lastName')}\n`;
             msg += `DOB: ${fd(f.get('dob'))}`;
             if (f.get('ffNumber')) msg += `\nFF#: ${f.get('ffNumber')}`;
 
@@ -672,9 +689,8 @@
             let msg = `${SIG} INTERNATIONAL BOOKING REQUEST\n\n`;
             msg += `Trip ID: ${f.get('tripId')}\n\n`;
             msg += `PASSENGER:\n`;
-            msg += `Name: ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `Name: ${f.get('title')} ${f.get('firstName')} ${f.get('lastName')}\n`;
             msg += `DOB: ${fd(f.get('dob'))}\n`;
-            msg += `Gender: ${f.get('gender')}\n`;
             msg += `Passport: ${f.get('passportNumber')}\n`;
             msg += `Passport Exp: ${fd(f.get('passportExpiry'))}`;
             if (f.get('visaNumber')) msg += `\nVisa: ${f.get('visaNumber')}`;
