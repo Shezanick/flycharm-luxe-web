@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Booking | Flycharm</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.PNG">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-lime: #D5FE00;
+            --brand-noir: #101010;
+            --brand-dark: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--brand-noir);
+            color: #E0E0E0;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-brand-header {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .text-cyber-lime { color: var(--brand-lime); }
+        .bg-cyber-lime { background-color: var(--brand-lime); }
+
+        .form-input, .form-select {
+            background-color: #1A1A1A;
+            border: 1px solid #333;
+            color: #E0E0E0;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            font-size: 0.9375rem;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--brand-lime);
+            box-shadow: 0 0 0 2px rgba(213, 254, 0, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #666;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #A0A0A0;
+            font-size: 0.8125rem;
+        }
+
+        .submit-btn {
+            background-color: var(--brand-lime);
+            color: var(--brand-noir);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .tab-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #333;
+            background-color: transparent;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .tab-button.active {
+            border-color: #555;
+            background-color: #1A1A1A;
+            color: #E0E0E0;
+        }
+
+        .trip-toggle {
+            padding: 0.875rem 2rem;
+            border: 2px solid #333;
+            background-color: transparent;
+            color: #A0A0A0;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .trip-toggle.active {
+            border-color: var(--brand-lime);
+            background-color: var(--brand-lime);
+            color: var(--brand-noir);
+        }
+
+        .section-card {
+            background-color: #1A1A1A;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #2A2A2A;
+        }
+
+        .locked-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(16, 16, 16, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .gap-4 { gap: 1rem; }
+
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:col-span-2 { grid-column: span 2 / span 2; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Access Code Lock -->
+    <div id="lockOverlay" class="locked-overlay">
+        <div style="text-align: center; max-width: 28rem; margin: 0 auto; padding: 2rem;">
+            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 3rem; margin: 0 auto 2rem;">
+            <h1 class="font-brand-header" style="font-size: 1.875rem; margin-bottom: 1rem;">Internal Booking Portal</h1>
+            <p style="color: #888; margin-bottom: 1.5rem;">Enter access code to continue</p>
+            <input
+                type="password"
+                id="accessCode"
+                class="form-input"
+                style="text-align: center; font-size: 1.5rem; letter-spacing: 0.25em; margin-bottom: 0.5rem;"
+                placeholder="••••"
+                maxlength="4"
+                autocomplete="off"
+            >
+            <p id="accessError" class="error-message" style="display: none;">Invalid access code</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" style="display: none;">
+        <div style="max-width: 48rem; margin: 0 auto; padding: 2rem 1rem;">
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 2rem; margin: 0 auto 1rem;">
+                <h1 class="font-brand-header" style="font-size: 1.875rem; margin-bottom: 0.25rem;">Internal Booking</h1>
+                <p style="color: #666; font-size: 0.875rem;">Fast. Smart. Efficient.</p>
+            </div>
+
+            <!-- Booking Type Toggle -->
+            <div style="display: flex; gap: 0; margin-bottom: 1.5rem; max-width: 20rem; margin-left: auto; margin-right: auto;">
+                <button id="domesticTab" class="tab-button active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">Domestic</button>
+                <button id="internationalTab" class="tab-button" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">International</button>
+            </div>
+
+            <!-- Domestic Form -->
+            <form id="domesticForm" style="display: block;">
+                <div style="margin-bottom: 1.25rem;">
+                    <!-- Trip ID -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <label class="form-label">Trip ID</label>
+                        <input type="text" name="tripId" class="form-input" placeholder="110" required autofocus>
+                    </div>
+
+                    <!-- Trip Type Toggle -->
+                    <div>
+                        <label class="form-label">Trip Type</label>
+                        <div style="display: flex; gap: 0;">
+                            <button type="button" id="oneWayBtn" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
+                            <button type="button" id="roundTripBtn" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passenger Details -->
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Title</label>
+                            <select name="title" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Master">Master</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="lastName" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">DOB</label>
+                            <input type="date" name="dob" class="form-input" max="2024-12-31" required>
+                        </div>
+                        <div>
+                            <label class="form-label">FF# (Optional)</label>
+                            <input type="text" name="ffNumber" class="form-input" placeholder="Frequent flyer number">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Details -->
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Flight</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="form-label">Airline</label>
+                            <input type="text" name="airline" class="form-input" placeholder="Air India, IndiGo, etc." required>
+                        </div>
+                        <div>
+                            <label class="form-label">Origin</label>
+                            <input type="text" name="origin" class="form-input" placeholder="DEL" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Destination</label>
+                            <input type="text" name="destination" class="form-input" placeholder="BOM" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Date</label>
+                            <input type="date" name="departDate" class="form-input" id="departDateDom" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Time</label>
+                            <input type="time" name="departTime" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Arrival Time</label>
+                            <input type="time" name="arrivalTime" class="form-input" required>
+                        </div>
+
+                        <!-- Return Fields -->
+                        <div id="returnDateField" style="display: none;">
+                            <label class="form-label">Return Date</label>
+                            <input type="date" name="returnDate" class="form-input" id="returnDateDom">
+                        </div>
+                        <div id="returnTimeField" style="display: none;">
+                            <label class="form-label">Return Depart Time</label>
+                            <input type="time" name="returnTime" class="form-input">
+                        </div>
+                        <div id="returnArrivalField" style="display: none;">
+                            <label class="form-label">Return Arrival Time</label>
+                            <input type="time" name="returnArrival" class="form-input">
+                        </div>
+
+                        <div>
+                            <label class="form-label">Class</label>
+                            <select name="class" class="form-select" required>
+                                <option value="Economy" selected>Economy</option>
+                                <option value="Business">Business</option>
+                                <option value="First">First</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Committed Price</label>
+                            <input type="text" name="price" class="form-input" placeholder="₹5,000" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Payment Method</label>
+                            <select name="paymentMethod" class="form-select" required>
+                                <option value="Shezan CC" selected>Shezan CC</option>
+                                <option value="Shezan's Friend">Shezan's Friend</option>
+                                <option value="Avesh SBI">Avesh SBI</option>
+                                <option value="Mulla Salim">Mulla Salim</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Payment Status</label>
+                            <select name="paymentStatus" class="form-select" required>
+                                <option value="DUE" selected>DUE</option>
+                                <option value="PAID">PAID</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Notes (Optional)</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send to WhatsApp 💬</button>
+            </form>
+
+            <!-- International Form -->
+            <form id="internationalForm" style="display: none;">
+                <div style="margin-bottom: 1.25rem;">
+                    <!-- Trip ID -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <label class="form-label">Trip ID</label>
+                        <input type="text" name="tripId" class="form-input" placeholder="1101" required>
+                    </div>
+
+                    <!-- Trip Type Toggle -->
+                    <div>
+                        <label class="form-label">Trip Type</label>
+                        <div style="display: flex; gap: 0;">
+                            <button type="button" id="oneWayBtnIntl" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
+                            <button type="button" id="roundTripBtnIntl" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passenger Details -->
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Title</label>
+                            <select name="title" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Master">Master</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">First Name (as per Passport)</label>
+                            <input type="text" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="lastName" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">DOB</label>
+                            <input type="date" name="dob" class="form-input" max="2024-12-31" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Passport #</label>
+                            <input type="text" name="passportNumber" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Passport Exp.</label>
+                            <input type="date" name="passportExpiry" class="form-input" id="passportExp" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Visa # (Optional)</label>
+                            <input type="text" name="visaNumber" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">FF# (Optional)</label>
+                            <input type="text" name="ffNumber" class="form-input" placeholder="Frequent flyer number">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Details -->
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Flight</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="form-label">Airline (Optional)</label>
+                            <input type="text" name="airline" class="form-input" placeholder="Emirates, Qatar Airways, etc.">
+                        </div>
+                        <div>
+                            <label class="form-label">Origin</label>
+                            <input type="text" name="origin" class="form-input" placeholder="DEL" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Destination</label>
+                            <input type="text" name="destination" class="form-input" placeholder="SYD" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Date</label>
+                            <input type="date" name="departDate" class="form-input" id="departDateIntl" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Time</label>
+                            <input type="time" name="departTime" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Arrival Time</label>
+                            <input type="time" name="arrivalTime" class="form-input" required>
+                        </div>
+
+                        <!-- Return Fields -->
+                        <div id="returnDateFieldIntl" style="display: none;">
+                            <label class="form-label">Return Date</label>
+                            <input type="date" name="returnDate" class="form-input" id="returnDateIntl">
+                        </div>
+                        <div id="returnTimeFieldIntl" style="display: none;">
+                            <label class="form-label">Return Depart Time</label>
+                            <input type="time" name="returnTime" class="form-input">
+                        </div>
+                        <div id="returnArrivalFieldIntl" style="display: none;">
+                            <label class="form-label">Return Arrival Time</label>
+                            <input type="time" name="returnArrival" class="form-input">
+                        </div>
+
+                        <div>
+                            <label class="form-label">Class</label>
+                            <select name="class" class="form-select" required>
+                                <option value="Economy" selected>Economy</option>
+                                <option value="Business">Business</option>
+                                <option value="First">First</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Refund Preference</label>
+                            <select name="refundPreference" class="form-select" required>
+                                <option value="Saver" selected>Saver</option>
+                                <option value="Flexi">Flexi</option>
+                                <option value="Value">Value</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Committed Price</label>
+                            <input type="text" name="price" class="form-input" placeholder="$500 or ₹50,000" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Payment Method</label>
+                            <select name="paymentMethod" class="form-select" required>
+                                <option value="Shezan CC" selected>Shezan CC</option>
+                                <option value="Shezan's Friend">Shezan's Friend</option>
+                                <option value="Avesh SBI">Avesh SBI</option>
+                                <option value="Mulla Salim">Mulla Salim</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Payment Status</label>
+                            <select name="paymentStatus" class="form-select" required>
+                                <option value="DUE" selected>DUE</option>
+                                <option value="PAID">PAID</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Notes (Optional)</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send to WhatsApp 💬</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const PHONE = '9717843955';
+        const SIG = '✓';
+
+        // Set smart date defaults
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+        const sixMonthsLater = new Date(today);
+        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+        const sixMonthsStr = sixMonthsLater.toISOString().split('T')[0];
+
+        // Set minimum dates for departure (today onwards)
+        document.getElementById('departDateDom').min = todayStr;
+        document.getElementById('departDateIntl').min = todayStr;
+        document.getElementById('returnDateDom').min = todayStr;
+        document.getElementById('returnDateIntl').min = todayStr;
+
+        // Set minimum passport expiry (6 months from today)
+        document.getElementById('passportExp').min = sixMonthsStr;
+
+        // Access Code
+        const code = document.getElementById('accessCode');
+        const err = document.getElementById('accessError');
+        const lock = document.getElementById('lockOverlay');
+        const main = document.getElementById('mainContent');
+
+        code.addEventListener('input', function(e) {
+            if (e.target.value === '1110') {
+                lock.style.display = 'none';
+                main.style.display = 'block';
+                err.style.display = 'none';
+            } else if (e.target.value.length === 4) {
+                err.style.display = 'block';
+                e.target.value = '';
+            }
+        });
+
+        // Tabs
+        const domTab = document.getElementById('domesticTab');
+        const intlTab = document.getElementById('internationalTab');
+        const domForm = document.getElementById('domesticForm');
+        const intlForm = document.getElementById('internationalForm');
+
+        domTab.onclick = () => {
+            domTab.classList.add('active');
+            intlTab.classList.remove('active');
+            domForm.style.display = 'block';
+            intlForm.style.display = 'none';
+        };
+
+        intlTab.onclick = () => {
+            intlTab.classList.add('active');
+            domTab.classList.remove('active');
+            intlForm.style.display = 'block';
+            domForm.style.display = 'none';
+        };
+
+        // Domestic Trip Type
+        const oneWay = document.getElementById('oneWayBtn');
+        const roundTrip = document.getElementById('roundTripBtn');
+        const retDate = document.getElementById('returnDateField');
+        const retTime = document.getElementById('returnTimeField');
+        const retArr = document.getElementById('returnArrivalField');
+
+        oneWay.onclick = () => {
+            oneWay.classList.add('active');
+            roundTrip.classList.remove('active');
+            retDate.style.display = 'none';
+            retTime.style.display = 'none';
+            retArr.style.display = 'none';
+            domForm.querySelector('[name="returnDate"]').removeAttribute('required');
+            domForm.querySelector('[name="returnTime"]').removeAttribute('required');
+            domForm.querySelector('[name="returnArrival"]').removeAttribute('required');
+        };
+
+        roundTrip.onclick = () => {
+            roundTrip.classList.add('active');
+            oneWay.classList.remove('active');
+            retDate.style.display = 'block';
+            retTime.style.display = 'block';
+            retArr.style.display = 'block';
+            domForm.querySelector('[name="returnDate"]').setAttribute('required', 'required');
+            domForm.querySelector('[name="returnTime"]').setAttribute('required', 'required');
+            domForm.querySelector('[name="returnArrival"]').setAttribute('required', 'required');
+        };
+
+        // International Trip Type
+        const oneWayIntl = document.getElementById('oneWayBtnIntl');
+        const roundTripIntl = document.getElementById('roundTripBtnIntl');
+        const retDateIntl = document.getElementById('returnDateFieldIntl');
+        const retTimeIntl = document.getElementById('returnTimeFieldIntl');
+        const retArrIntl = document.getElementById('returnArrivalFieldIntl');
+
+        oneWayIntl.onclick = () => {
+            oneWayIntl.classList.add('active');
+            roundTripIntl.classList.remove('active');
+            retDateIntl.style.display = 'none';
+            retTimeIntl.style.display = 'none';
+            retArrIntl.style.display = 'none';
+            intlForm.querySelector('[name="returnDate"]').removeAttribute('required');
+            intlForm.querySelector('[name="returnTime"]').removeAttribute('required');
+            intlForm.querySelector('[name="returnArrival"]').removeAttribute('required');
+        };
+
+        roundTripIntl.onclick = () => {
+            roundTripIntl.classList.add('active');
+            oneWayIntl.classList.remove('active');
+            retDateIntl.style.display = 'block';
+            retTimeIntl.style.display = 'block';
+            retArrIntl.style.display = 'block';
+            intlForm.querySelector('[name="returnDate"]').setAttribute('required', 'required');
+            intlForm.querySelector('[name="returnTime"]').setAttribute('required', 'required');
+            intlForm.querySelector('[name="returnArrival"]').setAttribute('required', 'required');
+        };
+
+        // Format Date
+        function fd(d) {
+            if (!d) return '';
+            const dt = new Date(d);
+            return `${String(dt.getDate()).padStart(2, '0')}/${String(dt.getMonth() + 1).padStart(2, '0')}/${dt.getFullYear()}`;
+        }
+
+        // Format Time
+        function ft(t) {
+            if (!t) return '';
+            const [h, m] = t.split(':');
+            const hr = parseInt(h);
+            const ap = hr >= 12 ? 'PM' : 'AM';
+            const dh = hr % 12 || 12;
+            return `${dh}:${m} ${ap}`;
+        }
+
+        // Domestic Form
+        domForm.onsubmit = (e) => {
+            e.preventDefault();
+            const f = new FormData(e.target);
+
+            let msg = `${SIG} CONFIRMED BOOKING\n\n`;
+            msg += `Trip ID: #${f.get('tripId')}\n\n`;
+            msg += `PASSENGER:\n`;
+            msg += `Name: ${f.get('title')} ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `DOB: ${fd(f.get('dob'))}`;
+            if (f.get('ffNumber')) msg += `\nFF#: ${f.get('ffNumber')}`;
+
+            msg += `\n\nFLIGHT:\n`;
+            msg += `Airline: ${f.get('airline')}\n`;
+            msg += `Route: ${f.get('origin')} → ${f.get('destination')}\n`;
+            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}\n`;
+            msg += `Arrival: ${ft(f.get('arrivalTime'))}`;
+
+            if (f.get('returnDate') && f.get('returnTime')) {
+                msg += `\nReturn Depart: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
+                if (f.get('returnArrival')) msg += `\nReturn Arrival: ${ft(f.get('returnArrival'))}`;
+            }
+
+            msg += `\nClass: ${f.get('class')}`;
+
+            msg += `\n\nPAYMENT:\n`;
+            msg += `Price: ${f.get('price')}\n`;
+            msg += `Method: ${f.get('paymentMethod')}\n`;
+            msg += `Status: ${f.get('paymentStatus')}`;
+
+            if (f.get('notes')) msg += `\n\nNOTES:\n${f.get('notes')}`;
+
+            window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+
+        // International Form
+        intlForm.onsubmit = (e) => {
+            e.preventDefault();
+            const f = new FormData(e.target);
+
+            let msg = `${SIG} INTERNATIONAL BOOKING REQUEST\n\n`;
+            msg += `Trip ID: ${f.get('tripId')}\n\n`;
+            msg += `PASSENGER:\n`;
+            msg += `Name: ${f.get('title')} ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `DOB: ${fd(f.get('dob'))}\n`;
+            msg += `Passport: ${f.get('passportNumber')}\n`;
+            msg += `Passport Exp: ${fd(f.get('passportExpiry'))}`;
+            if (f.get('visaNumber')) msg += `\nVisa: ${f.get('visaNumber')}`;
+            if (f.get('ffNumber')) msg += `\nFF#: ${f.get('ffNumber')}`;
+
+            msg += `\n\nFLIGHT:`;
+            if (f.get('airline')) msg += `\nAirline: ${f.get('airline')}`;
+            msg += `\nRoute: ${f.get('origin')} → ${f.get('destination')}\n`;
+            msg += `Depart: ${fd(f.get('departDate'))} at ${ft(f.get('departTime'))}\n`;
+            msg += `Arrival: ${ft(f.get('arrivalTime'))}`;
+
+            if (f.get('returnDate') && f.get('returnTime')) {
+                msg += `\nReturn Depart: ${fd(f.get('returnDate'))} at ${ft(f.get('returnTime'))}`;
+                if (f.get('returnArrival')) msg += `\nReturn Arrival: ${ft(f.get('returnArrival'))}`;
+            }
+
+            msg += `\nClass: ${f.get('class')}\n`;
+            msg += `Refund: ${f.get('refundPreference')}`;
+
+            msg += `\n\nPAYMENT:\n`;
+            msg += `Price: ${f.get('price')}\n`;
+            msg += `Method: ${f.get('paymentMethod')}\n`;
+            msg += `Status: ${f.get('paymentStatus')}`;
+
+            if (f.get('notes')) msg += `\n\nNOTES:\n${f.get('notes')}`;
+
+            window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+    </script>
+</body>
+</html>
