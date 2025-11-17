@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Booking Form | Flycharm</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.PNG">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-lime: #D5FE00;
+            --brand-noir: #101010;
+            --brand-dark: #1A1A1A;
+        }
+
+        body {
+            background-color: var(--brand-noir);
+            color: #E0E0E0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-brand-header {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .text-cyber-lime { color: var(--brand-lime); }
+        .bg-cyber-lime { background-color: var(--brand-lime); }
+        .border-cyber-lime { border-color: var(--brand-lime); }
+
+        .form-input {
+            background-color: #1A1A1A;
+            border: 1px solid #333;
+            color: #E0E0E0;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brand-lime);
+            box-shadow: 0 0 0 2px rgba(213, 254, 0, 0.1);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #A0A0A0;
+            font-size: 0.875rem;
+        }
+
+        .submit-btn {
+            background-color: var(--brand-lime);
+            color: var(--brand-noir);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #333;
+            background-color: transparent;
+            color: #A0A0A0;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .tab-button.active {
+            border-color: var(--brand-lime);
+            background-color: var(--brand-lime);
+            color: var(--brand-noir);
+        }
+
+        .passenger-group {
+            background-color: #1A1A1A;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+        }
+
+        .locked-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(16, 16, 16, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Access Code Lock -->
+    <div id="lockOverlay" class="locked-overlay">
+        <div class="text-center max-w-md mx-auto p-8">
+            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-12 mx-auto mb-8">
+            <h1 class="font-brand-header text-3xl mb-4">Internal Booking Portal</h1>
+            <p class="text-gray-400 mb-6">Enter access code to continue</p>
+            <input
+                type="password"
+                id="accessCode"
+                class="form-input text-center text-2xl tracking-widest mb-2"
+                placeholder="••••"
+                maxlength="4"
+                autocomplete="off"
+            >
+            <p id="accessError" class="error-message" style="display: none;">Invalid access code</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" style="display: none;">
+        <div class="container mx-auto px-4 py-8 max-w-4xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-10 mx-auto mb-4">
+                <h1 class="font-brand-header text-4xl mb-2">Internal Booking Form</h1>
+                <p class="text-gray-400">Quick booking confirmations for the team</p>
+            </div>
+
+            <!-- Booking Type Toggle -->
+            <div class="flex gap-0 mb-8 max-w-md mx-auto">
+                <button id="domesticTab" class="tab-button active flex-1 rounded-l-lg">Domestic</button>
+                <button id="internationalTab" class="tab-button flex-1 rounded-r-lg">International</button>
+            </div>
+
+            <!-- Domestic Form -->
+            <form id="domesticForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Trip ID -->
+                    <div>
+                        <label class="form-label">Trip ID</label>
+                        <input type="text" name="tripId" class="form-input" placeholder="e.g., 110" required>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label class="form-label">Customer Phone Number</label>
+                        <input type="tel" name="phoneNumber" class="form-input" placeholder="e.g., +919876543210" required>
+                    </div>
+                </div>
+
+                <!-- Passenger Details -->
+                <div class="passenger-group">
+                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Passenger Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="fullName" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Gender</label>
+                            <select name="gender" class="form-input" required>
+                                <option value="">Select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">DOB (DD/MM/YYYY)</label>
+                            <input type="text" name="dob" class="form-input" placeholder="DD/MM/YYYY" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">FF# (Optional)</label>
+                            <input type="text" name="ffNumber" class="form-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Details -->
+                <div class="passenger-group">
+                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Flight Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="form-label">Airline</label>
+                            <input type="text" name="airline" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Origin (Code)</label>
+                            <input type="text" name="origin" class="form-input" placeholder="e.g., DEL" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Destination (Code)</label>
+                            <input type="text" name="destination" class="form-input" placeholder="e.g., BOM" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Date</label>
+                            <input type="text" name="departDate" class="form-input" placeholder="DD/MM/YYYY" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Time</label>
+                            <input type="text" name="departTime" class="form-input" placeholder="e.g., 10:30 AM" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Return Date (if any)</label>
+                            <input type="text" name="returnDate" class="form-input" placeholder="DD/MM/YYYY">
+                        </div>
+                        <div>
+                            <label class="form-label">Return Time (if any)</label>
+                            <input type="text" name="returnTime" class="form-input" placeholder="e.g., 6:00 PM">
+                        </div>
+                        <div>
+                            <label class="form-label">Class</label>
+                            <select name="class" class="form-input" required>
+                                <option value="Economy">Economy</option>
+                                <option value="Business">Business</option>
+                                <option value="First">First</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Fare Type</label>
+                            <select name="fareType" class="form-input" required>
+                                <option value="Saver">Saver</option>
+                                <option value="Flexi">Flexi</option>
+                                <option value="Value">Value</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="passenger-group">
+                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Payment Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Committed Price</label>
+                            <input type="text" name="price" class="form-input" placeholder="e.g., ₹5,000" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Payment Method</label>
+                            <select name="paymentMethod" class="form-input" required>
+                                <option value="">Select...</option>
+                                <option value="Direct">Direct</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Card">Card</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Payment Status</label>
+                            <select name="paymentStatus" class="form-input" required>
+                                <option value="DUE">DUE</option>
+                                <option value="PAID">PAID</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="form-label">Notes</label>
+                    <textarea name="notes" class="form-input" rows="3" placeholder="Any additional information..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn w-full">
+                    Send to WhatsApp 💬
+                </button>
+            </form>
+
+            <!-- International Form -->
+            <form id="internationalForm" class="space-y-6" style="display: none;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Trip ID -->
+                    <div>
+                        <label class="form-label">Trip ID</label>
+                        <input type="text" name="tripId" class="form-input" placeholder="e.g., 1101" required>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label class="form-label">Customer Phone Number</label>
+                        <input type="tel" name="phoneNumber" class="form-input" placeholder="e.g., +919876543210" required>
+                    </div>
+
+                    <!-- Date -->
+                    <div>
+                        <label class="form-label">Date</label>
+                        <input type="text" name="date" class="form-input" placeholder="DD/MM/YYYY" required>
+                    </div>
+
+                    <!-- By -->
+                    <div>
+                        <label class="form-label">By</label>
+                        <input type="text" name="by" class="form-input" value="Roshan (Fly Charm)" required>
+                    </div>
+                </div>
+
+                <!-- Passenger Details -->
+                <div class="passenger-group">
+                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Passenger Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">First Name (as per Passport)</label>
+                            <input type="text" name="firstName" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="lastName" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">DOB (DD/MM/YYYY)</label>
+                            <input type="text" name="dob" class="form-input" placeholder="DD/MM/YYYY" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Gender</label>
+                            <select name="gender" class="form-input" required>
+                                <option value="">Select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Passport #</label>
+                            <input type="text" name="passportNumber" class="form-input" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Passport Exp. (DD/MM/YYYY)</label>
+                            <input type="text" name="passportExpiry" class="form-input" placeholder="DD/MM/YYYY" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Visa # (if applicable)</label>
+                            <input type="text" name="visaNumber" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">FF# (Optional)</label>
+                            <input type="text" name="ffNumber" class="form-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Details -->
+                <div class="passenger-group">
+                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Flight Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="form-label">Airline (Optional)</label>
+                            <input type="text" name="airline" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">Origin (Code)</label>
+                            <input type="text" name="origin" class="form-input" placeholder="e.g., DEL" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Destination (Code)</label>
+                            <input type="text" name="destination" class="form-input" placeholder="e.g., SYD" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Date (DD/MM/YYYY)</label>
+                            <input type="text" name="departDate" class="form-input" placeholder="DD/MM/YYYY" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Depart Time</label>
+                            <input type="text" name="departTime" class="form-input" placeholder="e.g., 10:30 AM" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Return Date (DD/MM/YYYY)</label>
+                            <input type="text" name="returnDate" class="form-input" placeholder="DD/MM/YYYY">
+                        </div>
+                        <div>
+                            <label class="form-label">Return Time</label>
+                            <input type="text" name="returnTime" class="form-input" placeholder="e.g., 6:00 PM">
+                        </div>
+                        <div>
+                            <label class="form-label">Class</label>
+                            <select name="class" class="form-input" required>
+                                <option value="Economy">Economy</option>
+                                <option value="Business">Business</option>
+                                <option value="First">First</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Refund Preference</label>
+                            <select name="refundPreference" class="form-input" required>
+                                <option value="Saver">Saver</option>
+                                <option value="Flexi">Flexi</option>
+                                <option value="Value">Value</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="passenger-group">
+                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Payment Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Method (Internal)</label>
+                            <select name="paymentMethod" class="form-input" required>
+                                <option value="">Select...</option>
+                                <option value="Direct">Direct</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Cash">Cash</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Client Payment Expectation</label>
+                            <select name="paymentExpectation" class="form-input" required>
+                                <option value="">Select...</option>
+                                <option value="Immediately After Booking">Immediately After Booking</option>
+                                <option value="Credit for 7 Days">Credit for 7 Days</option>
+                                <option value="Credit for 14 Days">Credit for 14 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="form-label">Notes</label>
+                    <textarea name="notes" class="form-input" rows="3" placeholder="Any specific client requests or important information..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn w-full">
+                    Send to WhatsApp 💬
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Access Code Logic
+        const accessCodeInput = document.getElementById('accessCode');
+        const accessError = document.getElementById('accessError');
+        const lockOverlay = document.getElementById('lockOverlay');
+        const mainContent = document.getElementById('mainContent');
+
+        accessCodeInput.addEventListener('input', function(e) {
+            if (e.target.value === '1110') {
+                lockOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                accessError.style.display = 'none';
+            } else if (e.target.value.length === 4) {
+                accessError.style.display = 'block';
+                e.target.value = '';
+            }
+        });
+
+        // Tab Switching
+        const domesticTab = document.getElementById('domesticTab');
+        const internationalTab = document.getElementById('internationalTab');
+        const domesticForm = document.getElementById('domesticForm');
+        const internationalForm = document.getElementById('internationalForm');
+
+        domesticTab.addEventListener('click', () => {
+            domesticTab.classList.add('active');
+            internationalTab.classList.remove('active');
+            domesticForm.style.display = 'block';
+            internationalForm.style.display = 'none';
+        });
+
+        internationalTab.addEventListener('click', () => {
+            internationalTab.classList.add('active');
+            domesticTab.classList.remove('active');
+            internationalForm.style.display = 'block';
+            domesticForm.style.display = 'none';
+        });
+
+        // Domestic Form Submission
+        domesticForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            const message = `*Confirmed Booking ⚡️*
+
+Trip ID: #${formData.get('tripId')}
+
+*Passengers:*
+
+Full Name: ${formData.get('fullName')}
+Gender: ${formData.get('gender')}
+DOB (DD/MM/YYYY): ${formData.get('dob')}
+FF# (Optional): ${formData.get('ffNumber') || 'N/A'}
+
+*Flight:*
+
+Airline: ${formData.get('airline')}
+Origin (Code): ${formData.get('origin')}
+Destination (Code): ${formData.get('destination')}
+Depart Date: ${formData.get('departDate')}
+Depart Time: ${formData.get('departTime')}
+Return Date (if any): ${formData.get('returnDate') || 'N/A'}
+Return Time (if any): ${formData.get('returnTime') || 'N/A'}
+Class: ${formData.get('class')}
+Fare Type: ${formData.get('fareType')}
+Committed Price: ${formData.get('price')}
+Payment Method: ${formData.get('paymentMethod')}
+
+Payment Status: ${formData.get('paymentStatus')}
+Notes: ${formData.get('notes') || 'None'}`;
+
+            const phoneNumber = formData.get('phoneNumber').replace(/\D/g, '');
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // International Form Submission
+        internationalForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            const message = `🌎 *Fly Charm - International Booking Request*
+
+Date: ${formData.get('date')}
+By: ${formData.get('by')}
+Trip ID: ${formData.get('tripId')}
+
+*Passengers:*
+
+First Name: ${formData.get('firstName')}
+Last Name: ${formData.get('lastName')}
+DOB (DD/MM/YYYY): ${formData.get('dob')}
+Gender: ${formData.get('gender')}
+Passport #: ${formData.get('passportNumber')}
+Passport Exp. (DD/MM/YYYY): ${formData.get('passportExpiry')}
+Visa # (if applicable): ${formData.get('visaNumber') || 'N/A'}
+FF# (Optional): ${formData.get('ffNumber') || 'N/A'}
+
+*Flight:*
+
+Airline (Optional): ${formData.get('airline') || 'N/A'}
+Origin (Code): ${formData.get('origin')}
+Destination (Code): ${formData.get('destination')}
+Depart Date: ${formData.get('departDate')}
+Depart Time: ${formData.get('departTime')}
+Return Date: ${formData.get('returnDate') || 'N/A'}
+Return Time: ${formData.get('returnTime') || 'N/A'}
+Class: ${formData.get('class')}
+Refund Preference: ${formData.get('refundPreference')}
+
+*Payment:*
+
+Method (Internal): ${formData.get('paymentMethod')}
+Client Payment Expectation: ${formData.get('paymentExpectation')}
+
+Notes: ${formData.get('notes') || 'None'}`;
+
+            const phoneNumber = formData.get('phoneNumber').replace(/\D/g, '');
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+        });
+    </script>
+</body>
+</html>
