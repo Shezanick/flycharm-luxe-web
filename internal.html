@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internal Booking Form | Flycharm</title>
+    <title>Internal Booking | Flycharm</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="favicon.PNG">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,7 +41,7 @@
             padding: 0.75rem;
             border-radius: 0.5rem;
             width: 100%;
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
 
         .form-input:focus, .form-select:focus {
@@ -76,49 +76,50 @@
         }
 
         .submit-btn:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
         }
 
         .tab-button {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #333;
-            background-color: transparent;
-            color: #A0A0A0;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 600;
-        }
-
-        .tab-button.active {
-            border-color: var(--brand-lime);
-            background-color: var(--brand-lime);
-            color: var(--brand-noir);
-        }
-
-        .toggle-button {
             padding: 0.5rem 1rem;
-            border: 2px solid #333;
+            border: 1px solid #333;
             background-color: transparent;
-            color: #A0A0A0;
+            color: #888;
             cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 600;
+            transition: all 0.15s;
+            font-weight: 500;
             font-size: 0.875rem;
         }
 
-        .toggle-button.active {
+        .tab-button.active {
+            border-color: #555;
+            background-color: #1A1A1A;
+            color: #E0E0E0;
+        }
+
+        .trip-toggle {
+            padding: 0.875rem 2rem;
+            border: 2px solid #333;
+            background-color: transparent;
+            color: #A0A0A0;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .trip-toggle.active {
             border-color: var(--brand-lime);
             background-color: var(--brand-lime);
             color: var(--brand-noir);
         }
 
-        .passenger-group {
+        .section-card {
             background-color: #1A1A1A;
             padding: 1.5rem;
             border-radius: 0.5rem;
             margin-bottom: 1rem;
-            border: 1px solid #333;
+            border: 1px solid #2A2A2A;
         }
 
         .locked-overlay {
@@ -168,42 +169,40 @@
 
     <!-- Main Content -->
     <div id="mainContent" style="display: none;">
-        <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="container mx-auto px-4 py-8 max-w-3xl">
             <!-- Header -->
             <div class="text-center mb-8">
-                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-10 mx-auto mb-4">
-                <h1 class="font-brand-header text-4xl mb-2">Internal Booking Form</h1>
-                <p class="text-gray-400">Quick booking confirmations for the team</p>
+                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" class="h-8 mx-auto mb-4">
+                <h1 class="font-brand-header text-3xl mb-1">Internal Booking</h1>
+                <p class="text-gray-500 text-sm">Fast. Smart. Efficient.</p>
             </div>
 
-            <!-- Booking Type Toggle -->
-            <div class="flex gap-0 mb-8 max-w-md mx-auto">
+            <!-- Booking Type Toggle (Small) -->
+            <div class="flex gap-0 mb-6 max-w-xs mx-auto">
                 <button id="domesticTab" class="tab-button active flex-1 rounded-l-lg">Domestic</button>
                 <button id="internationalTab" class="tab-button flex-1 rounded-r-lg">International</button>
             </div>
 
             <!-- Domestic Form -->
-            <form id="domesticForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Trip ID -->
-                    <div>
-                        <label class="form-label">Trip ID</label>
-                        <input type="text" name="tripId" class="form-input" placeholder="e.g., 110" required>
-                    </div>
+            <form id="domesticForm" class="space-y-5">
+                <!-- Trip ID -->
+                <div>
+                    <label class="form-label">Trip ID</label>
+                    <input type="text" name="tripId" class="form-input" placeholder="110" required autofocus>
                 </div>
 
-                <!-- Trip Type Toggle -->
+                <!-- Trip Type Toggle (Large & Prominent) -->
                 <div>
                     <label class="form-label">Trip Type</label>
                     <div class="flex gap-0">
-                        <button type="button" id="oneWayBtn" class="toggle-button active flex-1 rounded-l-lg">One Way</button>
-                        <button type="button" id="roundTripBtn" class="toggle-button flex-1 rounded-r-lg">Round Trip</button>
+                        <button type="button" id="oneWayBtn" class="trip-toggle active flex-1 rounded-l-lg">One Way</button>
+                        <button type="button" id="roundTripBtn" class="trip-toggle flex-1 rounded-r-lg">Round Trip</button>
                     </div>
                 </div>
 
                 <!-- Passenger Details -->
-                <div class="passenger-group">
-                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Passenger Details</h3>
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Passenger</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Full Name</label>
@@ -230,8 +229,8 @@
                 </div>
 
                 <!-- Flight Details -->
-                <div class="passenger-group">
-                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Flight Details</h3>
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Flight</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline</label>
@@ -276,8 +275,8 @@
                 </div>
 
                 <!-- Payment Details -->
-                <div class="passenger-group">
-                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Payment Details</h3>
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Payment</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Committed Price</label>
@@ -287,9 +286,10 @@
                             <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
                                 <option value="">Select</option>
-                                <option value="Shazan CC">Shazan CC</option>
-                                <option value="Awacious Credit Card">Awacious Credit Card</option>
-                                <option value="Shazan Friend">Shazan Friend</option>
+                                <option value="Shezan CC">Shezan CC</option>
+                                <option value="Shezan's Friend">Shezan's Friend</option>
+                                <option value="Avesh SBI">Avesh SBI</option>
+                                <option value="Mulla Salim">Mulla Salim</option>
                                 <option value="Other">Other</option>
                             </select>
                         </div>
@@ -305,13 +305,8 @@
 
                 <!-- Notes -->
                 <div>
-                    <label class="form-label">Home Ticket</label>
-                    <input type="text" name="homeTicket" class="form-input" placeholder="Optional">
-                </div>
-
-                <div>
-                    <label class="form-label">Additional Notes</label>
-                    <textarea name="notes" class="form-input" rows="2" placeholder="Optional"></textarea>
+                    <label class="form-label">Notes (Optional)</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn w-full">
@@ -320,34 +315,31 @@
             </form>
 
             <!-- International Form -->
-            <form id="internationalForm" class="space-y-6" style="display: none;">
+            <form id="internationalForm" class="space-y-5" style="display: none;">
+                <!-- Trip ID and Date -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="form-label">Trip ID</label>
-                        <input type="text" name="tripId" class="form-input" placeholder="e.g., 1101" required>
+                        <input type="text" name="tripId" class="form-input" placeholder="1101" required>
                     </div>
                     <div>
                         <label class="form-label">Date</label>
                         <input type="date" name="date" class="form-input" required>
                     </div>
-                    <div class="md:col-span-2">
-                        <label class="form-label">By</label>
-                        <input type="text" name="by" class="form-input" value="Roshan (Fly Charm)" required>
-                    </div>
                 </div>
 
-                <!-- Trip Type Toggle -->
+                <!-- Trip Type Toggle (Large & Prominent) -->
                 <div>
                     <label class="form-label">Trip Type</label>
                     <div class="flex gap-0">
-                        <button type="button" id="oneWayBtnIntl" class="toggle-button active flex-1 rounded-l-lg">One Way</button>
-                        <button type="button" id="roundTripBtnIntl" class="toggle-button flex-1 rounded-r-lg">Round Trip</button>
+                        <button type="button" id="oneWayBtnIntl" class="trip-toggle active flex-1 rounded-l-lg">One Way</button>
+                        <button type="button" id="roundTripBtnIntl" class="trip-toggle flex-1 rounded-r-lg">Round Trip</button>
                     </div>
                 </div>
 
                 <!-- Passenger Details -->
-                <div class="passenger-group">
-                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Passenger Details</h3>
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Passenger</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">First Name (as per Passport)</label>
@@ -390,8 +382,8 @@
                 </div>
 
                 <!-- Flight Details -->
-                <div class="passenger-group">
-                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Flight Details</h3>
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Flight</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline (Optional)</label>
@@ -444,16 +436,17 @@
                 </div>
 
                 <!-- Payment Details -->
-                <div class="passenger-group">
-                    <h3 class="text-cyber-lime font-brand-header text-xl mb-4">Payment Details</h3>
+                <div class="section-card">
+                    <h3 class="text-cyber-lime font-brand-header text-lg mb-4">Payment</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Method (Internal)</label>
                             <select name="paymentMethod" class="form-select" required>
                                 <option value="">Select</option>
-                                <option value="Shazan CC">Shazan CC</option>
-                                <option value="Awacious Credit Card">Awacious Credit Card</option>
-                                <option value="Shazan Friend">Shazan Friend</option>
+                                <option value="Shezan CC">Shezan CC</option>
+                                <option value="Shezan's Friend">Shezan's Friend</option>
+                                <option value="Avesh SBI">Avesh SBI</option>
+                                <option value="Mulla Salim">Mulla Salim</option>
                                 <option value="Other">Other</option>
                             </select>
                         </div>
@@ -471,13 +464,8 @@
 
                 <!-- Notes -->
                 <div>
-                    <label class="form-label">Home Ticket</label>
-                    <input type="text" name="homeTicket" class="form-input" placeholder="Optional">
-                </div>
-
-                <div>
-                    <label class="form-label">Additional Notes</label>
-                    <textarea name="notes" class="form-input" rows="2" placeholder="Optional"></textarea>
+                    <label class="form-label">Notes (Optional)</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn w-full">
@@ -489,6 +477,7 @@
 
     <script>
         const PHONE_NUMBER = '9016';
+        const SIGNATURE = '✓'; // Subtle checkmark to identify internal form usage
 
         // Access Code Logic
         const accessCodeInput = document.getElementById('accessCode');
@@ -596,7 +585,7 @@
             e.preventDefault();
             const formData = new FormData(e.target);
 
-            let message = `Confirmed Booking\n\nTrip ID: #${formData.get('tripId')}\n\nPassengers:\n\nFull Name: ${formData.get('fullName')}\nGender: ${formData.get('gender')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}`;
+            let message = `Confirmed Booking ${SIGNATURE}\n\nTrip ID: #${formData.get('tripId')}\n\nPassengers:\n\nFull Name: ${formData.get('fullName')}\nGender: ${formData.get('gender')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}`;
 
             if (formData.get('ffNumber')) {
                 message += `\nFF#: ${formData.get('ffNumber')}`;
@@ -609,10 +598,6 @@
             }
 
             message += `\nClass: ${formData.get('class')}\nCommitted Price: ${formData.get('price')}\nPayment Method: ${formData.get('paymentMethod')}\n\nPayment Status: ${formData.get('paymentStatus')}`;
-
-            if (formData.get('homeTicket')) {
-                message += `\nHome Ticket: ${formData.get('homeTicket')}`;
-            }
 
             if (formData.get('notes')) {
                 message += `\nNotes: ${formData.get('notes')}`;
@@ -628,7 +613,7 @@
             e.preventDefault();
             const formData = new FormData(e.target);
 
-            let message = `Fly Charm - International Booking Request\n\nDate: ${formatDate(formData.get('date'))}\nBy: ${formData.get('by')}\nTrip ID: ${formData.get('tripId')}\n\nPassengers:\n\nFirst Name: ${formData.get('firstName')}\nLast Name: ${formData.get('lastName')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}\nGender: ${formData.get('gender')}\nPassport #: ${formData.get('passportNumber')}\nPassport Exp. (DD/MM/YYYY): ${formatDate(formData.get('passportExpiry'))}`;
+            let message = `Fly Charm - International Booking Request ${SIGNATURE}\n\nDate: ${formatDate(formData.get('date'))}\nTrip ID: ${formData.get('tripId')}\n\nPassengers:\n\nFirst Name: ${formData.get('firstName')}\nLast Name: ${formData.get('lastName')}\nDOB (DD/MM/YYYY): ${formatDate(formData.get('dob'))}\nGender: ${formData.get('gender')}\nPassport #: ${formData.get('passportNumber')}\nPassport Exp. (DD/MM/YYYY): ${formatDate(formData.get('passportExpiry'))}`;
 
             if (formData.get('visaNumber')) {
                 message += `\nVisa #: ${formData.get('visaNumber')}`;
@@ -652,12 +637,8 @@
 
             message += `\nClass: ${formData.get('class')}\nRefund Preference: ${formData.get('refundPreference')}\n\nPayment:\n\nMethod (Internal): ${formData.get('paymentMethod')}\nClient Payment Expectation: ${formData.get('paymentExpectation')}`;
 
-            if (formData.get('homeTicket')) {
-                message += `\n\nHome Ticket: ${formData.get('homeTicket')}`;
-            }
-
             if (formData.get('notes')) {
-                message += `\nNotes: ${formData.get('notes')}`;
+                message += `\n\nNotes: ${formData.get('notes')}`;
             }
 
             const encodedMessage = encodeURIComponent(message);
