@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyCharm Drops - Live Flight Deals</title>
+
+    <meta name="description" content="Insane flight deals updated daily. Delhi, Mumbai, Ahmedabad.">
+    <link rel="icon" type="image/png" href="favicon.PNG">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --lime: #D5FE00;
+            --dark: #101010;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: #E0E0E0;
+        }
+
+        h1, h2 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .deal-card {
+            background: #1A1A1A;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .deal-card:hover {
+            border-color: #3A3A3A;
+            transform: translateY(-2px);
+        }
+
+        .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--lime);
+        }
+
+        .btn {
+            background: var(--lime);
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(213, 254, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-black/80 backdrop-blur-lg border-b border-gray-800 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html">
+                <img src="Flycharm-logo-clear-w.png" alt="FlyCharm" class="h-8">
+            </a>
+            <a href="index.html#cta" class="btn text-sm">Join Waitlist</a>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="max-w-6xl mx-auto px-6 py-20">
+
+        <!-- Title -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-red-500/10 border border-red-500/30 rounded-full px-4 py-2 mb-6">
+                <span class="text-red-400 text-sm font-bold">🔥 LIVE DEALS</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                FlyCharm Drops
+            </h1>
+
+            <p class="text-xl text-gray-400 mb-8">
+                Insane flight deals updated daily
+            </p>
+
+            <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94"
+               class="text-sm text-gray-500 hover:text-lime-400 border border-gray-800 hover:border-lime-400 rounded-full px-6 py-3 inline-block transition">
+                🔔 Get Deal Alerts
+            </a>
+        </div>
+
+        <!-- Deals Grid -->
+        <div id="deals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Deals rendered here by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="text-center py-20 text-gray-600" style="display: none;">
+            <div class="text-6xl mb-4">✈️</div>
+            <p class="text-xl">No deals right now. Check back at 9 AM IST!</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-10 text-center">
+        <div class="max-w-6xl mx-auto px-6">
+            <p class="text-gray-600 text-sm">
+                © 2025 FlyCharm • Built by <a href="https://wchstudios.com" class="hover:text-white">WCH Studios</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // DEALS DATA - EDIT THIS TO UPDATE DEALS
+        // ==========================================
+
+        const deals = [
+            {
+                route: "Delhi → Dubai",
+                price: "₹8,999",
+                originalPrice: "₹18,500",
+                date: "Dec 15",
+                type: "One Way",
+                bookingUrl: "https://www.airindia.com"
+            },
+            {
+                route: "Mumbai → Singapore",
+                price: "₹15,999",
+                originalPrice: "₹35,000",
+                date: "Dec 20-28",
+                type: "Round Trip",
+                bookingUrl: "https://www.singaporeair.com"
+            },
+            {
+                route: "Delhi → Bangalore",
+                price: "₹3,299",
+                originalPrice: "₹7,200",
+                date: "Nov 28",
+                type: "One Way",
+                bookingUrl: "https://www.airvistara.com"
+            },
+            {
+                route: "Mumbai → Goa",
+                price: "₹2,499",
+                originalPrice: "₹5,800",
+                date: "Nov 25",
+                type: "One Way",
+                bookingUrl: "https://www.goindigo.in"
+            },
+            {
+                route: "Ahmedabad → Bangkok",
+                price: "₹12,499",
+                originalPrice: "₹28,000",
+                date: "Dec 10-17",
+                type: "Round Trip",
+                bookingUrl: "https://www.emirates.com"
+            },
+            {
+                route: "Delhi → London",
+                price: "₹32,999",
+                originalPrice: "₹68,000",
+                date: "Dec 15-22",
+                type: "Round Trip",
+                bookingUrl: "https://www.britishairways.com"
+            }
+        ];
+
+        // ==========================================
+        // RENDER DEALS
+        // ==========================================
+
+        const whatsapp = '+919998156651';
+
+        function calculateSavings(price, original) {
+            const p = parseInt(price.replace(/[^0-9]/g, ''));
+            const o = parseInt(original.replace(/[^0-9]/g, ''));
+            return Math.round(((o - p) / o) * 100);
+        }
+
+        function renderDeals() {
+            const grid = document.getElementById('deals-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            if (deals.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.innerHTML = deals.map(deal => {
+                const savings = calculateSavings(deal.price, deal.originalPrice);
+                const message = `Hi! I saw the ${deal.route} deal (${deal.price}) on FlyCharm Drops. Can you help me book this?`;
+                const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+
+                return `
+                    <div class="deal-card">
+                        <!-- Route -->
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            ${deal.route}
+                        </h3>
+
+                        <!-- Date & Type -->
+                        <p class="text-sm text-gray-500 mb-6">
+                            ${deal.date} • ${deal.type}
+                        </p>
+
+                        <!-- Price -->
+                        <div class="mb-6">
+                            <div class="price mb-2">${deal.price}</div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-500 line-through text-sm">${deal.originalPrice}</span>
+                                <span class="bg-lime-400/10 text-lime-400 text-xs font-bold px-2 py-1 rounded">
+                                    ${savings}% off
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- CTAs -->
+                        <div class="space-y-2">
+                            <a href="${waLink}" class="btn w-full text-center block">
+                                Book with FlyCharm
+                            </a>
+                            <a href="${deal.bookingUrl}" target="_blank"
+                               class="text-center block text-sm text-gray-400 hover:text-white py-2 transition">
+                                or book direct →
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize
+        renderDeals();
+    </script>
+
+</body>
+</html>
