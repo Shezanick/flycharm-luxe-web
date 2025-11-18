@@ -111,13 +111,12 @@
 
         .economy-badge {
             color: #FFFFFF;
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
         }
 
         .business-badge {
-            color: var(--lime);
-            border: 1.5px solid var(--lime);
-            box-shadow: 0 4px 20px rgba(213, 254, 0, 0.3);
+            color: #FFFFFF;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
         }
 
         .date-badge {
@@ -138,7 +137,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 48px;
             font-weight: 900;
-            color: #FFFFFF;
+            color: var(--lime);
             line-height: 1;
             letter-spacing: -0.02em;
         }
@@ -163,6 +162,19 @@
         .btn-primary:hover {
             transform: scale(1.08);
             box-shadow: 0 8px 40px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-secondary {
+            color: #A0A0A0;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            color: #E0E0E0;
+            text-decoration: underline;
         }
 
         /* Filter Pills */
@@ -348,11 +360,11 @@
             </h1>
 
             <p class="text-2xl md:text-3xl text-gray-300 mb-4 max-w-4xl mx-auto leading-relaxed">
-                Flight deals so good, they feel like typos.
+                The craziest flight deals drop here first.
             </p>
 
             <p class="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
-                But they're not. We just find the deals before anyone else does.
+                Book directly or let FlyCharm handle it, same price without the stress.
             </p>
 
             <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94"
@@ -733,15 +745,13 @@ Can you help me book this?`;
                                 </div>
                             </div>
 
-                            <div class="space-y-4">
-                                <p class="text-xs text-center text-gray-500">
-                                    Our experts help you book this exact deal, hassle-free.
-                                </p>
+                            <div class="space-y-3">
                                 <a href="${waLink}" target="_blank" class="btn-primary w-full text-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                    </svg>
-                                    <span>Book with our help</span>
+                                    ✨
+                                    <span>Book with FlyCharm</span>
+                                </a>
+                                <a href="${deal.bookingUrl}" target="_blank" class="btn-secondary text-center block py-2">
+                                    or book direct →
                                 </a>
                             </div>
                         </div>
