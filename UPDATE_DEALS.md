@@ -1,38 +1,44 @@
-# How to Update Deals - JSON Edition 🚀
+# 🔥 How to Update FlyCharm Drops Daily
 
-## ✨ New System: Edit One File, Update Everything
+**Time Required:** 10-15 minutes
+**When:** Every day at 9 PM IST
+**File to Edit:** `drops-simple.html`
 
-All deals are now in **`deals.json`** - edit this file daily at 9 PM IST.
+---
+
+## ✨ One File. That's It.
+
+Everything is in **`drops-simple.html`** - edit the deals array, save, refresh. Done.
 
 ---
 
 ## 📝 Quick Start (30 Seconds)
 
-1. Open `deals.json`
-2. Edit the deals
-3. Save
-4. Refresh the website
-5. Done ✅
+1. Open `drops-simple.html`
+2. Find the `allDeals` array (around line 335)
+3. Edit the deals
+4. Save the file
+5. Refresh the website → Done ✅
 
 ---
 
 ## 📋 Deal Template (Copy & Paste)
 
-```json
+```javascript
 {
-    "from": "Mumbai",
-    "route": "Mumbai → Paris",
-    "destination": "France",
-    "price": "₹45,000",
-    "originalPrice": "₹95,000",
-    "travelDates": "15 Mar - 22 Mar 2026",
-    "departDate": "15 Mar 2026",
-    "returnDate": "22 Mar 2026",
-    "stops": "1 stop",
-    "cabin": "Economy",
-    "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop",
-    "bookingUrl": "https://www.skyscanner.co.in"
-}
+    from: "Mumbai",
+    route: "Mumbai → Paris",
+    destination: "France",
+    price: "₹45,000",
+    originalPrice: "₹95,000",
+    travelDates: "15 Mar - 22 Mar 2026",
+    departDate: "15 Mar 2026",
+    returnDate: "22 Mar 2026",
+    stops: "1 stop",
+    cabin: "Economy",
+    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop",
+    bookingUrl: "https://www.skyscanner.co.in"
+},
 ```
 
 **Important:** Don't forget the comma after `}` unless it's the last deal!
@@ -58,6 +64,93 @@ All deals are now in **`deals.json`** - edit this file daily at 9 PM IST.
 
 ---
 
+## 📍 Where to Edit
+
+Open `drops-simple.html` and scroll to around **line 335**. You'll see:
+
+```javascript
+<script>
+    // ==========================================
+    // DEALS DATA - Update this array daily at 9 PM IST
+    // ==========================================
+
+    const whatsapp = '+919998156651';
+    let currentFilter = 'all';
+
+    const allDeals = [
+        {
+            from: "Mumbai",
+            route: "Mumbai → Athens",
+            destination: "Greece",
+            // ... rest of deal
+        },
+        {
+            from: "Delhi",
+            // ... another deal
+        }
+        // ← Add/remove/edit deals here
+    ];
+</script>
+```
+
+---
+
+## ✈️ Adding a New Deal
+
+1. Find the `allDeals = [` array
+2. Scroll to the last deal (before the `];`)
+3. Add a comma after the last deal's closing `}`
+4. Paste your new deal
+5. Save
+
+**Example:**
+
+```javascript
+const allDeals = [
+    {
+        from: "Mumbai",
+        route: "Mumbai → Athens",
+        // ...existing deal...
+    },
+    {
+        from: "Delhi",
+        route: "New Delhi → Paris",  // ← Your new deal
+        destination: "France",
+        price: "₹48,500",
+        originalPrice: "₹98,000",
+        travelDates: "20 Mar - 30 Mar 2026",
+        departDate: "20 Mar 2026",
+        returnDate: "30 Mar 2026",
+        stops: "1 stop",
+        cabin: "Economy",
+        image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop",
+        bookingUrl: "https://www.skyscanner.co.in"
+    }
+];
+```
+
+---
+
+## ❌ Removing a Deal
+
+Just delete the entire `{ },` block:
+
+```javascript
+const allDeals = [
+    {
+        ...keep this deal...
+    },
+    {
+        ...DELETE THIS ENTIRE BLOCK...
+    },  // ← Delete this comma too if it's now the last deal!
+    {
+        ...keep this deal...
+    }
+];
+```
+
+---
+
 ## 📅 Date Formatting (CRITICAL)
 
 **Display Format** (`travelDates`):
@@ -69,10 +162,10 @@ All deals are now in **`deals.json`** - edit this file daily at 9 PM IST.
 - Format: `"DD MMM YYYY"`
 
 **Examples:**
-```json
-"travelDates": "10 Feb - 24 Feb 2026",
-"departDate": "10 Feb 2026",
-"returnDate": "24 Feb 2026"
+```javascript
+travelDates: "10 Feb - 24 Feb 2026",
+departDate: "10 Feb 2026",
+returnDate: "24 Feb 2026"
 ```
 
 ---
@@ -81,30 +174,36 @@ All deals are now in **`deals.json`** - edit this file daily at 9 PM IST.
 
 **Quick Image Library:**
 
-```json
+```javascript
 // Paris
-"image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop"
 
 // Dubai
-"image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop"
 
 // London
-"image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop"
 
 // New York
-"image": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop"
 
 // Bangkok
-"image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&h=600&fit=crop"
 
 // Singapore
-"image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&h=600&fit=crop"
 
 // Tokyo
-"image": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=600&fit=crop"
 
 // Bali
-"image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&h=600&fit=crop"
+image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&h=600&fit=crop"
+
+// Greece (Athens)
+image: "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop"
+
+// Vietnam (Hanoi)
+image: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=600&fit=crop"
 ```
 
 **To find new images:**
@@ -128,58 +227,6 @@ Your `from` field **must** match one of these exactly:
 - `"Kochi"`
 
 **Case-sensitive!** Use capital first letter.
-
----
-
-## ✈️ Adding a New Deal
-
-Open `deals.json` and add your deal **before** the last `]`:
-
-```json
-[
-    {
-        "from": "Mumbai",
-        "route": "Mumbai → Athens",
-        ...existing deal...
-    },
-    {
-        "from": "Delhi",
-        "route": "New Delhi → Paris",
-        "destination": "France",
-        "price": "₹48,500",
-        "originalPrice": "₹98,000",
-        "travelDates": "20 Mar - 30 Mar 2026",
-        "departDate": "20 Mar 2026",
-        "returnDate": "30 Mar 2026",
-        "stops": "1 stop",
-        "cabin": "Economy",
-        "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop",
-        "bookingUrl": "https://www.skyscanner.co.in"
-    }
-]
-```
-
-**Don't forget the comma** after the previous deal's `}`!
-
----
-
-## ❌ Removing a Deal
-
-Just delete the entire `{ }` block:
-
-```json
-[
-    {
-        ...keep this deal...
-    },
-    {
-        ...DELETE THIS ENTIRE BLOCK...
-    },  ← Don't forget to remove this comma too if it's now the last deal!
-    {
-        ...keep this deal...
-    }
-]
-```
 
 ---
 
@@ -223,7 +270,70 @@ Dates: 15 Mar - 22 Mar 2026
 Can you help me book this?
 ```
 
-**All data pulled automatically from the JSON!**
+**All data pulled automatically from the deals array!**
+
+---
+
+## 🐛 Common Mistakes
+
+### ❌ Missing comma
+```javascript
+{
+    from: "Delhi",
+    price: "₹50,000"
+}  // ← Need comma here!
+{
+    from: "Mumbai"
+```
+
+### ✅ Fixed
+```javascript
+{
+    from: "Delhi",
+    price: "₹50,000"
+},  // ← Comma added!
+{
+    from: "Mumbai"
+```
+
+---
+
+### ❌ Wrong date format
+```javascript
+travelDates: "15/03/2026",  // ← Wrong!
+departDate: "March 15, 2026"  // ← Wrong!
+```
+
+### ✅ Fixed
+```javascript
+travelDates: "15 Mar - 22 Mar 2026",  // ← Correct!
+departDate: "15 Mar 2026"  // ← Correct!
+```
+
+---
+
+### ❌ Wrong city name
+```javascript
+from: "delhi",  // ← Lowercase won't work!
+from: "New Delhi"  // ← Too specific!
+```
+
+### ✅ Fixed
+```javascript
+from: "Delhi"  // ← Perfect!
+```
+
+---
+
+### ❌ Using hyphen instead of arrow
+```javascript
+route: "Mumbai - Paris"  // ← Wrong!
+```
+
+### ✅ Fixed
+```javascript
+route: "Mumbai → Paris"  // ← Use arrow symbol →
+```
 
 ---
 
@@ -239,120 +349,44 @@ Can you help me book this?
 
 ---
 
-## 🧪 Testing Your Changes
-
-After editing `deals.json`:
-
-1. **Save the file** (Ctrl+S or Cmd+S)
-2. **Open/refresh** drops-simple.html in browser
-3. **Check loading** - Should show 3 skeleton cards briefly
-4. **Verify deals appear** - All your deals should render
-5. **Test filters** - Click each city filter
-6. **Test CTA** - Click "Book with FlyCharm" to check WhatsApp message
-7. **Mobile test** - Check on phone
-
----
-
-## 🐛 Common Mistakes
-
-### ❌ Missing comma
-```json
-{
-    "from": "Delhi",
-    "price": "₹50,000"
-}  ← Need comma here!
-{
-    "from": "Mumbai"
-```
-
-### ✅ Fixed
-```json
-{
-    "from": "Delhi",
-    "price": "₹50,000"
-},  ← Comma added!
-{
-    "from": "Mumbai"
-```
-
----
-
-### ❌ Wrong date format
-```json
-"travelDates": "15/03/2026"  ← Wrong!
-"departDate": "March 15, 2026"  ← Wrong!
-```
-
-### ✅ Fixed
-```json
-"travelDates": "15 Mar - 22 Mar 2026"  ← Correct!
-"departDate": "15 Mar 2026"  ← Correct!
-```
-
----
-
-### ❌ Wrong city name
-```json
-"from": "delhi"  ← Lowercase won't work!
-"from": "New Delhi"  ← Too specific!
-```
-
-### ✅ Fixed
-```json
-"from": "Delhi"  ← Perfect!
-```
-
----
-
 ## 🚀 Daily Workflow
 
 **Every day at 9 PM:**
 
-1. Open `deals.json`
-2. Remove expired deals (old travel dates)
-3. Add 2-3 new deals
-4. Save file
-5. Deploy/push to website
-6. Post to social media
+1. Open `drops-simple.html`
+2. Scroll to `allDeals` array (line ~335)
+3. Remove expired deals (old travel dates)
+4. Add 2-3 new deals from Skyscanner
+5. Save file
+6. Refresh website to verify
+7. Push to GitHub/deploy
+8. Post to social media
 
 **Time needed:** 10-15 minutes
 
 ---
 
-## 📊 JSON File Structure
+## 🧪 Testing Your Changes
 
-```json
-[
-    {
-        ...deal 1...
-    },
-    {
-        ...deal 2...
-    },
-    {
-        ...deal 3...
-    }
-]
-```
+After editing `drops-simple.html`:
 
-- Starts with `[`
-- Ends with `]`
-- Each deal wrapped in `{ }`
-- Commas between deals
-- No comma after last deal
+1. **Save the file** (Ctrl+S or Cmd+S)
+2. **Open/refresh** in browser
+3. **Verify deals appear** - All your deals should render
+4. **Test filters** - Click each city filter
+5. **Test CTA** - Click "Book with FlyCharm" to check WhatsApp message
+6. **Mobile test** - Check on phone
 
 ---
 
 ## ✨ That's It!
 
-**One file. One format. Infinite deals.**
+**One file. One array. Infinite deals.**
 
-Edit `deals.json` → Save → Refresh → Done.
-
-No HTML. No JavaScript. Just clean JSON data.
+Edit the `allDeals` array in `drops-simple.html` → Save → Refresh → Done.
 
 **Stupidly simple. Just like the deals.** 🔥
 
 ---
 
-**Questions?** Check `deals.json` for examples of all 15 current deals.
+**Questions?** Check the existing deals in the `allDeals` array for examples.
