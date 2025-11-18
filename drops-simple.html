@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlyCharm Drops - Stupidly Good Flight Deals</title>
 
-    <meta name="description" content="The kind of flight deals that make you question if we're running a charity. We're not. We're just better at this.">
+    <meta name="description" content="Flight deals so good, they feel like typos. But they're not. We just know where to look.">
     <link rel="icon" type="image/png" href="favicon.PNG">
 
     <!-- Fonts -->
@@ -31,29 +31,48 @@
 
         /* Premium Deal Card */
         .deal-card {
-            background: #1A1A1A;
+            background: linear-gradient(135deg, #1F1F1F 0%, #1A1A1A 100%);
             border: 1px solid #2A2A2A;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+        }
+
+        .deal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(213, 254, 0, 0.03), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .deal-card:hover::before {
+            opacity: 1;
         }
 
         .deal-card:hover {
             border-color: var(--lime);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(213, 254, 0, 0.15);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(213, 254, 0, 0.2),
+                        0 0 0 1px rgba(213, 254, 0, 0.1);
         }
 
         .deal-image {
             width: 100%;
-            height: 200px;
+            height: 240px;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
         }
 
         .deal-card:hover .deal-image {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .deal-image-wrapper {
@@ -63,53 +82,65 @@
 
         .class-badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 6px 12px;
-            border-radius: 20px;
+            top: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 8px 16px;
+            border-radius: 30px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             z-index: 10;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .economy-badge { color: #A0A0A0; border: 1px solid #444; }
-        .business-badge { color: var(--lime); border: 1px solid var(--lime); }
+        .economy-badge {
+            color: #FFFFFF;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .business-badge {
+            color: var(--lime);
+            border: 1.5px solid var(--lime);
+            box-shadow: 0 4px 20px rgba(213, 254, 0, 0.3);
+        }
 
         .price {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 42px;
-            font-weight: 800;
+            font-size: 48px;
+            font-weight: 900;
             color: var(--lime);
             line-height: 1;
+            letter-spacing: -0.02em;
         }
 
         .btn {
             background: var(--lime);
             color: #000;
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-radius: 100px;
             font-weight: 700;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
             font-size: 15px;
+            box-shadow: 0 4px 20px rgba(213, 254, 0, 0.3);
         }
 
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
+            transform: scale(1.08);
+            box-shadow: 0 8px 40px rgba(213, 254, 0, 0.5);
         }
 
         /* City Filter Pills */
         .filter-pill {
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 100px;
-            border: 1px solid #3A3A3A;
-            background: transparent;
+            border: 1.5px solid #3A3A3A;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
             color: #A0A0A0;
             font-size: 14px;
             font-weight: 600;
@@ -121,12 +152,28 @@
         .filter-pill:hover {
             border-color: #555;
             color: #E0E0E0;
+            background: rgba(40, 40, 40, 0.9);
         }
 
         .filter-pill.active {
             background: var(--lime);
             color: #000;
             border-color: var(--lime);
+            box-shadow: 0 4px 20px rgba(213, 254, 0, 0.3);
+        }
+
+        /* Date Badge */
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(213, 254, 0, 0.1);
+            border: 1px solid rgba(213, 254, 0, 0.3);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--lime);
         }
 
         /* Gradient Overlay on Images */
@@ -136,8 +183,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 50%;
-            background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
+            height: 60%;
+            background: linear-gradient(to top, rgba(26, 26, 26, 1) 0%, rgba(26, 26, 26, 0.8) 40%, transparent 100%);
             pointer-events: none;
         }
 
@@ -150,12 +197,34 @@
         .filters-container::-webkit-scrollbar {
             display: none;
         }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #1A1A1A 25%, #242424 50%, #1A1A1A 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Destination label */
+        .destination-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--lime);
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
-    <header class="sticky top-0 bg-black/90 backdrop-blur-xl border-b border-gray-800 z-50">
+    <header class="sticky top-0 bg-black/95 backdrop-blur-xl border-b border-gray-800 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html">
                 <img src="Flycharm-logo-clear-w.png" alt="FlyCharm" class="h-8">
@@ -215,12 +284,21 @@
                 <button class="filter-pill" data-city="Hyderabad" onclick="filterByCity('Hyderabad')">
                     Hyderabad
                 </button>
+                <button class="filter-pill" data-city="Kolkata" onclick="filterByCity('Kolkata')">
+                    Kolkata
+                </button>
+                <button class="filter-pill" data-city="Kochi" onclick="filterByCity('Kochi')">
+                    Kochi
+                </button>
             </div>
         </div>
 
         <!-- Deals Grid -->
         <div id="deals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Deals rendered here by JavaScript -->
+            <!-- Loading state -->
+            <div class="deal-card skeleton" style="height: 600px;"></div>
+            <div class="deal-card skeleton" style="height: 600px;"></div>
+            <div class="deal-card skeleton" style="height: 600px;"></div>
         </div>
 
         <!-- Empty State -->
@@ -248,198 +326,34 @@
 
     <script>
         // ==========================================
-        // DEALS DATA - EDIT THIS TO UPDATE DEALS
-        // ==========================================
-
-        const deals = [
-            {
-                from: "Mumbai",
-                route: "Mumbai → Athens",
-                destination: "Greece",
-                price: "₹1,04,987",
-                originalPrice: "₹2,10,000",
-                date: "Oct-Nov",
-                type: "1 stop",
-                cabin: "Business",
-                image: "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop",  // Parthenon
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Delhi",
-                route: "New Delhi → Washington",
-                destination: "United States",
-                price: "₹62,586",
-                originalPrice: "₹2,10,000",
-                date: "Jan-Feb, Dec",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1617581629397-a72507c3de9e?w=800&h=600&fit=crop",  // US Capitol
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Hyderabad",
-                route: "Hyderabad → Hanoi",
-                destination: "Vietnam",
-                price: "₹22,722",
-                originalPrice: "₹45,000",
-                date: "Feb-May",
-                type: "Non stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=600&fit=crop",  // Hanoi
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Mumbai",
-                route: "Mumbai → Chicago",
-                destination: "United States",
-                price: "₹73,154",
-                originalPrice: "₹2,00,000",
-                date: "Jan-Mar",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=600&fit=crop",  // Chicago skyline
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Kolkata",
-                route: "Kolkata → New York",
-                destination: "United States",
-                price: "₹69,554",
-                originalPrice: "₹1,45,000",
-                date: "Jan-Apr, Dec",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop",  // NYC skyline
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Ahmedabad",
-                route: "Ahmedabad → London",
-                destination: "United Kingdom",
-                price: "₹51,105",
-                originalPrice: "₹95,000",
-                date: "Mar-June",
-                type: "Non stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop",  // London
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Delhi",
-                route: "New Delhi → Vancouver",
-                destination: "Canada",
-                price: "₹70,551",
-                originalPrice: "₹2,10,000",
-                date: "Jan-Apr",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1519613898339-ec77d0d0c1c0?w=800&h=600&fit=crop",  // Vancouver
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Kolkata",
-                route: "Kolkata → Hanoi",
-                destination: "Vietnam",
-                price: "₹17,512",
-                originalPrice: "₹38,000",
-                date: "Feb",
-                type: "Non stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&h=600&fit=crop",  // Hanoi street
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Bengaluru",
-                route: "Bengaluru → Langkawi",
-                destination: "Malaysia",
-                price: "₹18,082",
-                originalPrice: "₹26,000",
-                date: "Nov",
-                type: "Non stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop",  // Langkawi beach
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Kochi",
-                route: "Kochi → Amsterdam",
-                destination: "Netherlands",
-                price: "₹32,540",
-                originalPrice: "₹80,000",
-                date: "Feb-Mar, May",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&h=600&fit=crop",  // Amsterdam canals
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Hyderabad",
-                route: "Hyderabad → Dubai",
-                destination: "United Arab Emirates",
-                price: "₹21,192",
-                originalPrice: "₹36,000",
-                date: "Feb-Mar",
-                type: "Non stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop",  // Dubai
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Chennai",
-                route: "Chennai → Amsterdam",
-                destination: "Netherlands",
-                price: "₹50,424",
-                originalPrice: "₹88,000",
-                date: "Jan-Mar",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1584003564911-01c7e74c835b?w=800&h=600&fit=crop",  // Amsterdam bikes
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Kochi",
-                route: "Kochi → Manchester",
-                destination: "United Kingdom",
-                price: "₹50,470",
-                originalPrice: "₹86,000",
-                date: "Feb",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1598882337118-d78f2dd32f6c?w=800&h=600&fit=crop",  // Manchester
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Bengaluru",
-                route: "Bengaluru → Bangkok",
-                destination: "Thailand",
-                price: "₹39,688",
-                originalPrice: "₹67,000",
-                date: "Jan-Aug, Dec",
-                type: "Non stop",
-                cabin: "Business",
-                image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&h=600&fit=crop",  // Bangkok temple
-                bookingUrl: "https://www.skyscanner.co.in"
-            },
-            {
-                from: "Chennai",
-                route: "Chennai → San Francisco",
-                destination: "United States",
-                price: "₹73,616",
-                originalPrice: "₹1,27,000",
-                date: "Mar-Apr",
-                type: "1 stop",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop",  // Golden Gate
-                bookingUrl: "https://www.skyscanner.co.in"
-            }
-        ];
-
-        // ==========================================
-        // RENDER DEALS
+        // LOAD DEALS FROM JSON FILE
         // ==========================================
 
         const whatsapp = '+919998156651';
         let currentFilter = 'all';
+        let allDeals = [];
+
+        // Fetch deals from JSON file
+        async function loadDeals() {
+            try {
+                const response = await fetch('deals.json');
+                if (!response.ok) throw new Error('Failed to load deals');
+                allDeals = await response.json();
+                renderDeals();
+            } catch (error) {
+                console.error('Error loading deals:', error);
+                document.getElementById('deals-grid').innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-red-400 text-xl mb-4">Failed to load deals</p>
+                        <p class="text-gray-500">Please refresh the page</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // HELPER FUNCTIONS
+        // ==========================================
 
         function calculateSavings(price, original) {
             const p = parseInt(price.replace(/[^0-9]/g, ''));
@@ -465,9 +379,9 @@
             const emptyState = document.getElementById('empty-state');
 
             // Filter deals
-            let filteredDeals = deals;
+            let filteredDeals = allDeals;
             if (currentFilter !== 'all') {
-                filteredDeals = deals.filter(deal => deal.from === currentFilter);
+                filteredDeals = allDeals.filter(deal => deal.from === currentFilter);
             }
 
             if (filteredDeals.length === 0) {
@@ -481,7 +395,12 @@
 
             grid.innerHTML = filteredDeals.map((deal, index) => {
                 const savings = calculateSavings(deal.price, deal.originalPrice);
-                const message = `Hi! I saw the ${deal.route} ${deal.cabin} deal (${deal.price}) on FlyCharm Drops. Can you help me book this?`;
+                const message = `Hi! I saw the ${deal.route} ${deal.cabin} deal (${deal.price}) on FlyCharm Drops.
+
+Dates: ${deal.travelDates}
+${deal.stops}
+
+Can you help me book this?`;
                 const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
                 const cabinClass = deal.cabin.toLowerCase();
 
@@ -489,35 +408,45 @@
                     <div class="deal-card" style="animation: fadeInUp 0.6s ease-out ${index * 0.1}s both;">
                         <!-- Image -->
                         <div class="deal-image-wrapper">
-                            <img src="${deal.image}" alt="${deal.destination}" class="deal-image">
+                            <img src="${deal.image}" alt="${deal.destination}" class="deal-image" loading="lazy">
                             <div class="class-badge ${cabinClass}-badge">
                                 ${deal.cabin}
                             </div>
                         </div>
 
                         <!-- Content -->
-                        <div class="p-6">
+                        <div class="p-8 relative z-10">
                             <!-- Destination -->
-                            <div class="text-sm text-lime-400 font-semibold mb-1">
+                            <div class="destination-label">
                                 ${deal.destination}
                             </div>
 
                             <!-- Route -->
-                            <h3 class="text-xl font-bold text-white mb-3">
+                            <h3 class="text-2xl font-bold text-white mb-4 leading-tight">
                                 ${deal.route.split(' → ')[1]}
                             </h3>
 
+                            <!-- Travel Dates Badge -->
+                            <div class="mb-4">
+                                <div class="date-badge">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    ${deal.travelDates}
+                                </div>
+                            </div>
+
                             <!-- Details -->
-                            <p class="text-xs text-gray-500 mb-6">
-                                ${deal.date} • ${deal.type} • From ${deal.from}
+                            <p class="text-sm text-gray-500 mb-6">
+                                ${deal.stops} • From ${deal.from}
                             </p>
 
                             <!-- Price -->
-                            <div class="mb-6">
-                                <div class="price mb-2">${deal.price}</div>
+                            <div class="mb-8">
+                                <div class="price mb-3">${deal.price}</div>
                                 <div class="flex items-center gap-3">
-                                    <span class="text-gray-500 line-through text-sm">${deal.originalPrice}</span>
-                                    <span class="bg-lime-400/10 text-lime-400 text-xs font-bold px-3 py-1 rounded-full">
+                                    <span class="text-gray-500 line-through text-base">${deal.originalPrice}</span>
+                                    <span class="bg-lime-400/10 text-lime-400 text-sm font-bold px-4 py-1.5 rounded-full">
                                         ${savings}% off
                                     </span>
                                 </div>
@@ -529,7 +458,7 @@
                                     Book with FlyCharm
                                 </a>
                                 <a href="${deal.bookingUrl}" target="_blank"
-                                   class="text-center block text-sm text-gray-400 hover:text-white py-2 transition">
+                                   class="text-center block text-sm text-gray-400 hover:text-white py-2 transition font-medium">
                                     or book direct →
                                 </a>
                             </div>
@@ -545,7 +474,7 @@
             @keyframes fadeInUp {
                 from {
                     opacity: 0;
-                    transform: translateY(30px);
+                    transform: translateY(40px);
                 }
                 to {
                     opacity: 1;
@@ -555,8 +484,8 @@
         `;
         document.head.appendChild(style);
 
-        // Initialize
-        renderDeals();
+        // Initialize - Load deals from JSON
+        loadDeals();
     </script>
 
 </body>
