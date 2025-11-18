@@ -115,6 +115,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .filter-pill:hover {
@@ -138,6 +139,16 @@
             height: 50%;
             background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
             pointer-events: none;
+        }
+
+        /* Filters scrollable on mobile */
+        .filters-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .filters-container::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
@@ -167,33 +178,44 @@
             </h1>
 
             <p class="text-2xl md:text-3xl text-gray-300 mb-4 max-w-4xl mx-auto leading-relaxed">
-                The kind of flight deals that make you question if we're running a charity.
+                Flight deals so good, they feel like typos.
             </p>
 
-            <p class="text-xl text-gray-500 mb-10 max-w-3xl mx-auto">
-                We're not. We're just <span class="text-lime-400">stupidly good</span> at finding prices travel sites pretend don't exist.
+            <p class="text-lg text-gray-400 mb-10 max-w-3xl mx-auto">
+                But they're not. We just know where to look while everyone else is Googling "cheap flights."
             </p>
 
             <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94"
-               class="text-sm text-gray-500 hover:text-lime-400 border border-gray-800 hover:border-lime-400 rounded-full px-8 py-4 inline-block transition">
+               class="text-sm text-gray-400 hover:text-lime-400 border border-gray-800 hover:border-lime-400 rounded-full px-8 py-4 inline-block transition font-semibold">
                 🔔 Never Miss a Drop
             </a>
         </div>
 
         <!-- City Filters -->
-        <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
-            <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">
-                All Cities
-            </button>
-            <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">
-                Delhi
-            </button>
-            <button class="filter-pill" data-city="Mumbai" onclick="filterByCity('Mumbai')">
-                Mumbai
-            </button>
-            <button class="filter-pill" data-city="Ahmedabad" onclick="filterByCity('Ahmedabad')">
-                Ahmedabad
-            </button>
+        <div class="filters-container mb-12">
+            <div class="flex items-center justify-center gap-3 min-w-max px-4">
+                <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">
+                    All Deals
+                </button>
+                <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">
+                    Delhi
+                </button>
+                <button class="filter-pill" data-city="Mumbai" onclick="filterByCity('Mumbai')">
+                    Mumbai
+                </button>
+                <button class="filter-pill" data-city="Ahmedabad" onclick="filterByCity('Ahmedabad')">
+                    Ahmedabad
+                </button>
+                <button class="filter-pill" data-city="Bengaluru" onclick="filterByCity('Bengaluru')">
+                    Bengaluru
+                </button>
+                <button class="filter-pill" data-city="Chennai" onclick="filterByCity('Chennai')">
+                    Chennai
+                </button>
+                <button class="filter-pill" data-city="Hyderabad" onclick="filterByCity('Hyderabad')">
+                    Hyderabad
+                </button>
+            </div>
         </div>
 
         <!-- Deals Grid -->
@@ -215,6 +237,9 @@
     <!-- Footer -->
     <footer class="border-t border-gray-800 py-10 text-center">
         <div class="max-w-7xl mx-auto px-6">
+            <p class="text-gray-600 text-sm mb-4">
+                Deals updated daily at 9 PM IST
+            </p>
             <p class="text-gray-600 text-sm">
                 © 2025 FlyCharm • Built by <a href="https://wchstudios.com" class="hover:text-white transition">WCH Studios</a>
             </p>
@@ -228,70 +253,184 @@
 
         const deals = [
             {
-                from: "Delhi",
-                route: "Delhi → Dubai",
-                price: "₹8,999",
-                originalPrice: "₹18,500",
-                date: "Dec 15",
-                type: "One Way",
-                cabin: "Economy",  // "Economy" or "Business"
-                image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop",  // Dubai skyline
-                bookingUrl: "https://www.airindia.com"
-            },
-            {
                 from: "Mumbai",
-                route: "Mumbai → Singapore",
-                price: "₹15,999",
-                originalPrice: "₹35,000",
-                date: "Dec 20-28",
-                type: "Round Trip",
-                cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&h=600&fit=crop",  // Singapore
-                bookingUrl: "https://www.singaporeair.com"
+                route: "Mumbai → Athens",
+                destination: "Greece",
+                price: "₹1,04,987",
+                originalPrice: "₹2,10,000",
+                date: "Oct-Nov",
+                type: "1 stop",
+                cabin: "Business",
+                image: "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop",  // Parthenon
+                bookingUrl: "https://www.skyscanner.co.in"
             },
             {
                 from: "Delhi",
-                route: "Delhi → Bangalore",
-                price: "₹3,299",
-                originalPrice: "₹7,200",
-                date: "Nov 28",
-                type: "One Way",
+                route: "New Delhi → Washington",
+                destination: "United States",
+                price: "₹62,586",
+                originalPrice: "₹2,10,000",
+                date: "Jan-Feb, Dec",
+                type: "1 stop",
                 cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&h=600&fit=crop",  // Bangalore
-                bookingUrl: "https://www.airvistara.com"
+                image: "https://images.unsplash.com/photo-1617581629397-a72507c3de9e?w=800&h=600&fit=crop",  // US Capitol
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Hyderabad",
+                route: "Hyderabad → Hanoi",
+                destination: "Vietnam",
+                price: "₹22,722",
+                originalPrice: "₹45,000",
+                date: "Feb-May",
+                type: "Non stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=600&fit=crop",  // Hanoi
+                bookingUrl: "https://www.skyscanner.co.in"
             },
             {
                 from: "Mumbai",
-                route: "Mumbai → Goa",
-                price: "₹2,499",
-                originalPrice: "₹5,800",
-                date: "Nov 25",
-                type: "One Way",
+                route: "Mumbai → Chicago",
+                destination: "United States",
+                price: "₹73,154",
+                originalPrice: "₹2,00,000",
+                date: "Jan-Mar",
+                type: "1 stop",
                 cabin: "Economy",
-                image: "https://images.unsplash.com/photo-1571847248879-7a85a6db9f2f?w=800&h=600&fit=crop",  // Goa beach
-                bookingUrl: "https://www.goindigo.in"
+                image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=600&fit=crop",  // Chicago skyline
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Kolkata",
+                route: "Kolkata → New York",
+                destination: "United States",
+                price: "₹69,554",
+                originalPrice: "₹1,45,000",
+                date: "Jan-Apr, Dec",
+                type: "1 stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop",  // NYC skyline
+                bookingUrl: "https://www.skyscanner.co.in"
             },
             {
                 from: "Ahmedabad",
-                route: "Ahmedabad → Bangkok",
-                price: "₹12,499",
-                originalPrice: "₹28,000",
-                date: "Dec 10-17",
-                type: "Round Trip",
-                cabin: "Business",
-                image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&h=600&fit=crop",  // Bangkok
-                bookingUrl: "https://www.emirates.com"
+                route: "Ahmedabad → London",
+                destination: "United Kingdom",
+                price: "₹51,105",
+                originalPrice: "₹95,000",
+                date: "Mar-June",
+                type: "Non stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop",  // London
+                bookingUrl: "https://www.skyscanner.co.in"
             },
             {
                 from: "Delhi",
-                route: "Delhi → London",
-                price: "₹32,999",
-                originalPrice: "₹68,000",
-                date: "Dec 15-22",
-                type: "Round Trip",
+                route: "New Delhi → Vancouver",
+                destination: "Canada",
+                price: "₹70,551",
+                originalPrice: "₹2,10,000",
+                date: "Jan-Apr",
+                type: "1 stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1519613898339-ec77d0d0c1c0?w=800&h=600&fit=crop",  // Vancouver
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Kolkata",
+                route: "Kolkata → Hanoi",
+                destination: "Vietnam",
+                price: "₹17,512",
+                originalPrice: "₹38,000",
+                date: "Feb",
+                type: "Non stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&h=600&fit=crop",  // Hanoi street
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Bengaluru",
+                route: "Bengaluru → Langkawi",
+                destination: "Malaysia",
+                price: "₹18,082",
+                originalPrice: "₹26,000",
+                date: "Nov",
+                type: "Non stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop",  // Langkawi beach
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Kochi",
+                route: "Kochi → Amsterdam",
+                destination: "Netherlands",
+                price: "₹32,540",
+                originalPrice: "₹80,000",
+                date: "Feb-Mar, May",
+                type: "1 stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&h=600&fit=crop",  // Amsterdam canals
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Hyderabad",
+                route: "Hyderabad → Dubai",
+                destination: "United Arab Emirates",
+                price: "₹21,192",
+                originalPrice: "₹36,000",
+                date: "Feb-Mar",
+                type: "Non stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop",  // Dubai
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Chennai",
+                route: "Chennai → Amsterdam",
+                destination: "Netherlands",
+                price: "₹50,424",
+                originalPrice: "₹88,000",
+                date: "Jan-Mar",
+                type: "1 stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1584003564911-01c7e74c835b?w=800&h=600&fit=crop",  // Amsterdam bikes
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Kochi",
+                route: "Kochi → Manchester",
+                destination: "United Kingdom",
+                price: "₹50,470",
+                originalPrice: "₹86,000",
+                date: "Feb",
+                type: "1 stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1598882337118-d78f2dd32f6c?w=800&h=600&fit=crop",  // Manchester
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Bengaluru",
+                route: "Bengaluru → Bangkok",
+                destination: "Thailand",
+                price: "₹39,688",
+                originalPrice: "₹67,000",
+                date: "Jan-Aug, Dec",
+                type: "Non stop",
                 cabin: "Business",
-                image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop",  // London
-                bookingUrl: "https://www.britishairways.com"
+                image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&h=600&fit=crop",  // Bangkok temple
+                bookingUrl: "https://www.skyscanner.co.in"
+            },
+            {
+                from: "Chennai",
+                route: "Chennai → San Francisco",
+                destination: "United States",
+                price: "₹73,616",
+                originalPrice: "₹1,27,000",
+                date: "Mar-Apr",
+                type: "1 stop",
+                cabin: "Economy",
+                image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop",  // Golden Gate
+                bookingUrl: "https://www.skyscanner.co.in"
             }
         ];
 
@@ -350,7 +489,7 @@
                     <div class="deal-card" style="animation: fadeInUp 0.6s ease-out ${index * 0.1}s both;">
                         <!-- Image -->
                         <div class="deal-image-wrapper">
-                            <img src="${deal.image}" alt="${deal.route}" class="deal-image">
+                            <img src="${deal.image}" alt="${deal.destination}" class="deal-image">
                             <div class="class-badge ${cabinClass}-badge">
                                 ${deal.cabin}
                             </div>
@@ -358,14 +497,19 @@
 
                         <!-- Content -->
                         <div class="p-6">
+                            <!-- Destination -->
+                            <div class="text-sm text-lime-400 font-semibold mb-1">
+                                ${deal.destination}
+                            </div>
+
                             <!-- Route -->
-                            <h3 class="text-2xl font-bold text-white mb-2">
-                                ${deal.route}
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                ${deal.route.split(' → ')[1]}
                             </h3>
 
-                            <!-- Date & Type -->
-                            <p class="text-sm text-gray-500 mb-6">
-                                ${deal.date} • ${deal.type}
+                            <!-- Details -->
+                            <p class="text-xs text-gray-500 mb-6">
+                                ${deal.date} • ${deal.type} • From ${deal.from}
                             </p>
 
                             <!-- Price -->
@@ -374,7 +518,7 @@
                                 <div class="flex items-center gap-3">
                                     <span class="text-gray-500 line-through text-sm">${deal.originalPrice}</span>
                                     <span class="bg-lime-400/10 text-lime-400 text-xs font-bold px-3 py-1 rounded-full">
-                                        Save ${savings}%
+                                        ${savings}% off
                                     </span>
                                 </div>
                             </div>
