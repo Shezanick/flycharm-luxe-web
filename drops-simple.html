@@ -219,6 +219,85 @@
             color: var(--lime);
             margin-bottom: 8px;
         }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body::before {
+                opacity: 0.08; /* Lighter background on mobile */
+            }
+
+            body::after {
+                background: linear-gradient(180deg,
+                    rgba(16, 16, 16, 0.97) 0%,
+                    rgba(16, 16, 16, 0.92) 50%,
+                    rgba(16, 16, 16, 0.97) 100%);
+            }
+
+            main {
+                padding: 3rem 1rem !important;
+            }
+
+            h1 {
+                font-size: 3rem !important; /* 48px instead of 96px */
+                line-height: 1.1;
+            }
+
+            .price {
+                font-size: 36px !important;
+            }
+
+            .deal-card {
+                border-radius: 16px;
+            }
+
+            .deal-card > div {
+                padding: 1.5rem !important;
+            }
+
+            .deal-image {
+                height: 200px !important;
+            }
+
+            .class-badge {
+                top: 12px;
+                right: 12px;
+                padding: 6px 12px;
+                font-size: 10px;
+            }
+
+            .btn {
+                padding: 14px 24px !important;
+                font-size: 14px !important;
+            }
+
+            .filter-pill {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+
+            .date-badge {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem !important; /* 40px on very small screens */
+            }
+
+            p.text-2xl, p.text-3xl {
+                font-size: 1.25rem !important;
+            }
+
+            p.text-lg {
+                font-size: 0.95rem !important;
+            }
+
+            main {
+                padding: 2rem 1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -643,16 +722,10 @@ Can you help me book this?`;
                                 </div>
                             </div>
 
-                            <!-- CTAs -->
-                            <div class="space-y-3">
-                                <a href="${waLink}" class="btn w-full text-center block">
-                                    Book with FlyCharm
-                                </a>
-                                <a href="${deal.bookingUrl}" target="_blank"
-                                   class="text-center block text-sm text-gray-400 hover:text-white py-2 transition font-medium">
-                                    or book direct →
-                                </a>
-                            </div>
+                            <!-- CTA -->
+                            <a href="${waLink}" class="btn w-full text-center block">
+                                Book with FlyCharm
+                            </a>
                         </div>
                     </div>
                 `;
