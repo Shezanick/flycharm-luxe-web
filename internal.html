@@ -654,7 +654,9 @@
             let msg = `${SIG} CONFIRMED BOOKING\n\n`;
             msg += `Trip ID: #${f.get('tripId')}\n\n`;
             msg += `PASSENGER:\n`;
-            msg += `Name: ${f.get('title')} ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `Title: ${f.get('title')}\n`;
+            msg += `First Name: ${f.get('firstName')}\n`;
+            msg += `Last Name: ${f.get('lastName')}\n`;
             msg += `DOB: ${fd(f.get('dob'))}`;
             if (f.get('ffNumber')) msg += `\nFF#: ${f.get('ffNumber')}`;
 
@@ -689,7 +691,9 @@
             let msg = `${SIG} INTERNATIONAL BOOKING REQUEST\n\n`;
             msg += `Trip ID: ${f.get('tripId')}\n\n`;
             msg += `PASSENGER:\n`;
-            msg += `Name: ${f.get('title')} ${f.get('firstName')} ${f.get('lastName')}\n`;
+            msg += `Title: ${f.get('title')}\n`;
+            msg += `First Name: ${f.get('firstName')}\n`;
+            msg += `Last Name: ${f.get('lastName')}\n`;
             msg += `DOB: ${fd(f.get('dob'))}\n`;
             msg += `Passport: ${f.get('passportNumber')}\n`;
             msg += `Passport Exp: ${fd(f.get('passportExpiry'))}`;
