@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FlyCharm Drops - Stupidly Good Flight Deals</title>
 
     <meta name="description" content="Flight deals so good, they feel like typos. But they're not. We just know where to look.">
@@ -21,6 +21,13 @@
             --border: rgba(255, 255, 255, 0.08);
         }
 
+        /* --- CORE FIX FOR BROKEN SCROLL --- */
+        html, body {
+            overflow-x: hidden; /* Prevents the whole page from moving sideways */
+            width: 100%;
+            position: relative;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--dark);
@@ -29,7 +36,6 @@
                 radial-gradient(circle at 50% 0%, rgba(213, 254, 0, 0.03) 0%, transparent 50%),
                 linear-gradient(to bottom, #0A0A0A 0%, #111 100%);
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         h1, h2, h3, .price {
@@ -42,177 +48,112 @@
             background: rgba(20, 20, 20, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border);
-            border-radius: 24px; /* Slightly softer radius */
+            border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
-            transform: translateZ(0); /* Hardware acceleration */
+            transform: translateZ(0);
         }
 
         .deal-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            padding: 1px;
+            content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px;
             background: linear-gradient(180deg, rgba(255,255,255,0.1), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            opacity: 0.5;
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0.5;
         }
 
         .deal-card:hover {
             transform: translateY(-8px) scale(1.01);
             border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 20px 40px -10px rgba(0,0,0,0.8),
-                0 0 20px -5px rgba(213, 254, 0, 0.05); /* Subtle lime glow */
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), 0 0 20px -5px rgba(213, 254, 0, 0.05);
         }
 
         /* --- Image Styling --- */
-        .deal-image-wrapper {
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 16/10;
-        }
-
-        .deal-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s ease;
-            filter: saturate(0.9); /* Cinematic look */
-        }
-
-        .deal-card:hover .deal-image {
-            transform: scale(1.08);
-            filter: saturate(1.1);
-        }
-
+        .deal-image-wrapper { overflow: hidden; position: relative; aspect-ratio: 16/10; }
+        .deal-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; filter: saturate(0.9); }
+        .deal-card:hover .deal-image { transform: scale(1.08); filter: saturate(1.1); }
         .deal-image-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent 50%, rgba(20,20,20,1) 100%);
-            z-index: 1;
-            pointer-events: none;
+            z-index: 1; pointer-events: none;
         }
 
         /* --- Badge Styling --- */
         .class-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 10;
-            border: 1px solid rgba(255,255,255,0.1);
+            position: absolute; top: 16px; right: 16px;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            padding: 6px 14px; border-radius: 100px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            z-index: 10; border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-
-        .business-badge {
-            color: var(--lime);
-            border-color: rgba(213, 254, 0, 0.3);
-            background: rgba(213, 254, 0, 0.05);
-        }
-
+        .business-badge { color: var(--lime); border-color: rgba(213, 254, 0, 0.3); background: rgba(213, 254, 0, 0.05); }
         .date-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #ccc;
-            transition: border-color 0.3s;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 14px; border-radius: 10px;
+            font-size: 13px; font-weight: 500; color: #ccc; transition: border-color 0.3s;
         }
-        
-        .deal-card:hover .date-badge {
-            border-color: rgba(213, 254, 0, 0.4);
-            color: var(--lime);
-        }
+        .deal-card:hover .date-badge { border-color: rgba(213, 254, 0, 0.4); color: var(--lime); }
 
-        /* --- Price Styling (Requested: White) --- */
-        .price {
-            font-size: 3.5rem; /* 56px */
-            font-weight: 700;
-            color: #FFFFFF;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-        }
+        /* --- Price Styling --- */
+        .price { font-size: 3.5rem; font-weight: 700; color: #FFFFFF; line-height: 0.9; letter-spacing: -0.04em; }
 
         /* --- Buttons --- */
         .btn-primary {
-            background: #FFFFFF;
-            color: #000;
-            padding: 16px 32px;
-            border-radius: 100px;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            font-size: 15px;
-            border: 1px solid #fff;
+            background: #FFFFFF; color: #000; padding: 16px 32px;
+            border-radius: 100px; font-weight: 600; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); font-size: 15px; border: 1px solid #fff;
         }
-
         .btn-primary:hover {
-            background: var(--lime);
-            border-color: var(--lime);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px -5px rgba(213, 254, 0, 0.4);
+            background: var(--lime); border-color: var(--lime);
+            transform: translateY(-2px); box-shadow: 0 10px 30px -5px rgba(213, 254, 0, 0.4);
+        }
+        .btn-secondary { color: #888; font-size: 13px; font-weight: 500; transition: color 0.3s ease; text-decoration: none; }
+        .btn-secondary:hover { color: #fff; }
+
+        /* --- Filter Scroll Fix --- */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+            scrollbar-width: none; /* Firefox hide */
+            width: 100%;
+            padding: 4px 24px 20px 24px; /* Bottom padding makes room for shadow/glow */
+            mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        }
+        .scroll-container::-webkit-scrollbar { display: none; } /* Chrome hide */
+        
+        /* Inner wrapper ensures proper spacing */
+        .scroll-content {
+            display: flex;
+            gap: 12px;
+            margin: 0 auto; /* Centers content if it's smaller than screen */
         }
 
-        .btn-secondary {
-            color: #888;
-            font-size: 13px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            text-decoration: none;
+        /* On mobile, align left so first item isn't hidden by center alignment */
+        @media (max-width: 768px) {
+            .scroll-container {
+                mask-image: linear-gradient(to right, transparent 0%, black 4%, black 92%, transparent 100%);
+            }
+            .scroll-content {
+                margin: 0; /* Left align on mobile */
+                min-width: min-content; /* Ensure it takes up necessary space */
+            }
+            /* Add pseudo-elements to create 'padding' at start/end of scroll that works with justify-content */
+            .scroll-content::after { content: ''; padding-right: 24px; }
         }
 
-        .btn-secondary:hover {
-            color: #fff;
-        }
-
-        /* --- Filter Pills --- */
         .filter-pill {
-            padding: 10px 24px;
-            border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.03);
-            color: #888;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            padding: 10px 24px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
+            color: #888; font-size: 13px; font-weight: 500; cursor: pointer;
+            transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; /* Prevent shrinking */
         }
-
-        .filter-pill:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: #fff;
-        }
-
-        .filter-pill.active {
-            background: var(--lime);
-            color: #000;
-            border-color: var(--lime);
-            font-weight: 600;
-        }
+        .filter-pill:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+        .filter-pill.active { background: var(--lime); color: #000; border-color: var(--lime); font-weight: 600; }
 
         /* --- Hero Animations --- */
         @keyframes pulse-glow {
@@ -222,34 +163,17 @@
         .live-badge { animation: pulse-glow 3s infinite ease-in-out; }
 
         .ghost-button {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #ccc;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            color: #ccc; backdrop-filter: blur(10px); transition: all 0.3s ease;
         }
-        .ghost-button:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: #fff;
-            color: #fff;
-        }
-
-        /* --- Layout Utils --- */
-        .filters-container {
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        }
+        .ghost-button:hover { background: rgba(255,255,255,0.08); border-color: #fff; color: #fff; }
         
-        /* --- Mobile Optimizations (Maintaining Code 2 Structure) --- */
+        /* --- Mobile Optimizations --- */
         @media (max-width: 768px) {
             .deal-card { border-radius: 20px; }
-            .price { font-size: 2.5rem; } /* 40px */
+            .price { font-size: 2.5rem; }
             h1 { font-size: 3rem !important; letter-spacing: -0.04em; }
-            
-            /* Ensure internal spacing matches Code 2 */
             .p-8 { padding: 1.5rem !important; } 
-            
-            /* Reset mask for cleaner mobile scrolling */
-            .filters-container { mask-image: none; padding-bottom: 10px; }
         }
     </style>
 </head>
@@ -269,12 +193,11 @@
     </header>
 
     <!-- Main -->
-    <main class="max-w-7xl mx-auto px-6 py-16 sm:py-24">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 overflow-hidden"> <!-- Overflow hidden prevents x-scroll on main -->
 
         <!-- Hero Section -->
-        <div class="text-center mb-24 relative">
-            <!-- Ambient background glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-lime-400/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="text-center mb-16 relative">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] bg-lime-400/10 blur-[120px] rounded-full pointer-events-none"></div>
 
             <div class="relative z-10">
                 <div class="live-badge inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm">
@@ -286,7 +209,7 @@
                     FlyCharm<br><span class="text-transparent bg-clip-text bg-gradient-to-b from-lime-200 to-lime-400">Drops</span>
                 </h1>
 
-                <p class="text-xl sm:text-2xl md:text-3xl text-gray-400 mb-4 max-w-3xl mx-auto font-light">
+                <p class="text-xl sm:text-2xl md:text-3xl text-gray-400 mb-4 max-w-3xl mx-auto font-light px-4">
                     Flight deals so good, they feel like typos.
                 </p>
                 
@@ -301,23 +224,27 @@
             </div>
         </div>
 
-        <!-- City Filters -->
-        <div class="filters-container mb-16 flex justify-center">
-            <div class="flex items-center gap-2 min-w-max px-8 pb-2">
-                <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">All</button>
-                <button class="filter-pill" data-city="Mumbai" onclick="filterByCity('Mumbai')">Mumbai</button>
-                <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">Delhi</button>
-                <button class="filter-pill" data-city="Bengaluru" onclick="filterByCity('Bengaluru')">Bengaluru</button>
-                <button class="filter-pill" data-city="Chennai" onclick="filterByCity('Chennai')">Chennai</button>
-                <button class="filter-pill" data-city="Hyderabad" onclick="filterByCity('Hyderabad')">Hyderabad</button>
-                <button class="filter-pill" data-city="Ahmedabad" onclick="filterByCity('Ahmedabad')">Ahmedabad</button>
-                <button class="filter-pill" data-city="Kolkata" onclick="filterByCity('Kolkata')">Kolkata</button>
-                <button class="filter-pill" data-city="Kochi" onclick="filterByCity('Kochi')">Kochi</button>
+        <!-- City Filters (Fixed Scrolling) -->
+        <div class="mb-12 w-full relative">
+            <!-- The scroll container clips the overflow -->
+            <div class="scroll-container">
+                <!-- The inner wrapper holds the items -->
+                <div class="scroll-content">
+                    <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">All</button>
+                    <button class="filter-pill" data-city="Mumbai" onclick="filterByCity('Mumbai')">Mumbai</button>
+                    <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">Delhi</button>
+                    <button class="filter-pill" data-city="Bengaluru" onclick="filterByCity('Bengaluru')">Bengaluru</button>
+                    <button class="filter-pill" data-city="Chennai" onclick="filterByCity('Chennai')">Chennai</button>
+                    <button class="filter-pill" data-city="Hyderabad" onclick="filterByCity('Hyderabad')">Hyderabad</button>
+                    <button class="filter-pill" data-city="Ahmedabad" onclick="filterByCity('Ahmedabad')">Ahmedabad</button>
+                    <button class="filter-pill" data-city="Kolkata" onclick="filterByCity('Kolkata')">Kolkata</button>
+                    <button class="filter-pill" data-city="Kochi" onclick="filterByCity('Kochi')">Kochi</button>
+                </div>
             </div>
         </div>
 
         <!-- Deals Grid -->
-        <div id="deals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="deals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <!-- Deals rendered here via JS -->
         </div>
 
@@ -337,7 +264,7 @@
                 Updated Daily • 9 PM IST
             </p>
             <p class="text-gray-400 text-sm mb-8 flex items-center justify-center gap-2 opacity-80">
-                <span>Handpicked by humans, not algorithms.</span>
+                <span>Handpicked by the beautiful humans at FlyCharm</span>
             </p>
             <p class="text-gray-600 text-xs">
                 © 2025 FlyCharm • Crafted by <a href="https://wchstudios.com" class="hover:text-white transition-colors underline decoration-gray-700 hover:decoration-white">WCH Studios</a>
@@ -353,7 +280,6 @@
         const whatsapp = '+919998156651';
         let currentFilter = 'all';
 
-        // Full Dataset from Code 1
         const allDeals = [
             { from: "Mumbai", route: "Mumbai → Athens", destination: "Greece", price: "₹1,04,987", originalPrice: "₹2,10,000", travelDates: "15 Dec - 22 Dec 2025", stops: "1 stop", cabin: "Business", image: "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.co.in" },
             { from: "Delhi", route: "New Delhi → Washington", destination: "United States", price: "₹62,586", originalPrice: "₹2,10,000", travelDates: "10 Jan - 24 Jan 2026", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1617581629397-a72507c3de9e?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.co.in" },
@@ -409,7 +335,6 @@
                 const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
                 const cabinClass = deal.cabin.toLowerCase();
 
-                // The Card HTML Structure (Mobile Optimized from Code 2, Styled for aesthetic)
                 return `
                     <div class="deal-card" style="animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.05}s both;">
                         <div class="deal-image-wrapper">
