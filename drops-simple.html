@@ -29,7 +29,7 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Premium Deal Card */
+        /* Card Styling */
         .deal-card {
             background: linear-gradient(135deg, #1F1F1F 0%, #1A1A1A 100%);
             border: 1px solid #2A2A2A;
@@ -46,7 +46,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(213, 254, 0, 0.03), transparent);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
@@ -58,12 +58,13 @@
         }
 
         .deal-card:hover {
-            border-color: var(--lime);
+            border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 30px 80px rgba(213, 254, 0, 0.2),
-                        0 0 0 1px rgba(213, 254, 0, 0.1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
+        /* Image Styling */
         .deal-image {
             width: 100%;
             height: 240px;
@@ -80,6 +81,18 @@
             position: relative;
         }
 
+        .deal-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(16, 16, 16, 1) 0%, rgba(16, 16, 16, 0.8) 40%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Badge Styling */
         .class-badge {
             position: absolute;
             top: 16px;
@@ -107,34 +120,52 @@
             box-shadow: 0 4px 20px rgba(213, 254, 0, 0.3);
         }
 
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(213, 254, 0, 0.1);
+            border: 1px solid rgba(213, 254, 0, 0.3);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--lime);
+        }
+
+        /* Price Styling */
         .price {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 48px;
             font-weight: 900;
-            color: var(--lime);
+            color: #FFFFFF;
             line-height: 1;
             letter-spacing: -0.02em;
         }
 
-        .btn {
+        /* Button Styling */
+        .btn-primary {
             background: #FFFFFF;
             color: #000;
             padding: 16px 32px;
             border-radius: 100px;
             font-weight: 700;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             transition: all 0.3s ease;
             font-size: 15px;
             box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
         }
 
-        .btn:hover {
+        .btn-primary:hover {
             transform: scale(1.08);
             box-shadow: 0 8px 40px rgba(255, 255, 255, 0.4);
         }
 
-        /* City Filter Pills */
+        /* Filter Pills */
         .filter-pill {
             padding: 12px 28px;
             border-radius: 100px;
@@ -162,83 +193,63 @@
             box-shadow: 0 4px 20px rgba(213, 254, 0, 0.3);
         }
 
-        /* Date Badge */
-        .date-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(213, 254, 0, 0.1);
-            border: 1px solid rgba(213, 254, 0, 0.3);
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--lime);
+        /* Hero Elements */
+        @keyframes subtle-pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 10px 15px rgba(220, 38, 38, 0);
+            }
         }
 
-        /* Gradient Overlay on Images */
-        .deal-image-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(to top, rgba(26, 26, 26, 1) 0%, rgba(26, 26, 26, 0.8) 40%, transparent 100%);
-            pointer-events: none;
+        .live-badge {
+            animation: subtle-pulse 2.5s infinite;
         }
 
-        /* Filters scrollable on mobile */
+        .ghost-button {
+            background-color: transparent;
+            border: 1px solid #3A3A3A;
+            color: #A0A0A0;
+            transition: all 0.3s ease;
+        }
+
+        .ghost-button:hover {
+            background-color: #1A1A1A;
+            border-color: #555;
+            color: #E0E0E0;
+        }
+
+        /* Utility */
         .filters-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
+
         .filters-container::-webkit-scrollbar {
             display: none;
         }
 
-        /* Loading skeleton */
-        .skeleton {
-            background: linear-gradient(90deg, #1A1A1A 25%, #242424 50%, #1A1A1A 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s ease-in-out infinite;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Destination label */
         .destination-label {
             font-size: 12px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: var(--lime);
-            margin-bottom: 8px;
+            color: #888;
+            margin-bottom: 4px;
         }
 
         /* Mobile Optimizations */
         @media (max-width: 768px) {
-            body::before {
-                opacity: 0.08; /* Lighter background on mobile */
-            }
-
-            body::after {
-                background: linear-gradient(180deg,
-                    rgba(16, 16, 16, 0.97) 0%,
-                    rgba(16, 16, 16, 0.92) 50%,
-                    rgba(16, 16, 16, 0.97) 100%);
-            }
-
             main {
                 padding: 3rem 1rem !important;
             }
 
             h1 {
-                font-size: 3rem !important; /* 48px instead of 96px */
+                font-size: 3rem !important;
                 line-height: 1.1;
             }
 
@@ -265,7 +276,7 @@
                 font-size: 10px;
             }
 
-            .btn {
+            .btn-primary {
                 padding: 14px 24px !important;
                 font-size: 14px !important;
             }
@@ -283,7 +294,7 @@
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 2.5rem !important; /* 40px on very small screens */
+                font-size: 2.5rem !important;
             }
 
             p.text-2xl, p.text-3xl {
@@ -297,10 +308,14 @@
             main {
                 padding: 2rem 1rem !important;
             }
+
+            .deal-card h3 {
+                font-size: 1.5rem !important;
+            }
         }
     </style>
 </head>
-<body>
+<body class="bg-dark">
 
     <!-- Header -->
     <header class="sticky top-0 bg-black/95 backdrop-blur-xl border-b border-gray-800 z-50">
@@ -308,7 +323,14 @@
             <a href="index.html">
                 <img src="Flycharm-logo-clear-w.png" alt="FlyCharm" class="h-8">
             </a>
-            <a href="index.html#cta" class="btn text-sm px-6 py-3">Join Waitlist</a>
+            <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94"
+               class="btn-primary text-sm px-6 py-3 hidden sm:inline-flex">
+                Get Deal Alerts
+            </a>
+            <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94"
+               class="text-white sm:hidden text-xs uppercase font-bold tracking-wider">
+                Alerts
+            </a>
         </div>
     </header>
 
@@ -316,8 +338,8 @@
     <main class="max-w-7xl mx-auto px-6 py-20">
 
         <!-- Hero Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-red-500/10 border border-red-500/30 rounded-full px-4 py-2 mb-6">
+        <div class="text-center mb-20">
+            <div class="live-badge inline-block bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 mb-6">
                 <span class="text-red-400 text-sm font-bold">🔥 LIVE DEALS</span>
             </div>
 
@@ -329,13 +351,14 @@
                 Flight deals so good, they feel like typos.
             </p>
 
-            <p class="text-lg text-gray-400 mb-10 max-w-3xl mx-auto">
-                But they're not. We just know where to look while everyone else is Googling "cheap flights."
+            <p class="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
+                But they're not. We just find the deals before anyone else does.
             </p>
 
             <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94"
-               class="text-sm text-gray-400 hover:text-lime-400 border border-gray-800 hover:border-lime-400 rounded-full px-8 py-4 inline-block transition font-semibold">
-                🔔 Never Miss a Drop
+               class="ghost-button rounded-full px-8 py-4 inline-flex items-center gap-2 font-semibold">
+                🔔
+                <span>Never Miss a Drop</span>
             </a>
         </div>
 
@@ -345,14 +368,11 @@
                 <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">
                     All Deals
                 </button>
-                <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">
-                    Delhi
-                </button>
                 <button class="filter-pill" data-city="Mumbai" onclick="filterByCity('Mumbai')">
                     Mumbai
                 </button>
-                <button class="filter-pill" data-city="Ahmedabad" onclick="filterByCity('Ahmedabad')">
-                    Ahmedabad
+                <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">
+                    Delhi
                 </button>
                 <button class="filter-pill" data-city="Bengaluru" onclick="filterByCity('Bengaluru')">
                     Bengaluru
@@ -362,6 +382,9 @@
                 </button>
                 <button class="filter-pill" data-city="Hyderabad" onclick="filterByCity('Hyderabad')">
                     Hyderabad
+                </button>
+                <button class="filter-pill" data-city="Ahmedabad" onclick="filterByCity('Ahmedabad')">
+                    Ahmedabad
                 </button>
                 <button class="filter-pill" data-city="Kolkata" onclick="filterByCity('Kolkata')">
                     Kolkata
@@ -374,7 +397,7 @@
 
         <!-- Deals Grid -->
         <div id="deals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Deals will be rendered here by JavaScript -->
+            <!-- Deals are rendered here -->
         </div>
 
         <!-- Empty State -->
@@ -391,8 +414,14 @@
     <!-- Footer -->
     <footer class="border-t border-gray-800 py-10 text-center">
         <div class="max-w-7xl mx-auto px-6">
-            <p class="text-gray-600 text-sm mb-4">
+            <p class="text-gray-500 text-sm mb-4">
                 Deals updated daily at 9 PM IST
+            </p>
+            <p class="text-gray-500 text-sm mb-4 flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                </svg>
+                <span>Handpicked by the beautiful humans at FlyCharm</span>
             </p>
             <p class="text-gray-600 text-sm">
                 © 2025 FlyCharm • Built by <a href="https://wchstudios.com" class="hover:text-white transition">WCH Studios</a>
@@ -628,19 +657,14 @@
         function calculateSavings(price, original) {
             const p = parseInt(price.replace(/[^0-9]/g, ''));
             const o = parseInt(original.replace(/[^0-9]/g, ''));
+            if (isNaN(p) || isNaN(o) || o === 0) return 0;
             return Math.round(((o - p) / o) * 100);
         }
 
         function filterByCity(city) {
             currentFilter = city;
-
-            // Update active pill
-            document.querySelectorAll('.filter-pill').forEach(pill => {
-                pill.classList.remove('active');
-            });
+            document.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
             document.querySelector(`[data-city="${city}"]`).classList.add('active');
-
-            // Re-render deals
             renderDeals();
         }
 
@@ -648,11 +672,9 @@
             const grid = document.getElementById('deals-grid');
             const emptyState = document.getElementById('empty-state');
 
-            // Filter deals
-            let filteredDeals = allDeals;
-            if (currentFilter !== 'all') {
-                filteredDeals = allDeals.filter(deal => deal.from === currentFilter);
-            }
+            let filteredDeals = allDeals.filter(deal =>
+                currentFilter === 'all' || deal.from === currentFilter
+            );
 
             if (filteredDeals.length === 0) {
                 grid.style.display = 'none';
@@ -676,42 +698,31 @@ Can you help me book this?`;
 
                 return `
                     <div class="deal-card" style="animation: fadeInUp 0.6s ease-out ${index * 0.1}s both;">
-                        <!-- Image -->
                         <div class="deal-image-wrapper">
                             <img src="${deal.image}" alt="${deal.destination}" class="deal-image" loading="lazy">
-                            <div class="class-badge ${cabinClass}-badge">
-                                ${deal.cabin}
-                            </div>
+                            <div class="class-badge ${cabinClass}-badge">${deal.cabin}</div>
                         </div>
 
-                        <!-- Content -->
                         <div class="p-8 relative z-10">
-                            <!-- Destination -->
-                            <div class="destination-label">
-                                ${deal.destination}
-                            </div>
+                            <p class="destination-label">${deal.destination}</p>
 
-                            <!-- Route -->
-                            <h3 class="text-2xl font-bold text-white mb-4 leading-tight">
+                            <h3 class="text-3xl font-bold text-white mb-4 leading-tight">
                                 ${deal.route.split(' → ')[1]}
                             </h3>
 
-                            <!-- Travel Dates Badge -->
                             <div class="mb-4">
                                 <div class="date-badge">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
-                                    ${deal.travelDates}
+                                    <span>${deal.travelDates}</span>
                                 </div>
                             </div>
 
-                            <!-- Details -->
                             <p class="text-sm text-gray-500 mb-6">
                                 ${deal.stops} • From ${deal.from}
                             </p>
 
-                            <!-- Price -->
                             <div class="mb-8">
                                 <div class="price mb-3">${deal.price}</div>
                                 <div class="flex items-center gap-3">
@@ -722,10 +733,17 @@ Can you help me book this?`;
                                 </div>
                             </div>
 
-                            <!-- CTA -->
-                            <a href="${waLink}" class="btn w-full text-center block">
-                                Book with FlyCharm
-                            </a>
+                            <div class="space-y-4">
+                                <p class="text-xs text-center text-gray-500">
+                                    Our experts help you book this exact deal, hassle-free.
+                                </p>
+                                <a href="${waLink}" target="_blank" class="btn-primary w-full text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                    </svg>
+                                    <span>Book with our help</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -748,8 +766,8 @@ Can you help me book this?`;
         `;
         document.head.appendChild(style);
 
-        // Initialize - Render deals on page load
-        renderDeals();
+        // Initialize
+        document.addEventListener('DOMContentLoaded', renderDeals);
     </script>
 
 </body>
