@@ -9,13 +9,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --brand-lime: #D5FE00;
-            --brand-noir: #101010;
-            --brand-dark: #1A1A1A;
+            --brand-black: #0a0a0a;
+            --brand-surface: #141414;
+            --brand-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
         }
 
         * {
@@ -25,53 +28,65 @@
         }
 
         body {
-            background-color: var(--brand-noir);
-            color: #E0E0E0;
+            background-color: var(--brand-black);
+            /* Subtle premium grain texture using gradients */
+            background-image: 
+                radial-gradient(circle at 50% 0%, #252525 0%, transparent 75%),
+                linear-gradient(0deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
 
         .font-brand-header {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
         .text-cyber-lime { color: var(--brand-lime); }
-        .bg-cyber-lime { background-color: var(--brand-lime); }
 
+        /* --- Inputs --- */
         .form-input, .form-select {
-            background-color: #1A1A1A;
-            border: 1px solid #333;
-            color: #E0E0E0;
-            padding: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--brand-border);
+            color: #fff;
+            padding: 0.875rem 1rem;
             border-radius: 0.5rem;
             width: 100%;
-            transition: border-color 0.15s, box-shadow 0.15s;
-            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
         }
 
         .form-input:focus, .form-select:focus {
             outline: none;
             border-color: var(--brand-lime);
-            box-shadow: 0 0 0 2px rgba(213, 254, 0, 0.1);
+            background-color: rgba(213, 254, 0, 0.02);
+            box-shadow: 0 0 0 1px var(--brand-lime);
         }
 
         .form-input::placeholder {
-            color: #666;
+            color: #555;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #A0A0A0;
-            font-size: 0.8125rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
+        /* --- Buttons --- */
         .submit-btn {
             background-color: var(--brand-lime);
-            color: var(--brand-noir);
+            color: var(--brand-black);
             font-weight: 700;
             padding: 1rem 2rem;
             border-radius: 0.5rem;
@@ -81,84 +96,133 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.1rem;
             width: 100%;
+            margin-top: 1rem;
         }
 
         .submit-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(213, 254, 0, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(213, 254, 0, 0.4);
         }
 
         .submit-btn:active {
-            transform: scale(0.98);
+            transform: translateY(0);
+        }
+
+        /* --- Tabs --- */
+        .tab-container {
+            background: var(--brand-surface);
+            border: 1px solid var(--brand-border);
+            padding: 4px;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
         }
 
         .tab-button {
-            padding: 0.5rem 1rem;
-            border: 1px solid #333;
+            padding: 0.75rem 1rem;
+            border: none;
             background-color: transparent;
-            color: #888;
+            color: #666;
             cursor: pointer;
-            transition: all 0.15s;
-            font-weight: 500;
+            transition: all 0.3s;
+            font-weight: 600;
             font-size: 0.875rem;
+            border-radius: 0.5rem;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .tab-button.active {
-            border-color: #555;
-            background-color: #1A1A1A;
-            color: #E0E0E0;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
 
+        /* --- Toggle Switch --- */
         .trip-toggle {
-            padding: 0.875rem 2rem;
-            border: 2px solid #333;
-            background-color: transparent;
-            color: #A0A0A0;
+            padding: 0.75rem;
+            border: 1px solid var(--brand-border);
+            background-color: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .trip-toggle:hover {
+            background-color: rgba(255,255,255,0.05);
         }
 
         .trip-toggle.active {
             border-color: var(--brand-lime);
-            background-color: var(--brand-lime);
-            color: var(--brand-noir);
+            background-color: rgba(213, 254, 0, 0.1);
+            color: var(--brand-lime);
+            position: relative;
+            z-index: 1;
         }
 
+        /* --- Cards --- */
         .section-card {
-            background-color: #1A1A1A;
+            background-color: var(--brand-surface);
             padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #2A2A2A;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--brand-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
+        .section-title {
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--brand-lime);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* --- Lock Screen --- */
         .locked-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(16, 16, 16, 0.98);
+            background-color: #050505;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            transition: opacity 0.4s ease;
         }
 
         .error-message {
             color: #ff4444;
             font-size: 0.875rem;
-            margin-top: 0.25rem;
+            margin-top: 1rem;
+            letter-spacing: 0.02em;
         }
 
+        /* --- Utilities --- */
         input[type="date"]::-webkit-calendar-picker-indicator,
         input[type="time"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
+            filter: invert(1) opacity(0.7);
             cursor: pointer;
         }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator:hover,
+        input[type="time"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
 
+        /* Custom Grid for consistent layout */
         .grid { display: grid; }
         .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
         .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -168,66 +232,75 @@
             .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .md\:col-span-2 { grid-column: span 2 / span 2; }
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #mainContent {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
     </style>
 </head>
 <body>
-    <!-- Access Code Lock -->
+    <!-- Access Code Lock (Logo appears ONLY here) -->
     <div id="lockOverlay" class="locked-overlay">
         <div style="text-align: center; max-width: 28rem; margin: 0 auto; padding: 2rem;">
-            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 3rem; margin: 0 auto 2rem;">
-            <h1 class="font-brand-header" style="font-size: 1.875rem; margin-bottom: 1rem;">Internal Booking Portal</h1>
-            <p style="color: #888; margin-bottom: 1.5rem;">Enter access code to continue</p>
+            <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 4rem; margin: 0 auto 2.5rem;">
+            <h1 class="font-brand-header" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff;">Internal Portal</h1>
+            <p style="color: #666; margin-bottom: 2rem; font-size: 0.9rem;">Secure Access Required</p>
             <input
                 type="password"
                 id="accessCode"
                 class="form-input"
-                style="text-align: center; font-size: 1.5rem; letter-spacing: 0.25em; margin-bottom: 0.5rem;"
+                style="text-align: center; font-size: 2rem; letter-spacing: 0.5em; margin-bottom: 0.5rem; border-color: #333;"
                 placeholder="••••"
                 maxlength="4"
                 autocomplete="off"
             >
-            <p id="accessError" class="error-message" style="display: none;">Invalid access code</p>
+            <p id="accessError" class="error-message" style="display: none;">Invalid Access Code</p>
         </div>
     </div>
 
     <!-- Main Content -->
     <div id="mainContent" style="display: none;">
-        <div style="max-width: 48rem; margin: 0 auto; padding: 2rem 1rem;">
-            <!-- Header -->
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <img src="Flycharm-logo-clear-w.png" alt="Flycharm" style="height: 2rem; margin: 0 auto 1rem;">
-                <h1 class="font-brand-header" style="font-size: 1.875rem; margin-bottom: 0.25rem;">Internal Booking</h1>
-                <p style="color: #666; font-size: 0.875rem;">Fast. Smart. Efficient.</p>
+        <div style="max-width: 46rem; margin: 0 auto; padding: 3rem 1.5rem;">
+            <!-- Text Header (No Image Logo) -->
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h1 class="font-brand-header" style="font-size: 2.5rem; margin-bottom: 0.25rem; color: #fff;">FLYCHARM</h1>
+                <p class="text-cyber-lime" style="font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em;">INTERNAL BOOKING SYSTEM</p>
             </div>
 
             <!-- Booking Type Toggle -->
-            <div style="display: flex; gap: 0; margin-bottom: 1.5rem; max-width: 20rem; margin-left: auto; margin-right: auto;">
-                <button id="domesticTab" class="tab-button active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">Domestic</button>
-                <button id="internationalTab" class="tab-button" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">International</button>
+            <div class="tab-container" style="display: flex; gap: 0; max-width: 24rem; margin-left: auto; margin-right: auto;">
+                <button id="domesticTab" class="tab-button active" style="flex: 1;">Domestic</button>
+                <button id="internationalTab" class="tab-button" style="flex: 1;">International</button>
             </div>
 
             <!-- Domestic Form -->
             <form id="domesticForm" style="display: block;">
-                <div style="margin-bottom: 1.25rem;">
+                <div style="margin-bottom: 2rem;">
                     <!-- Trip ID -->
-                    <div style="margin-bottom: 1.25rem;">
-                        <label class="form-label">Trip ID</label>
-                        <input type="text" name="tripId" class="form-input" placeholder="110" required autofocus>
-                    </div>
-
-                    <!-- Trip Type Toggle -->
-                    <div>
-                        <label class="form-label">Trip Type</label>
-                        <div style="display: flex; gap: 0;">
-                            <button type="button" id="oneWayBtn" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
-                            <button type="button" id="roundTripBtn" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                    <div class="section-card" style="display: flex; gap: 1rem; align-items: flex-end;">
+                        <div style="flex: 1;">
+                            <label class="form-label">Trip Reference ID</label>
+                            <input type="text" name="tripId" class="form-input" placeholder="e.g. 110" style="font-family: 'Space Grotesk'; font-size: 1.1rem;" required autofocus>
+                        </div>
+                        <!-- Trip Type Toggle -->
+                        <div style="flex: 1;">
+                            <label class="form-label">Itinerary Type</label>
+                            <div style="display: flex; gap: 0;">
+                                <button type="button" id="oneWayBtn" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
+                                <button type="button" id="roundTripBtn" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Passenger Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
+                    <h3 class="font-brand-header section-title"><span class="section-dot"></span>Passenger Manifest</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Title</label>
@@ -248,31 +321,31 @@
                             <input type="text" name="lastName" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">DOB</label>
+                            <label class="form-label">Date of Birth</label>
                             <input type="date" name="dob" class="form-input" max="2024-12-31" required>
                         </div>
                         <div>
                             <label class="form-label">FF# (Optional)</label>
-                            <input type="text" name="ffNumber" class="form-input" placeholder="Frequent flyer number">
+                            <input type="text" name="ffNumber" class="form-input" placeholder="Airline Membership">
                         </div>
                     </div>
                 </div>
 
                 <!-- Flight Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Flight</h3>
+                    <h3 class="font-brand-header section-title"><span class="section-dot"></span>Flight Logistics</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline</label>
                             <input type="text" name="airline" class="form-input" placeholder="Air India, IndiGo, etc." required>
                         </div>
                         <div>
-                            <label class="form-label">Origin</label>
-                            <input type="text" name="origin" class="form-input" placeholder="DEL" required>
+                            <label class="form-label">Origin Code</label>
+                            <input type="text" name="origin" class="form-input" placeholder="DEL" style="text-transform: uppercase;" required>
                         </div>
                         <div>
-                            <label class="form-label">Destination</label>
-                            <input type="text" name="destination" class="form-input" placeholder="BOM" required>
+                            <label class="form-label">Dest. Code</label>
+                            <input type="text" name="destination" class="form-input" placeholder="BOM" style="text-transform: uppercase;" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Date</label>
@@ -302,7 +375,7 @@
                         </div>
 
                         <div>
-                            <label class="form-label">Class</label>
+                            <label class="form-label">Cabin Class</label>
                             <select name="class" class="form-select" required>
                                 <option value="Economy" selected>Economy</option>
                                 <option value="Business">Business</option>
@@ -314,13 +387,20 @@
 
                 <!-- Payment Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
+                    <h3 class="font-brand-header section-title"><span class="section-dot"></span>Payment Information</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Committed Price</label>
-                            <input type="text" name="price" class="form-input" placeholder="₹5,000" required>
+                            <input type="text" name="price" class="form-input" placeholder="₹0.00" required>
                         </div>
                         <div>
+                            <label class="form-label">Status</label>
+                            <select name="paymentStatus" class="form-select" required>
+                                <option value="DUE" selected>DUE</option>
+                                <option value="PAID">PAID</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
                             <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
                                 <option value="Shezan CC" selected>Shezan CC</option>
@@ -330,20 +410,13 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="form-label">Payment Status</label>
-                            <select name="paymentStatus" class="form-select" required>
-                                <option value="DUE" selected>DUE</option>
-                                <option value="PAID">PAID</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Notes -->
-                <div style="margin-bottom: 1.25rem;">
-                    <label class="form-label">Notes (Optional)</label>
-                    <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
+                <div class="section-card">
+                    <label class="form-label">Operational Notes</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Special requests, baggage allowance, etc."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">Send to WhatsApp 💬</button>
@@ -351,26 +424,25 @@
 
             <!-- International Form -->
             <form id="internationalForm" style="display: none;">
-                <div style="margin-bottom: 1.25rem;">
-                    <!-- Trip ID -->
-                    <div style="margin-bottom: 1.25rem;">
-                        <label class="form-label">Trip ID</label>
-                        <input type="text" name="tripId" class="form-input" placeholder="1101" required>
-                    </div>
-
-                    <!-- Trip Type Toggle -->
-                    <div>
-                        <label class="form-label">Trip Type</label>
-                        <div style="display: flex; gap: 0;">
-                            <button type="button" id="oneWayBtnIntl" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
-                            <button type="button" id="roundTripBtnIntl" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                <div style="margin-bottom: 2rem;">
+                    <div class="section-card" style="display: flex; gap: 1rem; align-items: flex-end;">
+                        <div style="flex: 1;">
+                            <label class="form-label">Trip Reference ID</label>
+                            <input type="text" name="tripId" class="form-input" placeholder="e.g. 1101" style="font-family: 'Space Grotesk'; font-size: 1.1rem;" required>
+                        </div>
+                        <div style="flex: 1;">
+                            <label class="form-label">Itinerary Type</label>
+                            <div style="display: flex; gap: 0;">
+                                <button type="button" id="oneWayBtnIntl" class="trip-toggle active" style="flex: 1; border-radius: 0.5rem 0 0 0.5rem;">One Way</button>
+                                <button type="button" id="roundTripBtnIntl" class="trip-toggle" style="flex: 1; border-radius: 0 0.5rem 0.5rem 0;">Round Trip</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Passenger Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Passenger</h3>
+                    <h3 class="font-brand-header section-title"><span class="section-dot"></span>Passenger Identity</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Title</label>
@@ -383,7 +455,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="form-label">First Name (as per Passport)</label>
+                            <label class="form-label">First Name (Passport)</label>
                             <input type="text" name="firstName" class="form-input" required>
                         </div>
                         <div class="md:col-span-2">
@@ -391,11 +463,11 @@
                             <input type="text" name="lastName" class="form-input" required>
                         </div>
                         <div>
-                            <label class="form-label">DOB</label>
+                            <label class="form-label">Date of Birth</label>
                             <input type="date" name="dob" class="form-input" max="2024-12-31" required>
                         </div>
                         <div>
-                            <label class="form-label">Passport #</label>
+                            <label class="form-label">Passport No.</label>
                             <input type="text" name="passportNumber" class="form-input" required>
                         </div>
                         <div>
@@ -408,26 +480,26 @@
                         </div>
                         <div>
                             <label class="form-label">FF# (Optional)</label>
-                            <input type="text" name="ffNumber" class="form-input" placeholder="Frequent flyer number">
+                            <input type="text" name="ffNumber" class="form-input" placeholder="Airline Membership">
                         </div>
                     </div>
                 </div>
 
                 <!-- Flight Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Flight</h3>
+                    <h3 class="font-brand-header section-title"><span class="section-dot"></span>Flight Logistics</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="form-label">Airline (Optional)</label>
                             <input type="text" name="airline" class="form-input" placeholder="Emirates, Qatar Airways, etc.">
                         </div>
                         <div>
-                            <label class="form-label">Origin</label>
-                            <input type="text" name="origin" class="form-input" placeholder="DEL" required>
+                            <label class="form-label">Origin Code</label>
+                            <input type="text" name="origin" class="form-input" placeholder="DEL" style="text-transform: uppercase;" required>
                         </div>
                         <div>
-                            <label class="form-label">Destination</label>
-                            <input type="text" name="destination" class="form-input" placeholder="SYD" required>
+                            <label class="form-label">Dest. Code</label>
+                            <input type="text" name="destination" class="form-input" placeholder="SYD" style="text-transform: uppercase;" required>
                         </div>
                         <div>
                             <label class="form-label">Depart Date</label>
@@ -457,7 +529,7 @@
                         </div>
 
                         <div>
-                            <label class="form-label">Class</label>
+                            <label class="form-label">Cabin Class</label>
                             <select name="class" class="form-select" required>
                                 <option value="Economy" selected>Economy</option>
                                 <option value="Business">Business</option>
@@ -465,7 +537,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="form-label">Refund Preference</label>
+                            <label class="form-label">Refund Type</label>
                             <select name="refundPreference" class="form-select" required>
                                 <option value="Saver" selected>Saver</option>
                                 <option value="Flexi">Flexi</option>
@@ -477,13 +549,20 @@
 
                 <!-- Payment Details -->
                 <div class="section-card">
-                    <h3 class="text-cyber-lime font-brand-header" style="font-size: 1.125rem; margin-bottom: 1rem;">Payment</h3>
+                    <h3 class="font-brand-header section-title"><span class="section-dot"></span>Payment Information</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">Committed Price</label>
                             <input type="text" name="price" class="form-input" placeholder="$500 or ₹50,000" required>
                         </div>
                         <div>
+                            <label class="form-label">Status</label>
+                            <select name="paymentStatus" class="form-select" required>
+                                <option value="DUE" selected>DUE</option>
+                                <option value="PAID">PAID</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
                             <label class="form-label">Payment Method</label>
                             <select name="paymentMethod" class="form-select" required>
                                 <option value="Shezan CC" selected>Shezan CC</option>
@@ -493,20 +572,13 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="form-label">Payment Status</label>
-                            <select name="paymentStatus" class="form-select" required>
-                                <option value="DUE" selected>DUE</option>
-                                <option value="PAID">PAID</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Notes -->
-                <div style="margin-bottom: 1.25rem;">
-                    <label class="form-label">Notes (Optional)</label>
-                    <textarea name="notes" class="form-input" rows="2" placeholder="Home ticket, special requests, etc."></textarea>
+                <div class="section-card">
+                    <label class="form-label">Operational Notes</label>
+                    <textarea name="notes" class="form-input" rows="2" placeholder="Special requests, baggage allowance, etc."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">Send to WhatsApp 💬</button>
@@ -542,8 +614,11 @@
 
         code.addEventListener('input', function(e) {
             if (e.target.value === '1110') {
-                lock.style.display = 'none';
-                main.style.display = 'block';
+                lock.style.opacity = '0';
+                setTimeout(() => {
+                    lock.style.display = 'none';
+                    main.style.display = 'block';
+                }, 400);
                 err.style.display = 'none';
             } else if (e.target.value.length === 4) {
                 err.style.display = 'block';
