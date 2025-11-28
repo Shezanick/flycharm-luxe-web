@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FlyCharm Drops - Stupidly Good Flight Deals</title>
-
-    <meta name="description" content="Flight deals so good, they feel like typos. But they're not. We just know where to look.">
+    <meta name="description" content="Flight deals so good, they feel like typos. We just know where to look.">
+    
+    <!-- Assets -->
     <link rel="icon" type="image/png" href="favicon.PNG">
-
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        /* --- 1. VARIABLES & BASE --- */
         :root {
             --lime: #D5FE00;
-            --dark: #0A0A0A;
-            --card-bg: #141414;
+            --dark: #050505;
+            --card-bg: #121212;
             --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- CORE FIX FOR BROKEN SCROLL --- */
+        ::selection {
+            background: var(--lime);
+            color: #000;
+        }
+
         html, body {
-            overflow-x: hidden; /* Prevents the whole page from moving sideways */
+            overflow-x: hidden;
             width: 100%;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
@@ -33,73 +38,74 @@
             background-color: var(--dark);
             color: #E0E0E0;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(213, 254, 0, 0.03) 0%, transparent 50%),
-                linear-gradient(to bottom, #0A0A0A 0%, #111 100%);
+                radial-gradient(circle at 50% 0%, rgba(213, 254, 0, 0.04) 0%, transparent 40%),
+                linear-gradient(to bottom, #050505 0%, #111 100%);
             min-height: 100vh;
         }
 
-        h1, h2, h3, .price {
+        h1, h2, h3, .price-font {
             font-family: 'Space Grotesk', sans-serif;
             letter-spacing: -0.03em;
         }
 
-        /* --- Aesthetic Card Styling --- */
+        /* --- 2. CARDS & GLASSMORPHISM --- */
         .deal-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(12px);
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border);
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
-            transform: translateZ(0);
+            transform: translateZ(0); /* GPU Force */
         }
 
         .deal-card::after {
             content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0.5;
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0.6;
         }
 
         .deal-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), 0 0 20px -5px rgba(213, 254, 0, 0.05);
+            transform: translateY(-6px) scale(1.005);
+            border-color: var(--border-hover);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9), 0 0 30px -10px rgba(213, 254, 0, 0.05);
         }
 
-        /* --- Image Styling --- */
+        /* --- 3. IMAGERY --- */
         .deal-image-wrapper { overflow: hidden; position: relative; aspect-ratio: 16/10; }
-        .deal-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; filter: saturate(0.9); }
+        .deal-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; filter: saturate(0.95); }
         .deal-card:hover .deal-image { transform: scale(1.08); filter: saturate(1.1); }
         .deal-image-wrapper::before {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent 50%, rgba(20,20,20,1) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 60%, rgba(18,18,18,1) 100%);
             z-index: 1; pointer-events: none;
         }
 
-        /* --- Badge Styling --- */
+        /* --- 4. BADGES --- */
         .class-badge {
             position: absolute; top: 16px; right: 16px;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
             padding: 6px 14px; border-radius: 100px;
             font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
             z-index: 10; border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        .business-badge { color: var(--lime); border-color: rgba(213, 254, 0, 0.3); background: rgba(213, 254, 0, 0.05); }
+        .business-badge { color: var(--lime); border-color: rgba(213, 254, 0, 0.3); background: rgba(213, 254, 0, 0.08); }
+        
         .date-badge {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 8px 14px; border-radius: 10px;
             font-size: 13px; font-weight: 500; color: #ccc; transition: border-color 0.3s;
         }
-        .deal-card:hover .date-badge { border-color: rgba(213, 254, 0, 0.4); color: var(--lime); }
+        .deal-card:hover .date-badge { border-color: rgba(213, 254, 0, 0.3); color: #fff; }
 
-        /* --- Price Styling --- */
-        .price { font-size: 3.5rem; font-weight: 700; color: #FFFFFF; line-height: 0.9; letter-spacing: -0.04em; }
+        /* --- 5. TYPOGRAPHY & BUTTONS --- */
+        .price-font { font-size: 3.5rem; font-weight: 700; color: #FFFFFF; line-height: 0.9; letter-spacing: -0.04em; }
 
-        /* --- Buttons --- */
         .btn-primary {
             background: #FFFFFF; color: #000; padding: 16px 32px;
             border-radius: 100px; font-weight: 600; text-decoration: none;
@@ -110,69 +116,53 @@
             background: var(--lime); border-color: var(--lime);
             transform: translateY(-2px); box-shadow: 0 10px 30px -5px rgba(213, 254, 0, 0.4);
         }
-        .btn-secondary { color: #888; font-size: 13px; font-weight: 500; transition: color 0.3s ease; text-decoration: none; }
+        .btn-secondary { color: #666; font-size: 13px; font-weight: 500; transition: color 0.3s ease; text-decoration: none; }
         .btn-secondary:hover { color: #fff; }
-
-        /* --- Filter Scroll Fix --- */
-        .scroll-container {
-            display: flex;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
-            scrollbar-width: none; /* Firefox hide */
-            width: 100%;
-            padding: 4px 24px 20px 24px; /* Bottom padding makes room for shadow/glow */
-            mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-        }
-        .scroll-container::-webkit-scrollbar { display: none; } /* Chrome hide */
-        
-        /* Inner wrapper ensures proper spacing */
-        .scroll-content {
-            display: flex;
-            gap: 12px;
-            margin: 0 auto; /* Centers content if it's smaller than screen */
-        }
-
-        /* On mobile, align left so first item isn't hidden by center alignment */
-        @media (max-width: 768px) {
-            .scroll-container {
-                mask-image: linear-gradient(to right, transparent 0%, black 4%, black 92%, transparent 100%);
-            }
-            .scroll-content {
-                margin: 0; /* Left align on mobile */
-                min-width: min-content; /* Ensure it takes up necessary space */
-            }
-            /* Add pseudo-elements to create 'padding' at start/end of scroll that works with justify-content */
-            .scroll-content::after { content: ''; padding-right: 24px; }
-        }
-
-        .filter-pill {
-            padding: 10px 24px; border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
-            color: #888; font-size: 13px; font-weight: 500; cursor: pointer;
-            transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; /* Prevent shrinking */
-        }
-        .filter-pill:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
-        .filter-pill.active { background: var(--lime); color: #000; border-color: var(--lime); font-weight: 600; }
-
-        /* --- Hero Animations --- */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 0 10px 5px rgba(220, 38, 38, 0); transform: scale(1.02); }
-        }
-        .live-badge { animation: pulse-glow 3s infinite ease-in-out; }
 
         .ghost-button {
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
             color: #ccc; backdrop-filter: blur(10px); transition: all 0.3s ease;
         }
         .ghost-button:hover { background: rgba(255,255,255,0.08); border-color: #fff; color: #fff; }
+
+        /* --- 6. FILTERS SCROLLBAR --- */
+        .scroll-container {
+            display: flex; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
+            width: 100%; padding: 4px 24px 20px 24px;
+            mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        }
+        .scroll-container::-webkit-scrollbar { display: none; }
         
-        /* --- Mobile Optimizations --- */
+        .scroll-content { display: flex; gap: 10px; margin: 0 auto; }
+        
         @media (max-width: 768px) {
-            .deal-card { border-radius: 20px; }
-            .price { font-size: 2.5rem; }
-            h1 { font-size: 3rem !important; letter-spacing: -0.04em; }
+            .scroll-container { mask-image: linear-gradient(to right, transparent 0%, black 3%, black 92%, transparent 100%); }
+            .scroll-content { margin: 0; min-width: min-content; }
+            .scroll-content::after { content: ''; padding-right: 24px; } /* Mobile padding fix */
+        }
+
+        .filter-pill {
+            padding: 10px 22px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
+            color: #888; font-size: 13px; font-weight: 500; cursor: pointer;
+            transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0;
+        }
+        .filter-pill:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+        .filter-pill.active { background: var(--lime); color: #000; border-color: var(--lime); font-weight: 600; }
+
+        /* --- 7. ANIMATIONS --- */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .live-dot { animation: pulse-red 2s infinite; }
+        
+        @media (max-width: 768px) {
+            .price-font { font-size: 2.75rem; }
+            h1 { font-size: 3.2rem !important; letter-spacing: -0.04em; }
             .p-8 { padding: 1.5rem !important; } 
         }
     </style>
@@ -180,33 +170,35 @@
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="sticky top-0 bg-black/80 backdrop-blur-md border-b border-white/5 z-50 transition-all duration-300">
+    <header class="sticky top-0 bg-black/80 backdrop-blur-xl border-b border-white/5 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="opacity-90 hover:opacity-100 transition-opacity">
+                <!-- Ensure image path is correct -->
                 <img src="Flycharm-logo-clear-w.png" alt="FlyCharm" class="h-7 sm:h-8">
             </a>
             <a href="https://wa.me/919998156651?text=Hey%20FlyCharm!%20I%20want%20to%20get%20deal%20alerts.%20%F0%9F%94%94" 
-               class="bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs sm:text-sm px-5 py-2.5 rounded-full font-medium transition-all">
+               class="bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs sm:text-sm px-5 py-2.5 rounded-full font-medium transition-all hover:scale-105 active:scale-95">
                Get Alerts
             </a>
         </div>
     </header>
 
-    <!-- Main -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 overflow-hidden"> <!-- Overflow hidden prevents x-scroll on main -->
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 overflow-hidden">
 
         <!-- Hero Section -->
         <div class="text-center mb-16 relative">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] bg-lime-400/10 blur-[120px] rounded-full pointer-events-none"></div>
+            <!-- Ambient Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] bg-lime-400/10 blur-[100px] rounded-full pointer-events-none"></div>
 
             <div class="relative z-10">
-                <div class="live-badge inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 live-dot"></span>
                     <span class="text-red-400 text-xs font-bold tracking-widest uppercase">Live Deals</span>
                 </div>
 
                 <h1 class="text-5xl sm:text-7xl md:text-8xl font-bold text-white mb-6 leading-[0.95] tracking-tighter">
-                    FlyCharm<br><span class="text-transparent bg-clip-text bg-gradient-to-b from-lime-200 to-lime-400">Drops</span>
+                    FlyCharm<br><span class="text-transparent bg-clip-text bg-gradient-to-b from-lime-100 to-lime-400">Drops</span>
                 </h1>
 
                 <p class="text-xl sm:text-2xl md:text-3xl text-gray-400 mb-4 max-w-3xl mx-auto font-light px-4">
@@ -224,13 +216,11 @@
             </div>
         </div>
 
-        <!-- City Filters (Fixed Scrolling) -->
+        <!-- Filters -->
         <div class="mb-12 w-full relative">
-            <!-- The scroll container clips the overflow -->
             <div class="scroll-container">
-                <!-- The inner wrapper holds the items -->
                 <div class="scroll-content">
-                    <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">All</button>
+                    <button class="filter-pill active" data-city="all" onclick="filterByCity('all')">All Drops</button>
                     <button class="filter-pill" data-city="Mumbai" onclick="filterByCity('Mumbai')">Mumbai</button>
                     <button class="filter-pill" data-city="Delhi" onclick="filterByCity('Delhi')">Delhi</button>
                     <button class="filter-pill" data-city="Bengaluru" onclick="filterByCity('Bengaluru')">Bengaluru</button>
@@ -245,13 +235,13 @@
 
         <!-- Deals Grid -->
         <div id="deals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <!-- Deals rendered here via JS -->
+            <!-- Injected via JS -->
         </div>
 
         <!-- Empty State -->
         <div id="empty-state" class="text-center py-24 hidden">
-            <div class="text-6xl mb-4 opacity-50">✈️</div>
-            <p class="text-xl text-gray-500">No active drops from this city.</p>
+            <div class="text-6xl mb-4 opacity-40 grayscale">✈️</div>
+            <p class="text-xl text-gray-500">No active drops from this city right now.</p>
             <button onclick="filterByCity('all')" class="text-lime-400 hover:text-lime-300 underline mt-4 text-sm font-medium">View all active deals</button>
         </div>
 
@@ -260,11 +250,11 @@
     <!-- Footer -->
     <footer class="border-t border-white/5 py-12 text-center bg-black/20">
         <div class="max-w-7xl mx-auto px-6">
-            <p class="text-gray-500 text-xs uppercase tracking-widest mb-4">
+            <p class="text-gray-500 text-xs uppercase tracking-widest mb-4 font-semibold">
                 Updated Daily • 9 PM IST
             </p>
             <p class="text-gray-400 text-sm mb-8 flex items-center justify-center gap-2 opacity-80">
-                <span>Handpicked by the beautiful humans at FlyCharm</span>
+                <span>Handpicked by the humans at FlyCharm</span>
             </p>
             <p class="text-gray-600 text-xs">
                 © 2025 FlyCharm • Crafted by <a href="https://wecanhave.com" class="hover:text-white transition-colors underline decoration-gray-700 hover:decoration-white">WCH Studios</a>
@@ -272,375 +262,43 @@
         </div>
     </footer>
 
+    <!-- Logic -->
     <script>
-        // ==========================================
-        // DATA & LOGIC
-        // ==========================================
-
         const whatsapp = '+919998156651';
         let currentFilter = 'all';
 
+        // Data Source
         const allDeals = [
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Boston",
-                "destination": "United States",
-                "price": "₹69,862",
-                "originalPrice": "₹95,000",
-                "travelDates": "10 Feb - 15 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1573524949339-b830334a31ee?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Atlanta",
-                "destination": "United States",
-                "price": "₹71,390",
-                "originalPrice": "₹98,000",
-                "travelDates": "29 Jan - 06 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Milan",
-                "destination": "Italy",
-                "price": "₹40,429",
-                "originalPrice": "₹62,000",
-                "travelDates": "26 Feb - 12 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Zurich",
-                "destination": "Switzerland",
-                "price": "₹43,305",
-                "originalPrice": "₹68,000",
-                "travelDates": "25 Jan - 04 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Copenhagen",
-                "destination": "Denmark",
-                "price": "₹46,120",
-                "originalPrice": "₹70,000",
-                "travelDates": "03 Feb - 12 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Prague",
-                "destination": "Czech Republic",
-                "price": "₹47,819",
-                "originalPrice": "₹72,000",
-                "travelDates": "22 Feb - 02 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Toronto",
-                "destination": "Canada",
-                "price": "₹85,718",
-                "originalPrice": "₹120,000",
-                "travelDates": "28 Feb - 10 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → New York",
-                "destination": "United States",
-                "price": "₹67,988",
-                "originalPrice": "₹95,000",
-                "travelDates": "18 Feb - 27 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Chicago",
-                "destination": "United States",
-                "price": "₹79,228",
-                "originalPrice": "₹110,000",
-                "travelDates": "01 Feb - 06 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1494522358652-f30e61a60313?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Lisbon",
-                "destination": "Portugal",
-                "price": "₹47,290",
-                "originalPrice": "₹70,000",
-                "travelDates": "05 Feb - 16 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Madrid",
-                "destination": "Spain",
-                "price": "₹45,614",
-                "originalPrice": "₹68,000",
-                "travelDates": "28 Jan - 06 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Barcelona",
-                "destination": "Spain",
-                "price": "₹43,146",
-                "originalPrice": "₹67,000",
-                "travelDates": "13 Feb - 21 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Paris",
-                "destination": "France",
-                "price": "₹48,369",
-                "originalPrice": "₹72,000",
-                "travelDates": "11 Feb - 20 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Rome",
-                "destination": "Italy",
-                "price": "₹42,408",
-                "originalPrice": "₹66,000",
-                "travelDates": "11 Feb - 18 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Frankfurt",
-                "destination": "Germany",
-                "price": "₹47,078",
-                "originalPrice": "₹68,000",
-                "travelDates": "23 Feb - 04 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1626447637943-4c9d412fa8cf?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Dublin",
-                "destination": "Ireland",
-                "price": "₹47,653",
-                "originalPrice": "₹75,000",
-                "travelDates": "19 Feb - 25 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1549918864-48ac978761a4?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → London",
-                "destination": "United Kingdom",
-                "price": "₹47,222",
-                "originalPrice": "₹80,000",
-                "travelDates": "04 Feb - 17 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Amsterdam",
-                "destination": "Netherlands",
-                "price": "₹42,052",
-                "originalPrice": "₹68,000",
-                "travelDates": "03 Feb - 08 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1580996378027-23040f16f157?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Vienna",
-                "destination": "Austria",
-                "price": "₹50,143",
-                "originalPrice": "₹75,000",
-                "travelDates": "10 Feb - 17 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Geneva",
-                "destination": "Switzerland",
-                "price": "₹43,573",
-                "originalPrice": "₹70,000",
-                "travelDates": "14 Feb - 23 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1580316205823-da182af14ab3?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Moscow",
-                "destination": "Russia",
-                "price": "₹51,499",
-                "originalPrice": "₹78,000",
-                "travelDates": "02 Mar - 08 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Warsaw",
-                "destination": "Poland",
-                "price": "₹44,721",
-                "originalPrice": "₹68,000",
-                "travelDates": "03 Mar - 09 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Casablanca",
-                "destination": "Morocco",
-                "price": "₹47,583",
-                "originalPrice": "₹70,000",
-                "travelDates": "10 Feb - 22 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1699210260021-eac11ba4ff86?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Cairo",
-                "destination": "Egypt",
-                "price": "₹48,953",
-                "originalPrice": "₹68,000",
-                "travelDates": "01 Mar - 12 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Addis Ababa",
-                "destination": "Ethiopia",
-                "price": "₹38,964",
-                "originalPrice": "₹55,000",
-                "travelDates": "23 Feb - 08 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1614981816670-3e65f4cfdb28?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Tunis",
-                "destination": "Tunisia",
-                "price": "₹41,499",
-                "originalPrice": "₹62,000",
-                "travelDates": "08 Feb - 13 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1737276679387-ac18cbca095e?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Istanbul",
-                "destination": "Türkiye",
-                "price": "₹35,563",
-                "originalPrice": "₹55,000",
-                "travelDates": "16 Feb - 01 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Athens",
-                "destination": "Greece",
-                "price": "₹38,284",
-                "originalPrice": "₹60,000",
-                "travelDates": "29 Jan - 11 Feb",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Melbourne",
-                "destination": "Australia",
-                "price": "₹80,680",
-                "originalPrice": "₹130,000",
-                "travelDates": "03 Mar - 08 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
-            {
-                "from": "Mumbai",
-                "route": "Mumbai → Sydney",
-                "destination": "Australia",
-                "price": "₹71,542",
-                "originalPrice": "₹125,000",
-                "travelDates": "15 Feb - 01 Mar",
-                "stops": "1 stop",
-                "cabin": "Economy",
-                "image": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&h=600&fit=crop",
-                "bookingUrl": "https://www.skyscanner.com"
-            },
+            { from: "Mumbai", route: "Mumbai → Boston", destination: "United States", price: "₹69,862", originalPrice: "₹95,000", travelDates: "10 Feb - 15 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1573524949339-b830334a31ee?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Atlanta", destination: "United States", price: "₹71,390", originalPrice: "₹98,000", travelDates: "29 Jan - 06 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Milan", destination: "Italy", price: "₹40,429", originalPrice: "₹62,000", travelDates: "26 Feb - 12 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Zurich", destination: "Switzerland", price: "₹43,305", originalPrice: "₹68,000", travelDates: "25 Jan - 04 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Copenhagen", destination: "Denmark", price: "₹46,120", originalPrice: "₹70,000", travelDates: "03 Feb - 12 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Prague", destination: "Czech Republic", price: "₹47,819", originalPrice: "₹72,000", travelDates: "22 Feb - 02 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Toronto", destination: "Canada", price: "₹85,718", originalPrice: "₹120,000", travelDates: "28 Feb - 10 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → New York", destination: "United States", price: "₹67,988", originalPrice: "₹95,000", travelDates: "18 Feb - 27 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Chicago", destination: "United States", price: "₹79,228", originalPrice: "₹110,000", travelDates: "01 Feb - 06 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1494522358652-f30e61a60313?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Lisbon", destination: "Portugal", price: "₹47,290", originalPrice: "₹70,000", travelDates: "05 Feb - 16 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Madrid", destination: "Spain", price: "₹45,614", originalPrice: "₹68,000", travelDates: "28 Jan - 06 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Barcelona", destination: "Spain", price: "₹43,146", originalPrice: "₹67,000", travelDates: "13 Feb - 21 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Paris", destination: "France", price: "₹48,369", originalPrice: "₹72,000", travelDates: "11 Feb - 20 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Rome", destination: "Italy", price: "₹42,408", originalPrice: "₹66,000", travelDates: "11 Feb - 18 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Frankfurt", destination: "Germany", price: "₹47,078", originalPrice: "₹68,000", travelDates: "23 Feb - 04 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1626447637943-4c9d412fa8cf?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Dublin", destination: "Ireland", price: "₹47,653", originalPrice: "₹75,000", travelDates: "19 Feb - 25 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1549918864-48ac978761a4?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → London", destination: "United Kingdom", price: "₹47,222", originalPrice: "₹80,000", travelDates: "04 Feb - 17 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Amsterdam", destination: "Netherlands", price: "₹42,052", originalPrice: "₹68,000", travelDates: "03 Feb - 08 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1580996378027-23040f16f157?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Vienna", destination: "Austria", price: "₹50,143", originalPrice: "₹75,000", travelDates: "10 Feb - 17 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Geneva", destination: "Switzerland", price: "₹43,573", originalPrice: "₹70,000", travelDates: "14 Feb - 23 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1580316205823-da182af14ab3?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Moscow", destination: "Russia", price: "₹51,499", originalPrice: "₹78,000", travelDates: "02 Mar - 08 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1513326738677-b964603b136d?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Warsaw", destination: "Poland", price: "₹44,721", originalPrice: "₹68,000", travelDates: "03 Mar - 09 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Casablanca", destination: "Morocco", price: "₹47,583", originalPrice: "₹70,000", travelDates: "10 Feb - 22 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1699210260021-eac11ba4ff86?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Cairo", destination: "Egypt", price: "₹48,953", originalPrice: "₹68,000", travelDates: "01 Mar - 12 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Addis Ababa", destination: "Ethiopia", price: "₹38,964", originalPrice: "₹55,000", travelDates: "23 Feb - 08 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1614981816670-3e65f4cfdb28?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Tunis", destination: "Tunisia", price: "₹41,499", originalPrice: "₹62,000", travelDates: "08 Feb - 13 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1737276679387-ac18cbca095e?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Istanbul", destination: "Türkiye", price: "₹35,563", originalPrice: "₹55,000", travelDates: "16 Feb - 01 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Athens", destination: "Greece", price: "₹38,284", originalPrice: "₹60,000", travelDates: "29 Jan - 11 Feb", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Melbourne", destination: "Australia", price: "₹80,680", originalPrice: "₹130,000", travelDates: "03 Mar - 08 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
+            { from: "Mumbai", route: "Mumbai → Sydney", destination: "Australia", price: "₹71,542", originalPrice: "₹125,000", travelDates: "15 Feb - 01 Mar", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.com" },
             { from: "Mumbai", route: "Mumbai → Athens", destination: "Greece", price: "₹1,04,987", originalPrice: "₹2,10,000", travelDates: "15 Dec - 22 Dec 2025", stops: "1 stop", cabin: "Business", image: "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.co.in" },
             { from: "Delhi", route: "New Delhi → Washington", destination: "United States", price: "₹62,586", originalPrice: "₹2,10,000", travelDates: "10 Jan - 24 Jan 2026", stops: "1 stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1617581629397-a72507c3de9e?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.co.in" },
             { from: "Hyderabad", route: "Hyderabad → Hanoi", destination: "Vietnam", price: "₹22,722", originalPrice: "₹45,000", travelDates: "5 Feb - 12 Feb 2026", stops: "Non stop", cabin: "Economy", image: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=600&fit=crop", bookingUrl: "https://www.skyscanner.co.in" },
@@ -701,7 +359,9 @@
                         </div>
 
                         <div class="p-8 relative z-10">
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-[0.15em] mb-2">${deal.destination}</p>
+                            <div class="flex justify-between items-start">
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-[0.15em] mb-2">${deal.destination}</p>
+                            </div>
 
                             <h3 class="text-3xl md:text-4xl font-bold text-white mb-5 leading-[1.1] tracking-tight">
                                 ${deal.route.split(' → ')[1]}
@@ -716,16 +376,18 @@
                                 </div>
                             </div>
 
-                            <p class="text-sm text-gray-400 mb-8 flex items-center gap-2">
-                                <span class="w-1 h-1 bg-gray-500 rounded-full"></span>
-                                ${deal.stops} 
-                                <span class="w-1 h-1 bg-gray-500 rounded-full"></span>
-                                From ${deal.from}
+                            <!-- Roundtrip Added Here -->
+                            <p class="text-sm text-gray-400 mb-8 flex items-center gap-2 font-medium">
+                                <span>Roundtrip</span>
+                                <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                                <span>${deal.stops}</span>
+                                <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                                <span>From ${deal.from}</span>
                             </p>
 
                             <div class="mb-8 pt-6 border-t border-white/5">
                                 <div class="flex items-baseline gap-3 mb-2">
-                                    <div class="price">${deal.price}</div>
+                                    <div class="price-font">${deal.price}</div>
                                     <div class="bg-lime-400/10 text-lime-300 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">-${savings}%</div>
                                 </div>
                                 <div class="text-gray-500 text-sm">
@@ -752,6 +414,7 @@
             }).join('');
         }
 
+        // Styles for JS animation
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fadeInUp {
@@ -761,6 +424,7 @@
         `;
         document.head.appendChild(style);
 
+        // Init
         document.addEventListener('DOMContentLoaded', renderDeals);
     </script>
 
